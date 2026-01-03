@@ -5,7 +5,14 @@ import { useState, useEffect } from "react";
 export interface ActivityLog {
   id: string;
   sessionId: string;
-  eventType: "agent_started" | "agent_action" | "agent_screenshot" | "agent_bug_found" | "agent_completed" | "agent_failed" | "session_completed";
+  eventType:
+    | "agent_started"
+    | "agent_action"
+    | "agent_screenshot"
+    | "agent_bug_found"
+    | "agent_completed"
+    | "agent_failed"
+    | "session_completed";
   agentName: string | null;
   message: string | null;
   data: Record<string, unknown> | null;
@@ -26,7 +33,9 @@ interface UseActivityReturn {
   refresh: () => Promise<void>;
 }
 
-export function useActivity(options: UseActivityOptions = {}): UseActivityReturn {
+export function useActivity(
+  options: UseActivityOptions = {}
+): UseActivityReturn {
   const [activities, setActivities] = useState<ActivityLog[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);

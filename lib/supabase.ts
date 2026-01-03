@@ -37,10 +37,11 @@ export function createServerClient(): SupabaseClient<Database> {
   }
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   // Use service role key if available, otherwise fall back to anon key for development
-  const keyToUse = serviceRoleKey && serviceRoleKey !== "your_service_role_key" 
-    ? serviceRoleKey 
-    : supabaseAnonKey;
-  
+  const keyToUse =
+    serviceRoleKey && serviceRoleKey !== "your_service_role_key"
+      ? serviceRoleKey
+      : supabaseAnonKey;
+
   return createClient<Database>(supabaseUrl, keyToUse, {
     auth: {
       autoRefreshToken: false,
@@ -54,7 +55,7 @@ export async function getUserFromRequest(request: Request) {
   if (!isSupabaseConfigured) {
     return null;
   }
-  
+
   const authHeader = request.headers.get("Authorization");
   if (!authHeader?.startsWith("Bearer ")) {
     return null;

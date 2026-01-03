@@ -44,7 +44,8 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
   // Fetch project from database
   const { data: project, error } = await supabase
     .from("projects")
-    .select(`
+    .select(
+      `
       *,
       test_sessions (
         id,
@@ -57,7 +58,8 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
         severity,
         status
       )
-    `)
+    `
+    )
     .eq("id", id)
     .single();
 
@@ -68,12 +70,21 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
   // Calculate stats
   const sessions = project.test_sessions || [];
   const bugReports = project.bug_reports || [];
-  const completedSessions = sessions.filter((s: { status: string }) => s.status === "completed").length;
-  const passRate = sessions.length > 0 ? Math.round((completedSessions / sessions.length) * 100) : 0;
-  const lastSession = sessions.sort((a: { completed_at: string | null }, b: { completed_at: string | null }) => 
-    new Date(b.completed_at || 0).getTime() - new Date(a.completed_at || 0).getTime()
+  const completedSessions = sessions.filter(
+    (s: { status: string }) => s.status === "completed"
+  ).length;
+  const passRate =
+    sessions.length > 0
+      ? Math.round((completedSessions / sessions.length) * 100)
+      : 0;
+  const lastSession = sessions.sort(
+    (a: { completed_at: string | null }, b: { completed_at: string | null }) =>
+      new Date(b.completed_at || 0).getTime() -
+      new Date(a.completed_at || 0).getTime()
   )[0];
-  const openBugs = bugReports.filter((b: { status: string }) => b.status === "open").length;
+  const openBugs = bugReports.filter(
+    (b: { status: string }) => b.status === "open"
+  ).length;
 
   const stats = [
     {
@@ -128,17 +139,30 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
               <h1 className="text-3xl font-bold text-ghost-white">
                 {project.name}
               </h1>
-              <span className={`inline-flex items-center gap-1.5 text-sm ${
-                project.status === "active" ? "text-quantum-green" : 
-                project.status === "testing" ? "text-neural-bright" : 
-                project.status === "error" ? "text-crimson-red" : "text-mist-gray"
-              }`}>
-                <span className={`w-2 h-2 rounded-full ${
-                  project.status === "active" ? "bg-quantum-green animate-pulse" : 
-                  project.status === "testing" ? "bg-neural-bright animate-pulse" : 
-                  project.status === "error" ? "bg-crimson-red" : "bg-mist-gray"
-                }`} />
-                {(project.status?.charAt(0).toUpperCase() ?? "") + (project.status?.slice(1) ?? "") || "Idle"}
+              <span
+                className={`inline-flex items-center gap-1.5 text-sm ${
+                  project.status === "active"
+                    ? "text-quantum-green"
+                    : project.status === "testing"
+                    ? "text-neural-bright"
+                    : project.status === "error"
+                    ? "text-crimson-red"
+                    : "text-mist-gray"
+                }`}
+              >
+                <span
+                  className={`w-2 h-2 rounded-full ${
+                    project.status === "active"
+                      ? "bg-quantum-green animate-pulse"
+                      : project.status === "testing"
+                      ? "bg-neural-bright animate-pulse"
+                      : project.status === "error"
+                      ? "bg-crimson-red"
+                      : "bg-mist-gray"
+                  }`}
+                />
+                {(project.status?.charAt(0).toUpperCase() ?? "") +
+                  (project.status?.slice(1) ?? "") || "Idle"}
               </span>
             </div>
           </div>

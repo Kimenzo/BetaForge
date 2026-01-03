@@ -231,8 +231,17 @@ export default function DashboardPage() {
                 <ProjectCard
                   project={{
                     ...project,
-                    status: (project as { status?: string }).status as "active" | "testing" | "idle" | "error" || "idle",
-                    stats: (project as { stats?: { bugsFound: number; sessionsCount: number } }).stats || {
+                    status:
+                      ((project as { status?: string }).status as
+                        | "active"
+                        | "testing"
+                        | "idle"
+                        | "error") || "idle",
+                    stats: (
+                      project as {
+                        stats?: { bugsFound: number; sessionsCount: number };
+                      }
+                    ).stats || {
                       bugsFound: 0,
                       sessionsCount: 0,
                     },
@@ -263,7 +272,10 @@ export default function DashboardPage() {
             ) : (
               activities.slice(0, 5).map((activity) => {
                 // Map agent names to emojis and colors
-                const agentConfig: Record<string, { emoji: string; color: string }> = {
+                const agentConfig: Record<
+                  string,
+                  { emoji: string; color: string }
+                > = {
                   "Sarah Chen": { emoji: "🔍", color: "#8B5CF6" },
                   "Marcus Johnson": { emoji: "⚡", color: "#06B6D4" },
                   "Ahmed Hassan": { emoji: "♿", color: "#10B981" },
@@ -271,8 +283,11 @@ export default function DashboardPage() {
                   "Diego Martinez": { emoji: "🔥", color: "#F97316" },
                   "Emma Wilson": { emoji: "✨", color: "#6366F1" },
                 };
-                const config = agentConfig[activity.agentName || ""] || { emoji: "🤖", color: "#8B5CF6" };
-                
+                const config = agentConfig[activity.agentName || ""] || {
+                  emoji: "🤖",
+                  color: "#8B5CF6",
+                };
+
                 return (
                   <div
                     key={activity.id}
@@ -288,8 +303,12 @@ export default function DashboardPage() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm text-ghost-white">
-                        <span className="font-semibold">{activity.agentName || "Agent"}</span>{" "}
-                        <span className="text-phantom-gray">{getActivityAction(activity.eventType)}</span>{" "}
+                        <span className="font-semibold">
+                          {activity.agentName || "Agent"}
+                        </span>{" "}
+                        <span className="text-phantom-gray">
+                          {getActivityAction(activity.eventType)}
+                        </span>{" "}
                         <span className="text-neural-bright">
                           {activity.projectName || "a project"}
                         </span>

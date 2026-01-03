@@ -91,7 +91,10 @@ export class RelationalStore implements DataStore {
     userId: string,
     options?: QueryOptions
   ): Promise<Project[]> {
-    let query = this.getClient().from("projects").select("*").eq("user_id", userId);
+    let query = this.getClient()
+      .from("projects")
+      .select("*")
+      .eq("user_id", userId);
 
     if (options?.limit) query = query.limit(options.limit);
     if (options?.offset)

@@ -41,7 +41,9 @@ interface UseSessionsReturn {
   };
 }
 
-export function useSessions(options: UseSessionsOptions = {}): UseSessionsReturn {
+export function useSessions(
+  options: UseSessionsOptions = {}
+): UseSessionsReturn {
   const [sessions, setSessions] = useState<TestSession[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);

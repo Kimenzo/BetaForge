@@ -66,7 +66,7 @@ function formatRelativeTime(dateString: string): string {
 export default function ReportsPage() {
   const [selectedSeverity, setSelectedSeverity] = useState<Severity>("all");
   const [searchQuery, setSearchQuery] = useState("");
-  
+
   const { reports, isLoading, stats } = useReports({
     severity: selectedSeverity !== "all" ? selectedSeverity : undefined,
     limit: 100,
@@ -100,28 +100,36 @@ export default function ReportsPage() {
             <Bug className="w-4 h-4 text-neural-bright" />
             <span className="text-sm text-phantom-gray">Total Bugs</span>
           </div>
-          <p className="text-2xl font-bold text-ghost-white">{isLoading ? "..." : stats.total}</p>
+          <p className="text-2xl font-bold text-ghost-white">
+            {isLoading ? "..." : stats.total}
+          </p>
         </div>
         <div className="glass rounded-xl p-4 border border-white/5">
           <div className="flex items-center gap-2 mb-2">
             <AlertTriangle className="w-4 h-4 text-crimson-red" />
             <span className="text-sm text-phantom-gray">Critical</span>
           </div>
-          <p className="text-2xl font-bold text-ghost-white">{isLoading ? "..." : stats.critical}</p>
+          <p className="text-2xl font-bold text-ghost-white">
+            {isLoading ? "..." : stats.critical}
+          </p>
         </div>
         <div className="glass rounded-xl p-4 border border-white/5">
           <div className="flex items-center gap-2 mb-2">
             <AlertCircle className="w-4 h-4 text-ember-orange" />
             <span className="text-sm text-phantom-gray">Open</span>
           </div>
-          <p className="text-2xl font-bold text-ghost-white">{isLoading ? "..." : stats.open}</p>
+          <p className="text-2xl font-bold text-ghost-white">
+            {isLoading ? "..." : stats.open}
+          </p>
         </div>
         <div className="glass rounded-xl p-4 border border-white/5">
           <div className="flex items-center gap-2 mb-2">
             <Info className="w-4 h-4 text-quantum-green" />
             <span className="text-sm text-phantom-gray">Fixed</span>
           </div>
-          <p className="text-2xl font-bold text-ghost-white">{isLoading ? "..." : stats.fixed}</p>
+          <p className="text-2xl font-bold text-ghost-white">
+            {isLoading ? "..." : stats.fixed}
+          </p>
         </div>
       </div>
 
@@ -178,7 +186,10 @@ export default function ReportsPage() {
       {isLoading ? (
         <div className="space-y-3 animate-fade-in-up stagger-3">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="glass rounded-xl border border-white/5 p-5 animate-pulse">
+            <div
+              key={i}
+              className="glass rounded-xl border border-white/5 p-5 animate-pulse"
+            >
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-void-elevated" />
                 <div className="flex-1">
