@@ -147,7 +147,10 @@ export const RequestCache = new RequestCacheImpl();
 /**
  * Create a cache key from URL and params
  */
-export function createCacheKey(url: string, params?: Record<string, unknown>): string {
+export function createCacheKey(
+  url: string,
+  params?: Record<string, unknown>
+): string {
   const base = url.replace(/^https?:\/\/[^/]+/, "");
   if (!params) return base;
   return `${base}?${JSON.stringify(params)}`;

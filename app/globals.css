@@ -430,15 +430,17 @@ body {
 }
 
 @keyframes tilt {
-    0%, 50%, 100% {
-        transform: rotate(0deg);
-    }
-    25% {
-        transform: rotate(0.5deg);
-    }
-    75% {
-        transform: rotate(-0.5deg);
-    }
+  0%,
+  50%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(0.5deg);
+  }
+  75% {
+    transform: rotate(-0.5deg);
+  }
 }
 
 /* === LAYER: COMPONENTS === */
@@ -729,7 +731,7 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  
+
   .animate-fade-in-up,
   .animate-fade-in,
   .animate-scale-in,
@@ -852,7 +854,8 @@ body {
 
 /* Pulse animation for notifications */
 @keyframes notification-pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -866,7 +869,8 @@ body {
 
 /* Offline indicator animation */
 @keyframes offline-pulse {
-  0%, 100% {
+  0%,
+  100% {
     background-color: rgba(245, 158, 11, 1);
   }
   50% {
@@ -880,15 +884,14 @@ body {
 
 /* PWA Install prompt glow effect */
 .pwa-install-glow {
-  box-shadow: 
-    0 0 20px rgba(249, 115, 22, 0.3),
-    0 0 40px rgba(249, 115, 22, 0.2),
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.3), 0 0 40px rgba(249, 115, 22, 0.2),
     0 0 60px rgba(249, 115, 22, 0.1);
 }
 
 /* Wake lock indicator */
 @keyframes screen-active {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -922,11 +925,11 @@ body {
     padding-bottom: env(safe-area-inset-bottom);
     padding-left: env(safe-area-inset-left);
   }
-  
+
   .safe-area-top {
     padding-top: env(safe-area-inset-top);
   }
-  
+
   .safe-area-bottom {
     padding-bottom: env(safe-area-inset-bottom);
   }
@@ -937,11 +940,11 @@ body {
   .hide-when-standalone {
     display: none !important;
   }
-  
+
   .show-when-standalone {
     display: block !important;
   }
-  
+
   /* Adjust header for standalone mode */
   .standalone-header {
     padding-top: env(safe-area-inset-top, 0);
@@ -959,12 +962,12 @@ body {
     -webkit-app-region: drag;
     app-region: drag;
   }
-  
+
   .no-drag {
     -webkit-app-region: no-drag;
     app-region: no-drag;
   }
-  
+
   .content-below-titlebar {
     margin-top: env(titlebar-area-height, 33px);
   }
@@ -976,7 +979,7 @@ body {
     min-width: 44px;
     min-height: 44px;
   }
-  
+
   .touch-target-lg {
     min-width: 48px;
     min-height: 48px;

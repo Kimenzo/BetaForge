@@ -100,7 +100,14 @@ async function apiFetch<T>(
   options: RequestInit = {},
   apiOptions: UseApiOptions = {}
 ): Promise<ApiResult<T>> {
-  const { retry = true, retryCount = 3, retryDelay = 1000, cache = false, cacheTTL = 60, dedupe = true } = apiOptions;
+  const {
+    retry = true,
+    retryCount = 3,
+    retryDelay = 1000,
+    cache = false,
+    cacheTTL = 60,
+    dedupe = true,
+  } = apiOptions;
 
   const cacheKey = getCacheKey(url, options);
 
@@ -169,7 +176,8 @@ async function apiFetch<T>(
         success: false,
         error: {
           code: "NETWORK_ERROR",
-          message: error instanceof Error ? error.message : "Network request failed",
+          message:
+            error instanceof Error ? error.message : "Network request failed",
           timestamp: new Date().toISOString(),
         },
       };
@@ -205,50 +213,53 @@ export function useApi<T>(
 
   const abortControllerRef = useRef<AbortController | null>(null);
 
-  const execute = useCallback(async (overrideOptions?: RequestInit) => {
-    // Abort previous request
-    if (abortControllerRef.current) {
-      abortControllerRef.current.abort();
-    }
-    abortControllerRef.current = new AbortController();
+  const execute = useCallback(
+    async (overrideOptions?: RequestInit) => {
+      // Abort previous request
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+      abortControllerRef.current = new AbortController();
 
-    setState((prev) => ({
-      ...prev,
-      isLoading: true,
-      isError: false,
-      isSuccess: false,
-    }));
-
-    const result = await apiFetch<T>(
-      url,
-      {
-        ...options,
-        ...overrideOptions,
-        signal: abortControllerRef.current.signal,
-      },
-      apiOptions
-    );
-
-    if (result.success) {
-      setState({
-        data: result.data,
-        error: null,
-        isLoading: false,
+      setState((prev) => ({
+        ...prev,
+        isLoading: true,
         isError: false,
-        isSuccess: true,
-      });
-      return result.data;
-    } else {
-      setState({
-        data: null,
-        error: result.error,
-        isLoading: false,
-        isError: true,
         isSuccess: false,
-      });
-      return null;
-    }
-  }, [url, options, apiOptions]);
+      }));
+
+      const result = await apiFetch<T>(
+        url,
+        {
+          ...options,
+          ...overrideOptions,
+          signal: abortControllerRef.current.signal,
+        },
+        apiOptions
+      );
+
+      if (result.success) {
+        setState({
+          data: result.data,
+          error: null,
+          isLoading: false,
+          isError: false,
+          isSuccess: true,
+        });
+        return result.data;
+      } else {
+        setState({
+          data: null,
+          error: result.error,
+          isLoading: false,
+          isError: true,
+          isSuccess: false,
+        });
+        return null;
+      }
+    },
+    [url, options, apiOptions]
+  );
 
   const reset = useCallback(() => {
     setState({
@@ -279,10 +290,7 @@ export function useApi<T>(
 // Convenience Hooks
 // ============================================================================
 
-export function useApiQuery<T>(
-  url: string,
-  options: UseApiOptions = {}
-) {
+export function useApiQuery<T>(url: string, options: UseApiOptions = {}) {
   const { execute, ...state } = useApi<T>(url, { method: "GET" }, options);
 
   // Auto-fetch on mount
@@ -354,12 +362,14 @@ export function useApiMutation<TInput, TOutput>(
 // ============================================================================
 
 export const api = {
-  get: <T>(url: string, options?: UseApiOptions) => apiFetch<T>(url, { method: "GET" }, options),
+  get: <T>(url: string, options?: UseApiOptions) =>
+    apiFetch<T>(url, { method: "GET" }, options),
   post: <T>(url: string, data?: unknown, options?: UseApiOptions) =>
     apiFetch<T>(url, { method: "POST", body: JSON.stringify(data) }, options),
   put: <T>(url: string, data?: unknown, options?: UseApiOptions) =>
     apiFetch<T>(url, { method: "PUT", body: JSON.stringify(data) }, options),
   patch: <T>(url: string, data?: unknown, options?: UseApiOptions) =>
     apiFetch<T>(url, { method: "PATCH", body: JSON.stringify(data) }, options),
-  delete: <T>(url: string, options?: UseApiOptions) => apiFetch<T>(url, { method: "DELETE" }, options),
+  delete: <T>(url: string, options?: UseApiOptions) =>
+    apiFetch<T>(url, { method: "DELETE" }, options),
 };

@@ -131,14 +131,16 @@ export const SPRING_PRESETS: Record<string, SpringConfig> = {
 /**
  * Create spring animation timing
  */
-export function createSpring(preset: keyof typeof SPRING_PRESETS | SpringConfig): string {
+export function createSpring(
+  preset: keyof typeof SPRING_PRESETS | SpringConfig
+): string {
   const config = typeof preset === "string" ? SPRING_PRESETS[preset] : preset;
-  
+
   // Convert spring physics to cubic-bezier approximation
   // This is a simplified conversion - for true springs, use a physics library
   const { stiffness, damping } = config;
   const dampingRatio = damping / (2 * Math.sqrt(stiffness));
-  
+
   if (dampingRatio >= 1) {
     // Overdamped - use ease-out
     return "cubic-bezier(0.16, 1, 0.3, 1)";

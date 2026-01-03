@@ -6,7 +6,12 @@
 
 import { NextResponse } from "next/server";
 import { ZodError, ZodSchema } from "zod";
-import { AppError, ErrorCode, toAppError, type SerializedError } from "./errors";
+import {
+  AppError,
+  ErrorCode,
+  toAppError,
+  type SerializedError,
+} from "./errors";
 import { logger, type LogContext } from "./logger";
 
 // ============================================================================
@@ -68,7 +73,9 @@ export interface RequestContext extends LogContext {
  * Generate a unique request ID
  */
 export function generateRequestId(): string {
-  return `req_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 9)}`;
+  return `req_${Date.now().toString(36)}_${Math.random()
+    .toString(36)
+    .slice(2, 9)}`;
 }
 
 /**
@@ -80,7 +87,10 @@ export function createRequestContext(request: Request): RequestContext {
     requestId: generateRequestId(),
     traceId: request.headers.get("x-trace-id") || generateRequestId(),
     startTime: performance.now(),
-    ip: request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || undefined,
+    ip:
+      request.headers.get("x-forwarded-for") ||
+      request.headers.get("x-real-ip") ||
+      undefined,
     userAgent: request.headers.get("user-agent") || undefined,
     method: request.method,
     path: url.pathname,
@@ -94,7 +104,11 @@ export function createRequestContext(request: Request): RequestContext {
 /**
  * Create a success response
  */
-export function success<T>(data: T, meta?: ResponseMeta, status = 200): NextResponse<ApiSuccessResponse<T>> {
+export function success<T>(
+  data: T,
+  meta?: ResponseMeta,
+  status = 200
+): NextResponse<ApiSuccessResponse<T>> {
   const response: ApiSuccessResponse<T> = {
     success: true,
     data,
@@ -107,7 +121,10 @@ export function success<T>(data: T, meta?: ResponseMeta, status = 200): NextResp
 /**
  * Create a created (201) response
  */
-export function created<T>(data: T, meta?: ResponseMeta): NextResponse<ApiSuccessResponse<T>> {
+export function created<T>(
+  data: T,
+  meta?: ResponseMeta
+): NextResponse<ApiSuccessResponse<T>> {
   return success(data, meta, 201);
 }
 
@@ -121,20 +138,32 @@ export function noContent(): NextResponse {
 /**
  * Create an error response
  */
-export function error(appError: AppError, ctx?: RequestContext): NextResponse<ApiErrorResponse> {
+export function error(
+  appError: AppError,
+  ctx?: RequestContext
+): NextResponse<ApiErrorResponse> {
   const serialized = appError.serialize(appError.isOperational);
-  
+
   if (ctx) {
     serialized.requestId = ctx.requestId;
   }
 
   // Log the error
-  const log = ctx ? logger.child({ traceId: ctx.traceId, requestId: ctx.requestId }) : logger;
-  
+  const log = ctx
+    ? logger.child({ traceId: ctx.traceId, requestId: ctx.requestId })
+    : logger;
+
   if (appError.statusCode >= 500) {
-    log.error(`API Error: ${appError.message}`, appError, appError.context.metadata as Record<string, unknown>);
+    log.error(
+      `API Error: ${appError.message}`,
+      appError,
+      appError.context.metadata as Record<string, unknown>
+    );
   } else {
-    log.warn(`API Error: ${appError.message}`, { code: appError.code, statusCode: appError.statusCode });
+    log.warn(`API Error: ${appError.message}`, {
+      code: appError.code,
+      statusCode: appError.statusCode,
+    });
   }
 
   const response: ApiErrorResponse = {
@@ -146,7 +175,9 @@ export function error(appError: AppError, ctx?: RequestContext): NextResponse<Ap
 
   // Add rate limit headers if applicable
   if (appError.code === ErrorCode.RATE_LIMITED && "retryAfter" in appError) {
-    headers["Retry-After"] = String((appError as { retryAfter: number }).retryAfter);
+    headers["Retry-After"] = String(
+      (appError as { retryAfter: number }).retryAfter
+    );
   }
 
   return NextResponse.json(response, { status: appError.statusCode, headers });
@@ -155,7 +186,10 @@ export function error(appError: AppError, ctx?: RequestContext): NextResponse<Ap
 /**
  * Handle unknown errors and convert to proper response
  */
-export function handleError(err: unknown, ctx?: RequestContext): NextResponse<ApiErrorResponse> {
+export function handleError(
+  err: unknown,
+  ctx?: RequestContext
+): NextResponse<ApiErrorResponse> {
   const appError = toAppError(err, { requestId: ctx?.requestId });
   return error(appError, ctx);
 }
@@ -163,7 +197,10 @@ export function handleError(err: unknown, ctx?: RequestContext): NextResponse<Ap
 /**
  * Handle Zod validation errors
  */
-export function handleValidationError(zodError: ZodError, ctx?: RequestContext): NextResponse<ApiErrorResponse> {
+export function handleValidationError(
+  zodError: ZodError,
+  ctx?: RequestContext
+): NextResponse<ApiErrorResponse> {
   const issues = zodError.issues.map((e) => ({
     field: e.path.join("."),
     message: e.message,
@@ -192,7 +229,10 @@ export async function parseBody<T>(
   request: Request,
   schema: ZodSchema<T>,
   ctx?: RequestContext
-): Promise<{ data: T; error?: never } | { data?: never; error: NextResponse<ApiErrorResponse> }> {
+): Promise<
+  | { data: T; error?: never }
+  | { data?: never; error: NextResponse<ApiErrorResponse> }
+> {
   try {
     const body = await request.json();
     const result = schema.safeParse(body);
@@ -222,7 +262,9 @@ export function parseQuery<T>(
   request: Request,
   schema: ZodSchema<T>,
   ctx?: RequestContext
-): { data: T; error?: never } | { data?: never; error: NextResponse<ApiErrorResponse> } {
+):
+  | { data: T; error?: never }
+  | { data?: never; error: NextResponse<ApiErrorResponse> } {
   const url = new URL(request.url);
   const params = Object.fromEntries(url.searchParams.entries());
   const result = schema.safeParse(params);
@@ -241,7 +283,9 @@ export function parseParams<T>(
   params: Record<string, string>,
   schema: ZodSchema<T>,
   ctx?: RequestContext
-): { data: T; error?: never } | { data?: never; error: NextResponse<ApiErrorResponse> } {
+):
+  | { data: T; error?: never }
+  | { data?: never; error: NextResponse<ApiErrorResponse> } {
   const result = schema.safeParse(params);
 
   if (!result.success) {
@@ -286,7 +330,11 @@ export function withStandardHeaders(
  */
 export function withCacheHeaders(
   response: NextResponse,
-  options: { maxAge?: number; staleWhileRevalidate?: number; private?: boolean } = {}
+  options: {
+    maxAge?: number;
+    staleWhileRevalidate?: number;
+    private?: boolean;
+  } = {}
 ): NextResponse {
   const directives: string[] = [];
 

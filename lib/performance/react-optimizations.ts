@@ -31,9 +31,10 @@ export function memoWithDeepCompare<P extends object>(
   const MemoizedComponent = memo(Component, (prevProps, nextProps) => {
     return JSON.stringify(prevProps) === JSON.stringify(nextProps);
   });
-  
-  MemoizedComponent.displayName = displayName || `Memo(${Component.displayName || Component.name})`;
-  
+
+  MemoizedComponent.displayName =
+    displayName || `Memo(${Component.displayName || Component.name})`;
+
   return MemoizedComponent;
 }
 
@@ -54,7 +55,9 @@ export function createOptimizedContext<T>(
   const Provider: ComponentType<{ value: T; children: ReactNode }> = memo(
     ({ value, children }) => {
       const memoizedValue = useMemo(() => value, [JSON.stringify(value)]);
-      return <Context.Provider value={memoizedValue}>{children}</Context.Provider>;
+      return (
+        <Context.Provider value={memoizedValue}>{children}</Context.Provider>
+      );
     }
   );
 

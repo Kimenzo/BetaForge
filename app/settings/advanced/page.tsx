@@ -239,7 +239,9 @@ export default function AdvancedSettingsPage() {
           <div className="flex items-center gap-3">
             <Zap className="w-5 h-5 text-neural-bright" />
             <div>
-              <h3 className="text-lg font-semibold text-white">Beta Features</h3>
+              <h3 className="text-lg font-semibold text-white">
+                Beta Features
+              </h3>
               <p className="text-sm text-phantom-gray">
                 Try experimental features before they're released
               </p>
@@ -305,7 +307,9 @@ export default function AdvancedSettingsPage() {
       <section className="p-6 rounded-2xl bg-plasma-pink/5 border border-plasma-pink/20 animate-fade-in-up stagger-5">
         <div className="flex items-center gap-3 mb-6">
           <AlertTriangle className="w-5 h-5 text-plasma-pink" />
-          <h3 className="text-lg font-semibold text-plasma-pink">Danger Zone</h3>
+          <h3 className="text-lg font-semibold text-plasma-pink">
+            Danger Zone
+          </h3>
         </div>
 
         <div className="p-4 rounded-xl bg-plasma-pink/5 border border-plasma-pink/20">
@@ -336,55 +340,55 @@ export default function AdvancedSettingsPage() {
             onClick={() => setShowDeleteModal(false)}
           />
           <div className="fixed inset-0 flex items-center justify-center p-4 pointer-events-none">
-          <div className="relative w-full max-w-md p-6 bg-void-elevated rounded-2xl border border-white/10 pointer-events-auto">
-            <div className="w-12 h-12 rounded-xl bg-plasma-pink/20 flex items-center justify-center mb-4">
-              <AlertTriangle className="w-6 h-6 text-plasma-pink" />
+            <div className="relative w-full max-w-md p-6 bg-void-elevated rounded-2xl border border-white/10 pointer-events-auto">
+              <div className="w-12 h-12 rounded-xl bg-plasma-pink/20 flex items-center justify-center mb-4">
+                <AlertTriangle className="w-6 h-6 text-plasma-pink" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">
+                Delete Workspace?
+              </h3>
+              <p className="text-phantom-gray mb-4">
+                This will permanently delete your workspace, including:
+              </p>
+              <ul className="text-sm text-phantom-gray mb-4 space-y-1">
+                <li>• All projects and test sessions</li>
+                <li>• All bug reports and analytics data</li>
+                <li>• All API keys and integrations</li>
+                <li>• All team members will lose access</li>
+              </ul>
+              <p className="text-sm text-phantom-gray mb-4">
+                Type{" "}
+                <span className="text-plasma-pink font-medium">
+                  delete my workspace
+                </span>{" "}
+                to confirm:
+              </p>
+              <input
+                type="text"
+                value={deleteConfirmText}
+                onChange={(e) => setDeleteConfirmText(e.target.value)}
+                placeholder="delete my workspace"
+                className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white mb-6 focus:outline-none focus:border-plasma-pink transition-all"
+              />
+              <div className="flex gap-3">
+                <button
+                  onClick={() => {
+                    setShowDeleteModal(false);
+                    setDeleteConfirmText("");
+                  }}
+                  className="flex-1 py-3 rounded-xl border border-white/10 text-white font-medium hover:bg-white/5 transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleDeleteWorkspace}
+                  disabled={deleteConfirmText !== "delete my workspace"}
+                  className="flex-1 py-3 rounded-xl bg-plasma-pink text-white font-medium hover:bg-plasma-pink/80 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Delete Permanently
+                </button>
+              </div>
             </div>
-            <h3 className="text-xl font-bold text-white mb-2">
-              Delete Workspace?
-            </h3>
-            <p className="text-phantom-gray mb-4">
-              This will permanently delete your workspace, including:
-            </p>
-            <ul className="text-sm text-phantom-gray mb-4 space-y-1">
-              <li>• All projects and test sessions</li>
-              <li>• All bug reports and analytics data</li>
-              <li>• All API keys and integrations</li>
-              <li>• All team members will lose access</li>
-            </ul>
-            <p className="text-sm text-phantom-gray mb-4">
-              Type{" "}
-              <span className="text-plasma-pink font-medium">
-                delete my workspace
-              </span>{" "}
-              to confirm:
-            </p>
-            <input
-              type="text"
-              value={deleteConfirmText}
-              onChange={(e) => setDeleteConfirmText(e.target.value)}
-              placeholder="delete my workspace"
-              className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white mb-6 focus:outline-none focus:border-plasma-pink transition-all"
-            />
-            <div className="flex gap-3">
-              <button
-                onClick={() => {
-                  setShowDeleteModal(false);
-                  setDeleteConfirmText("");
-                }}
-                className="flex-1 py-3 rounded-xl border border-white/10 text-white font-medium hover:bg-white/5 transition-all"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleDeleteWorkspace}
-                disabled={deleteConfirmText !== "delete my workspace"}
-                className="flex-1 py-3 rounded-xl bg-plasma-pink text-white font-medium hover:bg-plasma-pink/80 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Delete Permanently
-              </button>
-            </div>
-          </div>
           </div>
         </div>
       )}

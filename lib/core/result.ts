@@ -54,8 +54,8 @@ export function ok<T>(value: T): Ok<T> {
   return {
     ok: true,
     value,
-    isOk: () => true,
-    isErr: () => false,
+    isOk(): this is Ok<T> { return true; },
+    isErr(): this is Err<never> { return false; },
     unwrap: () => value,
     unwrapOr: () => value,
     map: <U>(fn: (v: T) => U) => ok(fn(value)),
@@ -71,8 +71,8 @@ export function err<E>(error: E): Err<E> {
   return {
     ok: false,
     error,
-    isOk: () => false,
-    isErr: () => true,
+    isOk(): this is Ok<never> { return false; },
+    isErr(): this is Err<E> { return true; },
     unwrap: () => {
       throw error;
     },

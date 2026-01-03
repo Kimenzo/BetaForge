@@ -6,10 +6,11 @@ import { NextResponse } from "next/server";
 export async function GET() {
   return NextResponse.json(
     {
-      message: "Auth provider not configured. Please set up your preferred authentication solution.",
+      message:
+        "Auth provider not configured. Please set up your preferred authentication solution.",
       suggestions: [
         "Clerk (clerk.com)",
-        "NextAuth.js (next-auth.js.org)", 
+        "NextAuth.js (next-auth.js.org)",
         "Auth0 (auth0.com)",
         "Supabase Auth (supabase.com/auth)",
       ],

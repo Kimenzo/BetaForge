@@ -5,7 +5,14 @@
 
 "use client";
 
-import { useState, useEffect, useCallback, useRef, useMemo, useTransition } from "react";
+import {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  useMemo,
+  useTransition,
+} from "react";
 import { RequestCache, createCacheKey } from "@/lib/performance/cache";
 
 interface FetchState<T> {
@@ -56,7 +63,9 @@ export function useOptimizedFetch<T>(
   const cacheKey = url ? createCacheKey(url) : null;
 
   const [state, setState] = useState<FetchState<T>>(() => ({
-    data: (opts.initialData as T) ?? (cacheKey ? RequestCache.get<T>(cacheKey) : undefined),
+    data:
+      (opts.initialData as T) ??
+      (cacheKey ? RequestCache.get<T>(cacheKey) : undefined),
     error: undefined,
     isLoading: !opts.initialData && !RequestCache.get(cacheKey ?? ""),
     isValidating: false,
@@ -66,73 +75,79 @@ export function useOptimizedFetch<T>(
   const mountedRef = useRef(true);
   const lastFetchRef = useRef<number>(0);
 
-  const fetchData = useCallback(async (isRevalidation = false) => {
-    if (!url || !cacheKey) return;
+  const fetchData = useCallback(
+    async (isRevalidation = false) => {
+      if (!url || !cacheKey) return;
 
-    // Dedupe check
-    const now = Date.now();
-    if (now - lastFetchRef.current < opts.dedupingInterval) {
-      return;
-    }
-    lastFetchRef.current = now;
+      // Dedupe check
+      const now = Date.now();
+      if (now - lastFetchRef.current < opts.dedupingInterval) {
+        return;
+      }
+      lastFetchRef.current = now;
 
-    // Set loading/validating state
-    if (!isRevalidation) {
-      setState((prev) => ({ ...prev, isLoading: true }));
-    } else {
-      setState((prev) => ({ ...prev, isValidating: true }));
-    }
+      // Set loading/validating state
+      if (!isRevalidation) {
+        setState((prev) => ({ ...prev, isLoading: true }));
+      } else {
+        setState((prev) => ({ ...prev, isValidating: true }));
+      }
 
-    try {
-      const response = await fetch(url);
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const data = await response.json();
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const data = await response.json();
 
-      // Cache the result
-      RequestCache.set(cacheKey, data, opts.ttl);
+        // Cache the result
+        RequestCache.set(cacheKey, data, opts.ttl);
 
-      // Update state with transition for smooth UI
-      if (mountedRef.current) {
-        startTransition(() => {
-          setState({
-            data,
-            error: undefined,
+        // Update state with transition for smooth UI
+        if (mountedRef.current) {
+          startTransition(() => {
+            setState({
+              data,
+              error: undefined,
+              isLoading: false,
+              isValidating: false,
+            });
+          });
+        }
+      } catch (error) {
+        if (mountedRef.current) {
+          setState((prev) => ({
+            ...prev,
+            error: error instanceof Error ? error : new Error("Unknown error"),
             isLoading: false,
             isValidating: false,
-          });
-        });
+          }));
+        }
       }
-    } catch (error) {
-      if (mountedRef.current) {
-        setState((prev) => ({
-          ...prev,
-          error: error instanceof Error ? error : new Error("Unknown error"),
-          isLoading: false,
-          isValidating: false,
-        }));
-      }
-    }
-  }, [url, cacheKey, opts.ttl, opts.dedupingInterval]);
+    },
+    [url, cacheKey, opts.ttl, opts.dedupingInterval]
+  );
 
   const revalidate = useCallback(async () => {
     await fetchData(true);
   }, [fetchData]);
 
-  const mutate = useCallback(async (newData?: T) => {
-    if (!cacheKey) return;
-    
-    if (newData !== undefined) {
-      RequestCache.set(cacheKey, newData, opts.ttl);
-      setState((prev) => ({ ...prev, data: newData }));
-    } else {
-      await revalidate();
-    }
-  }, [cacheKey, opts.ttl, revalidate]);
+  const mutate = useCallback(
+    async (newData?: T) => {
+      if (!cacheKey) return;
+
+      if (newData !== undefined) {
+        RequestCache.set(cacheKey, newData, opts.ttl);
+        setState((prev) => ({ ...prev, data: newData }));
+      } else {
+        await revalidate();
+      }
+    },
+    [cacheKey, opts.ttl, revalidate]
+  );
 
   // Initial fetch
   useEffect(() => {
     mountedRef.current = true;
-    
+
     if (opts.revalidateOnMount) {
       fetchData();
     }
@@ -202,7 +217,11 @@ export function useOptimizedPagination<T>(
   const [page, setPage] = useState(1);
 
   const url = `${baseUrl}?page=${page}&limit=${pageSize}`;
-  const result = useOptimizedFetch<{ data: T[]; total: number; hasMore: boolean }>(url, fetchOptions);
+  const result = useOptimizedFetch<{
+    data: T[];
+    total: number;
+    hasMore: boolean;
+  }>(url, fetchOptions);
 
   const nextPage = useCallback(() => {
     setPage((p) => p + 1);
@@ -240,12 +259,12 @@ export function useOptimizedInfiniteScroll<T>(
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-  
+
   const url = page === 1 ? `${baseUrl}?page=1&limit=${pageSize}` : null;
-  const { data, isLoading, error, revalidate } = useOptimizedFetch<{ data: T[]; hasMore: boolean }>(
-    url,
-    fetchOptions
-  );
+  const { data, isLoading, error, revalidate } = useOptimizedFetch<{
+    data: T[];
+    hasMore: boolean;
+  }>(url, fetchOptions);
 
   // Initialize first page
   useEffect(() => {
@@ -257,13 +276,15 @@ export function useOptimizedInfiniteScroll<T>(
 
   const loadMore = useCallback(async () => {
     if (isLoadingMore || !hasMore) return;
-    
+
     setIsLoadingMore(true);
     try {
       const nextPage = page + 1;
-      const response = await fetch(`${baseUrl}?page=${nextPage}&limit=${pageSize}`);
+      const response = await fetch(
+        `${baseUrl}?page=${nextPage}&limit=${pageSize}`
+      );
       const result = await response.json();
-      
+
       setPages((prev) => [...prev, result.data]);
       setPage(nextPage);
       setHasMore(result.hasMore);

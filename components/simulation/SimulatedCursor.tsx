@@ -2,7 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { Position, CursorStyle, SimulationActionType } from "@/lib/simulation/types";
+import type {
+  Position,
+  CursorStyle,
+  SimulationActionType,
+} from "@/lib/simulation/types";
 
 interface SimulatedCursorProps {
   position: Position;
@@ -23,7 +27,9 @@ export function SimulatedCursor({
   color = "#8B5CF6",
   agentName,
 }: SimulatedCursorProps) {
-  const [clickRipples, setClickRipples] = useState<{ id: number; x: number; y: number }[]>([]);
+  const [clickRipples, setClickRipples] = useState<
+    { id: number; x: number; y: number }[]
+  >([]);
   const rippleIdRef = useRef(0);
 
   // Add click ripple effect
@@ -124,14 +130,42 @@ export function SimulatedCursor({
                     stroke="white"
                     strokeWidth="1.5"
                   />
-                  <circle cx="14" cy="14" r="3" fill={color} stroke="white" strokeWidth="1" />
+                  <circle
+                    cx="14"
+                    cy="14"
+                    r="3"
+                    fill={color}
+                    stroke="white"
+                    strokeWidth="1"
+                  />
                 </g>
               ) : cursorType === "text" ? (
                 // I-beam text cursor
                 <g>
-                  <line x1="12" y1="4" x2="12" y2="20" stroke={color} strokeWidth="2" />
-                  <line x1="8" y1="4" x2="16" y2="4" stroke={color} strokeWidth="2" />
-                  <line x1="8" y1="20" x2="16" y2="20" stroke={color} strokeWidth="2" />
+                  <line
+                    x1="12"
+                    y1="4"
+                    x2="12"
+                    y2="20"
+                    stroke={color}
+                    strokeWidth="2"
+                  />
+                  <line
+                    x1="8"
+                    y1="4"
+                    x2="16"
+                    y2="4"
+                    stroke={color}
+                    strokeWidth="2"
+                  />
+                  <line
+                    x1="8"
+                    y1="20"
+                    x2="16"
+                    y2="20"
+                    stroke={color}
+                    strokeWidth="2"
+                  />
                 </g>
               ) : cursorType === "grab" || cursorType === "grabbing" ? (
                 // Hand cursor

@@ -124,9 +124,16 @@ export abstract class BaseRepository<
   /**
    * Find all entities with pagination
    */
-  async findAll(options: QueryOptions = {}): Promise<Result<PaginatedResult<TEntity>, AppError>> {
+  async findAll(
+    options: QueryOptions = {}
+  ): Promise<Result<PaginatedResult<TEntity>, AppError>> {
     const timer = this.log.startTimer(`${this.tableName}.findAll`);
-    const { page = 1, limit = 20, sortBy = "created_at", sortOrder = "desc" } = options;
+    const {
+      page = 1,
+      limit = 20,
+      sortBy = "created_at",
+      sortOrder = "desc",
+    } = options;
     const offset = (page - 1) * limit;
 
     try {
@@ -155,7 +162,9 @@ export abstract class BaseRepository<
         return err(Errors.supabase(error.message));
       }
 
-      const items = (data || []).map((row: Record<string, unknown>) => this.toEntity(row));
+      const items = (data || []).map((row: Record<string, unknown>) =>
+        this.toEntity(row)
+      );
       const total = count || 0;
 
       return ok({
@@ -264,7 +273,7 @@ export abstract class BaseRepository<
    * Check if entity exists
    */
   async exists(id: string): Promise<Result<boolean, AppError>> {
-    const result = await tryCatch(
+    const result = await tryCatch<boolean, AppError>(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (this.db as any)
         .from(this.tableName)

@@ -73,7 +73,10 @@ export async function POST(request: NextRequest) {
     });
 
     // Flush if buffer is large or enough time has passed
-    if (metricsBuffer.length >= 100 || Date.now() - lastFlush > FLUSH_INTERVAL) {
+    if (
+      metricsBuffer.length >= 100 ||
+      Date.now() - lastFlush > FLUSH_INTERVAL
+    ) {
       await flushMetrics();
     }
 
@@ -103,7 +106,9 @@ export async function GET(request: NextRequest) {
       acc[m.metric] = { avg: 0, count: 0, good: 0, poor: 0 };
     }
     acc[m.metric].count += 1;
-    acc[m.metric].avg = (acc[m.metric].avg * (acc[m.metric].count - 1) + m.value) / acc[m.metric].count;
+    acc[m.metric].avg =
+      (acc[m.metric].avg * (acc[m.metric].count - 1) + m.value) /
+      acc[m.metric].count;
     if (m.rating === "good") acc[m.metric].good += 1;
     if (m.rating === "poor") acc[m.metric].poor += 1;
     return acc;

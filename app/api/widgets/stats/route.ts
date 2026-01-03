@@ -22,17 +22,14 @@ export async function GET() {
         .select("id, severity")
         .order("created_at", { ascending: false })
         .limit(20),
-      supabase
-        .from("projects")
-        .select("id, status")
-        .eq("status", "active"),
+      supabase.from("projects").select("id, status").eq("status", "active"),
     ]);
 
     const runningSessions =
       sessionsResult.data?.filter((s) => s.status === "running").length || 0;
     const completedToday =
       sessionsResult.data?.filter((s) => s.status === "completed").length || 0;
-    
+
     const criticalBugs =
       bugsResult.data?.filter((b) => b.severity === "critical").length || 0;
     const highBugs =

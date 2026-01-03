@@ -191,22 +191,22 @@ export default function PricingPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [checkoutModal, setCheckoutModal] = useState<{
     isOpen: boolean;
-    plan: typeof plans[0] | null;
+    plan: (typeof plans)[0] | null;
   }>({ isOpen: false, plan: null });
 
-  const handlePlanSelect = (plan: typeof plans[0]) => {
+  const handlePlanSelect = (plan: (typeof plans)[0]) => {
     // Enterprise plans go to contact
     if (plan.name === "Enterprise") {
       window.location.href = "/contact?type=enterprise";
       return;
     }
-    
+
     // Free plans go directly to signup
     if (plan.price.monthly === 0) {
       window.location.href = "/signup?plan=free";
       return;
     }
-    
+
     // Open checkout modal for paid plans
     setCheckoutModal({ isOpen: true, plan });
   };
@@ -221,7 +221,10 @@ export default function PricingPage() {
           plan={{
             id: checkoutModal.plan.name.toLowerCase(),
             name: checkoutModal.plan.name,
-            price: checkoutModal.plan.price as { monthly: number; yearly: number },
+            price: checkoutModal.plan.price as {
+              monthly: number;
+              yearly: number;
+            },
             description: checkoutModal.plan.description,
           }}
           billingInterval={isYearly ? "yearly" : "monthly"}
@@ -361,9 +364,7 @@ export default function PricingPage() {
                       </p>
                     )}
                   {plan.price.monthly !== null && plan.price.monthly > 0 && (
-                    <p className="text-xs text-mist-gray mt-1">
-                      excl. VAT/tax
-                    </p>
+                    <p className="text-xs text-mist-gray mt-1">excl. VAT/tax</p>
                   )}
                 </div>
 
@@ -400,12 +401,13 @@ export default function PricingPage() {
               </div>
             ))}
           </div>
-          
+
           {/* VAT/Tax Notice */}
           <div className="mt-8 text-center">
             <p className="text-sm text-mist-gray flex items-center justify-center gap-2">
               <Globe className="w-4 h-4" />
-              Prices shown are exclusive of VAT/taxes. Applicable taxes will be calculated at checkout based on your location.
+              Prices shown are exclusive of VAT/taxes. Applicable taxes will be
+              calculated at checkout based on your location.
             </p>
           </div>
         </div>

@@ -7,7 +7,14 @@
 
 import Link, { LinkProps } from "next/link";
 import { useRouter } from "next/navigation";
-import { forwardRef, useCallback, useRef, memo, type ReactNode, type MouseEvent } from "react";
+import {
+  forwardRef,
+  useCallback,
+  useRef,
+  memo,
+  type ReactNode,
+  type MouseEvent,
+} from "react";
 import { cn } from "@/lib/utils";
 import { prefetchRoute } from "@/lib/performance/preload";
 
@@ -114,10 +121,13 @@ export const PrefetchLink = memo(
  * Navigation link with active state
  */
 export const NavLink = memo(
-  forwardRef<HTMLAnchorElement, PrefetchLinkProps & { 
-    isActive?: boolean;
-    activeClassName?: string;
-  }>(function NavLink(
+  forwardRef<
+    HTMLAnchorElement,
+    PrefetchLinkProps & {
+      isActive?: boolean;
+      activeClassName?: string;
+    }
+  >(function NavLink(
     {
       children,
       className,
@@ -132,7 +142,9 @@ export const NavLink = memo(
         ref={ref}
         className={cn(
           "transition-colors duration-200",
-          isActive ? activeClassName : "text-phantom-gray hover:text-ghost-white",
+          isActive
+            ? activeClassName
+            : "text-phantom-gray hover:text-ghost-white",
           className
         )}
         {...props}
@@ -147,22 +159,21 @@ export const NavLink = memo(
  * Button link - styled like a button but is a link
  */
 export const ButtonLink = memo(
-  forwardRef<HTMLAnchorElement, PrefetchLinkProps & {
-    variant?: "primary" | "secondary" | "ghost";
-    size?: "sm" | "md" | "lg";
-  }>(function ButtonLink(
-    {
-      children,
-      className,
-      variant = "primary",
-      size = "md",
-      ...props
-    },
+  forwardRef<
+    HTMLAnchorElement,
+    PrefetchLinkProps & {
+      variant?: "primary" | "secondary" | "ghost";
+      size?: "sm" | "md" | "lg";
+    }
+  >(function ButtonLink(
+    { children, className, variant = "primary", size = "md", ...props },
     ref
   ) {
     const variants = {
-      primary: "bg-gradient-to-r from-neural to-neural-dim text-white hover:shadow-glow",
-      secondary: "bg-void-elevated text-ghost-white border border-white/10 hover:border-neural/30",
+      primary:
+        "bg-gradient-to-r from-neural to-neural-dim text-white hover:shadow-glow",
+      secondary:
+        "bg-void-elevated text-ghost-white border border-white/10 hover:border-neural/30",
       ghost: "text-phantom-gray hover:text-ghost-white hover:bg-white/5",
     };
 

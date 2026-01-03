@@ -217,7 +217,7 @@ export async function POST(request: NextRequest) {
         })
         .eq("id", session.id);
 
-      // Dispatch session.failed webhook event  
+      // Dispatch session.failed webhook event
       dispatchWebhookEvent(
         "session.failed",
         {
@@ -402,7 +402,7 @@ async function verifyIncomingWebhook(
   };
 
   const secret = secrets[source];
-  
+
   // If no secret configured, skip verification (development mode)
   if (!secret) {
     return true;
@@ -429,4 +429,3 @@ async function verifyIncomingWebhook(
       return false;
   }
 }
-

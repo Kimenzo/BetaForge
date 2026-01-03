@@ -6,7 +6,11 @@
 "use client";
 
 import { useEffect, useCallback, useRef } from "react";
-import { measureWebVitals, reportPerformance, type PerformanceReport } from "@/lib/performance/monitoring";
+import {
+  measureWebVitals,
+  reportPerformance,
+  type PerformanceReport,
+} from "@/lib/performance/monitoring";
 
 interface WebVitalsProps {
   /** Callback when a metric is measured */
@@ -28,27 +32,41 @@ export function WebVitals({
 }: WebVitalsProps) {
   const reportsRef = useRef<PerformanceReport[]>([]);
 
-  const handleReport = useCallback((report: PerformanceReport) => {
-    // Store report
-    reportsRef.current.push(report);
+  const handleReport = useCallback(
+    (report: PerformanceReport) => {
+      // Store report
+      reportsRef.current.push(report);
 
-    // Debug logging
-    if (debug) {
-      const emoji = report.rating === "good" ? "✅" : report.rating === "poor" ? "❌" : "⚠️";
-      console.log(
-        `%c${emoji} ${report.metric}: ${report.value.toFixed(2)}ms`,
-        `color: ${report.rating === "good" ? "#10B981" : report.rating === "poor" ? "#EF4444" : "#F59E0B"}`
-      );
-    }
+      // Debug logging
+      if (debug) {
+        const emoji =
+          report.rating === "good"
+            ? "✅"
+            : report.rating === "poor"
+            ? "❌"
+            : "⚠️";
+        console.log(
+          `%c${emoji} ${report.metric}: ${report.value.toFixed(2)}ms`,
+          `color: ${
+            report.rating === "good"
+              ? "#10B981"
+              : report.rating === "poor"
+              ? "#EF4444"
+              : "#F59E0B"
+          }`
+        );
+      }
 
-    // Send to analytics
-    if (sendToAnalytics) {
-      reportPerformance(report);
-    }
+      // Send to analytics
+      if (sendToAnalytics) {
+        reportPerformance(report);
+      }
 
-    // Custom callback
-    onReport?.(report);
-  }, [debug, sendToAnalytics, onReport]);
+      // Custom callback
+      onReport?.(report);
+    },
+    [debug, sendToAnalytics, onReport]
+  );
 
   useEffect(() => {
     // Start measuring Web Vitals

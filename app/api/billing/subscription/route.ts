@@ -72,7 +72,8 @@ export async function POST(request: Request) {
     };
 
     const planPrices = planPricing[planId as keyof typeof planPricing];
-    const amount = planPrices?.[billingInterval as keyof typeof planPrices] || 0;
+    const amount =
+      planPrices?.[billingInterval as keyof typeof planPrices] || 0;
 
     // Check if subscription exists
     const { data: existingSub } = await supabase
@@ -92,7 +93,9 @@ export async function POST(request: Request) {
     const subscriptionData = {
       user_id: users.id,
       provider: "dodo",
-      provider_subscription_id: `sub_${Date.now()}_${Math.random().toString(36).substring(7)}`,
+      provider_subscription_id: `sub_${Date.now()}_${Math.random()
+        .toString(36)
+        .substring(7)}`,
       plan_id: planId as string,
       status: "active",
       current_period_start: now.toISOString(),

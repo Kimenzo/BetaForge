@@ -6,38 +6,46 @@
 /**
  * Check if running in browser environment
  */
-const isBrowser = typeof window !== 'undefined' && typeof navigator !== 'undefined';
+const isBrowser =
+  typeof window !== "undefined" && typeof navigator !== "undefined";
 
 /**
  * PWA Feature Detection (SSR-safe)
  */
 export const pwaCapabilities = {
-  serviceWorker: isBrowser && 'serviceWorker' in navigator,
-  pushManager: isBrowser && 'PushManager' in window,
-  notifications: isBrowser && 'Notification' in window,
-  backgroundSync: isBrowser && 'sync' in (window.ServiceWorkerRegistration?.prototype || {}),
-  periodicSync: isBrowser && 'periodicSync' in (window.ServiceWorkerRegistration?.prototype || {}),
-  badging: isBrowser && 'setAppBadge' in navigator,
-  share: isBrowser && 'share' in navigator,
-  shareTarget: isBrowser && 'shareTarget' in navigator,
-  wakeLock: isBrowser && 'wakeLock' in navigator,
-  bluetooth: isBrowser && 'bluetooth' in navigator,
-  usb: isBrowser && 'usb' in navigator,
-  fileSystem: isBrowser && 'showOpenFilePicker' in window,
-  clipboard: isBrowser && 'clipboard' in navigator,
-  storage: isBrowser && 'storage' in navigator,
-  persistentStorage: isBrowser && 'persist' in (navigator.storage || {}),
-  indexedDB: isBrowser && 'indexedDB' in window,
-  caches: isBrowser && 'caches' in window,
-  credentials: isBrowser && 'credentials' in navigator,
-  payment: isBrowser && 'PaymentRequest' in window,
-  geolocation: isBrowser && 'geolocation' in navigator,
-  mediaDevices: isBrowser && 'mediaDevices' in navigator,
-  screenCapture: isBrowser && 'getDisplayMedia' in (navigator.mediaDevices || {}),
-  pictureInPicture: isBrowser && typeof document !== 'undefined' && 'pictureInPictureEnabled' in document,
-  windowControlsOverlay: isBrowser && 'windowControlsOverlay' in navigator,
-  launchHandler: isBrowser && 'launchQueue' in window,
-  protocol: isBrowser && 'registerProtocolHandler' in navigator,
+  serviceWorker: isBrowser && "serviceWorker" in navigator,
+  pushManager: isBrowser && "PushManager" in window,
+  notifications: isBrowser && "Notification" in window,
+  backgroundSync:
+    isBrowser && "sync" in (window.ServiceWorkerRegistration?.prototype || {}),
+  periodicSync:
+    isBrowser &&
+    "periodicSync" in (window.ServiceWorkerRegistration?.prototype || {}),
+  badging: isBrowser && "setAppBadge" in navigator,
+  share: isBrowser && "share" in navigator,
+  shareTarget: isBrowser && "shareTarget" in navigator,
+  wakeLock: isBrowser && "wakeLock" in navigator,
+  bluetooth: isBrowser && "bluetooth" in navigator,
+  usb: isBrowser && "usb" in navigator,
+  fileSystem: isBrowser && "showOpenFilePicker" in window,
+  clipboard: isBrowser && "clipboard" in navigator,
+  storage: isBrowser && "storage" in navigator,
+  persistentStorage: isBrowser && "persist" in (navigator.storage || {}),
+  indexedDB: isBrowser && "indexedDB" in window,
+  caches: isBrowser && "caches" in window,
+  credentials: isBrowser && "credentials" in navigator,
+  payment: isBrowser && "PaymentRequest" in window,
+  geolocation: isBrowser && "geolocation" in navigator,
+  mediaDevices: isBrowser && "mediaDevices" in navigator,
+  screenCapture:
+    isBrowser && "getDisplayMedia" in (navigator.mediaDevices || {}),
+  pictureInPicture:
+    isBrowser &&
+    typeof document !== "undefined" &&
+    "pictureInPictureEnabled" in document,
+  windowControlsOverlay: isBrowser && "windowControlsOverlay" in navigator,
+  launchHandler: isBrowser && "launchQueue" in window,
+  protocol: isBrowser && "registerProtocolHandler" in navigator,
 };
 
 /**
@@ -49,36 +57,36 @@ export class ServiceWorkerManager {
 
   async register(): Promise<ServiceWorkerRegistration | null> {
     if (!pwaCapabilities.serviceWorker) {
-      console.warn('[PWA] Service Worker not supported');
+      console.warn("[PWA] Service Worker not supported");
       return null;
     }
 
     try {
-      this.registration = await navigator.serviceWorker.register('/sw.js', {
-        scope: '/',
-        updateViaCache: 'none',
+      this.registration = await navigator.serviceWorker.register("/sw.js", {
+        scope: "/",
+        updateViaCache: "none",
       });
 
-      console.log('[PWA] Service Worker registered:', this.registration.scope);
+      console.log("[PWA] Service Worker registered:", this.registration.scope);
 
       // Check for updates on page load
-      this.registration.addEventListener('updatefound', () => {
+      this.registration.addEventListener("updatefound", () => {
         this.handleUpdate();
       });
 
       // Listen for controller changes (new SW activated)
-      navigator.serviceWorker.addEventListener('controllerchange', () => {
-        console.log('[PWA] New Service Worker activated');
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        console.log("[PWA] New Service Worker activated");
       });
 
       // Listen for messages from SW
-      navigator.serviceWorker.addEventListener('message', (event) => {
+      navigator.serviceWorker.addEventListener("message", (event) => {
         this.handleMessage(event.data);
       });
 
       return this.registration;
     } catch (error) {
-      console.error('[PWA] Service Worker registration failed:', error);
+      console.error("[PWA] Service Worker registration failed:", error);
       return null;
     }
   }
@@ -87,9 +95,12 @@ export class ServiceWorkerManager {
     const newWorker = this.registration?.installing;
     if (!newWorker) return;
 
-    newWorker.addEventListener('statechange', () => {
-      if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-        console.log('[PWA] New version available');
+    newWorker.addEventListener("statechange", () => {
+      if (
+        newWorker.state === "installed" &&
+        navigator.serviceWorker.controller
+      ) {
+        console.log("[PWA] New version available");
         this.updateCallback?.();
       }
     });
@@ -97,14 +108,16 @@ export class ServiceWorkerManager {
 
   private handleMessage(data: { type: string; [key: string]: unknown }) {
     switch (data.type) {
-      case 'SW_ACTIVATED':
-        console.log('[PWA] SW activated, version:', data.version);
+      case "SW_ACTIVATED":
+        console.log("[PWA] SW activated, version:", data.version);
         break;
-      case 'SHARE_TARGET':
-        window.dispatchEvent(new CustomEvent('pwa:share', { detail: data.data }));
+      case "SHARE_TARGET":
+        window.dispatchEvent(
+          new CustomEvent("pwa:share", { detail: data.data })
+        );
         break;
-      case 'NAVIGATE':
-        if (typeof data.url === 'string') {
+      case "NAVIGATE":
+        if (typeof data.url === "string") {
           window.location.href = data.url;
         }
         break;
@@ -122,7 +135,7 @@ export class ServiceWorkerManager {
   async skipWaiting(): Promise<void> {
     const waiting = this.registration?.waiting;
     if (waiting) {
-      waiting.postMessage({ type: 'SKIP_WAITING' });
+      waiting.postMessage({ type: "SKIP_WAITING" });
     }
   }
 
@@ -130,11 +143,10 @@ export class ServiceWorkerManager {
     return new Promise((resolve) => {
       const channel = new MessageChannel();
       channel.port1.onmessage = (event) => resolve(event.data?.version || null);
-      
-      navigator.serviceWorker.controller?.postMessage(
-        { type: 'GET_VERSION' },
-        [channel.port2]
-      );
+
+      navigator.serviceWorker.controller?.postMessage({ type: "GET_VERSION" }, [
+        channel.port2,
+      ]);
 
       setTimeout(() => resolve(null), 1000);
     });
@@ -143,12 +155,12 @@ export class ServiceWorkerManager {
   async clearCache(): Promise<boolean> {
     return new Promise((resolve) => {
       const channel = new MessageChannel();
-      channel.port1.onmessage = (event) => resolve(event.data?.success || false);
-      
-      navigator.serviceWorker.controller?.postMessage(
-        { type: 'CLEAR_CACHE' },
-        [channel.port2]
-      );
+      channel.port1.onmessage = (event) =>
+        resolve(event.data?.success || false);
+
+      navigator.serviceWorker.controller?.postMessage({ type: "CLEAR_CACHE" }, [
+        channel.port2,
+      ]);
 
       setTimeout(() => resolve(false), 5000);
     });
@@ -167,27 +179,27 @@ export class PushNotificationManager {
 
   async requestPermission(): Promise<NotificationPermission> {
     if (!pwaCapabilities.notifications) {
-      console.warn('[PWA] Notifications not supported');
-      return 'denied';
+      console.warn("[PWA] Notifications not supported");
+      return "denied";
     }
 
     const permission = await Notification.requestPermission();
-    console.log('[PWA] Notification permission:', permission);
+    console.log("[PWA] Notification permission:", permission);
     return permission;
   }
 
   async subscribe(vapidPublicKey: string): Promise<PushSubscription | null> {
     if (!this.registration || !pwaCapabilities.pushManager) {
-      console.warn('[PWA] Push not supported');
+      console.warn("[PWA] Push not supported");
       return null;
     }
 
     try {
       // Check existing subscription
       let subscription = await this.registration.pushManager.getSubscription();
-      
+
       if (subscription) {
-        console.log('[PWA] Existing push subscription found');
+        console.log("[PWA] Existing push subscription found");
         return subscription;
       }
 
@@ -197,10 +209,10 @@ export class PushNotificationManager {
         applicationServerKey: this.urlBase64ToUint8Array(vapidPublicKey),
       });
 
-      console.log('[PWA] Push subscription created');
+      console.log("[PWA] Push subscription created");
       return subscription;
     } catch (error) {
-      console.error('[PWA] Push subscription failed:', error);
+      console.error("[PWA] Push subscription failed:", error);
       return null;
     }
   }
@@ -209,15 +221,16 @@ export class PushNotificationManager {
     if (!this.registration) return false;
 
     try {
-      const subscription = await this.registration.pushManager.getSubscription();
+      const subscription =
+        await this.registration.pushManager.getSubscription();
       if (subscription) {
         await subscription.unsubscribe();
-        console.log('[PWA] Push unsubscribed');
+        console.log("[PWA] Push unsubscribed");
         return true;
       }
       return false;
     } catch (error) {
-      console.error('[PWA] Unsubscribe failed:', error);
+      console.error("[PWA] Unsubscribe failed:", error);
       return false;
     }
   }
@@ -228,10 +241,10 @@ export class PushNotificationManager {
   }
 
   private urlBase64ToUint8Array(base64String: string): Uint8Array {
-    const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
+    const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
     const base64 = (base64String + padding)
-      .replace(/-/g, '+')
-      .replace(/_/g, '/');
+      .replace(/-/g, "+")
+      .replace(/_/g, "/");
 
     const rawData = window.atob(base64);
     const outputArray = new Uint8Array(rawData.length);
@@ -255,41 +268,57 @@ export class BackgroundSyncManager {
 
   async registerSync(tag: string): Promise<boolean> {
     if (!this.registration || !pwaCapabilities.backgroundSync) {
-      console.warn('[PWA] Background sync not supported');
+      console.warn("[PWA] Background sync not supported");
       return false;
     }
 
     try {
-      await (this.registration as unknown as { sync: { register: (tag: string) => Promise<void> } }).sync.register(tag);
-      console.log('[PWA] Background sync registered:', tag);
+      await (
+        this.registration as unknown as {
+          sync: { register: (tag: string) => Promise<void> };
+        }
+      ).sync.register(tag);
+      console.log("[PWA] Background sync registered:", tag);
       return true;
     } catch (error) {
-      console.error('[PWA] Background sync registration failed:', error);
+      console.error("[PWA] Background sync registration failed:", error);
       return false;
     }
   }
 
-  async registerPeriodicSync(tag: string, minInterval: number = 12 * 60 * 60 * 1000): Promise<boolean> {
+  async registerPeriodicSync(
+    tag: string,
+    minInterval: number = 12 * 60 * 60 * 1000
+  ): Promise<boolean> {
     if (!this.registration || !pwaCapabilities.periodicSync) {
-      console.warn('[PWA] Periodic sync not supported');
+      console.warn("[PWA] Periodic sync not supported");
       return false;
     }
 
     try {
       const status = await navigator.permissions.query({
-        name: 'periodic-background-sync' as PermissionName,
+        name: "periodic-background-sync" as PermissionName,
       });
 
-      if (status.state !== 'granted') {
-        console.warn('[PWA] Periodic sync permission not granted');
+      if (status.state !== "granted") {
+        console.warn("[PWA] Periodic sync permission not granted");
         return false;
       }
 
-      await (this.registration as unknown as { periodicSync: { register: (tag: string, options: { minInterval: number }) => Promise<void> } }).periodicSync.register(tag, { minInterval });
-      console.log('[PWA] Periodic sync registered:', tag);
+      await (
+        this.registration as unknown as {
+          periodicSync: {
+            register: (
+              tag: string,
+              options: { minInterval: number }
+            ) => Promise<void>;
+          };
+        }
+      ).periodicSync.register(tag, { minInterval });
+      console.log("[PWA] Periodic sync registered:", tag);
       return true;
     } catch (error) {
-      console.error('[PWA] Periodic sync registration failed:', error);
+      console.error("[PWA] Periodic sync registration failed:", error);
       return false;
     }
   }
@@ -301,7 +330,7 @@ export class BackgroundSyncManager {
 export class BadgeManager {
   async setBadge(count?: number): Promise<boolean> {
     if (!pwaCapabilities.badging) {
-      console.warn('[PWA] Badging not supported');
+      console.warn("[PWA] Badging not supported");
       return false;
     }
 
@@ -313,7 +342,7 @@ export class BadgeManager {
       }
       return true;
     } catch (error) {
-      console.error('[PWA] Set badge failed:', error);
+      console.error("[PWA] Set badge failed:", error);
       return false;
     }
   }
@@ -327,7 +356,7 @@ export class BadgeManager {
       await navigator.clearAppBadge();
       return true;
     } catch (error) {
-      console.error('[PWA] Clear badge failed:', error);
+      console.error("[PWA] Clear badge failed:", error);
       return false;
     }
   }
@@ -339,7 +368,7 @@ export class BadgeManager {
 export class ShareManager {
   canShare(data?: ShareData): boolean {
     if (!pwaCapabilities.share) return false;
-    if (data && 'canShare' in navigator) {
+    if (data && "canShare" in navigator) {
       return navigator.canShare(data);
     }
     return true;
@@ -347,7 +376,7 @@ export class ShareManager {
 
   async share(data: ShareData): Promise<boolean> {
     if (!this.canShare(data)) {
-      console.warn('[PWA] Sharing not supported for this data');
+      console.warn("[PWA] Sharing not supported for this data");
       return false;
     }
 
@@ -355,16 +384,19 @@ export class ShareManager {
       await navigator.share(data);
       return true;
     } catch (error) {
-      if ((error as Error).name !== 'AbortError') {
-        console.error('[PWA] Share failed:', error);
+      if ((error as Error).name !== "AbortError") {
+        console.error("[PWA] Share failed:", error);
       }
       return false;
     }
   }
 
-  async shareFile(files: File[], data?: Omit<ShareData, 'files'>): Promise<boolean> {
+  async shareFile(
+    files: File[],
+    data?: Omit<ShareData, "files">
+  ): Promise<boolean> {
     if (!navigator.canShare?.({ files })) {
-      console.warn('[PWA] File sharing not supported');
+      console.warn("[PWA] File sharing not supported");
       return false;
     }
 
@@ -372,7 +404,7 @@ export class ShareManager {
       await navigator.share({ ...data, files });
       return true;
     } catch (error) {
-      console.error('[PWA] File share failed:', error);
+      console.error("[PWA] File share failed:", error);
       return false;
     }
   }
@@ -386,22 +418,22 @@ export class WakeLockManager {
 
   async request(): Promise<boolean> {
     if (!pwaCapabilities.wakeLock) {
-      console.warn('[PWA] Wake Lock not supported');
+      console.warn("[PWA] Wake Lock not supported");
       return false;
     }
 
     try {
-      this.wakeLock = await navigator.wakeLock.request('screen');
-      
-      this.wakeLock.addEventListener('release', () => {
-        console.log('[PWA] Wake Lock released');
+      this.wakeLock = await navigator.wakeLock.request("screen");
+
+      this.wakeLock.addEventListener("release", () => {
+        console.log("[PWA] Wake Lock released");
         this.wakeLock = null;
       });
 
-      console.log('[PWA] Wake Lock acquired');
+      console.log("[PWA] Wake Lock acquired");
       return true;
     } catch (error) {
-      console.error('[PWA] Wake Lock request failed:', error);
+      console.error("[PWA] Wake Lock request failed:", error);
       return false;
     }
   }
@@ -420,15 +452,15 @@ export class WakeLockManager {
   // Re-acquire wake lock on visibility change
   setupAutoReacquire(): () => void {
     const handleVisibilityChange = async () => {
-      if (document.visibilityState === 'visible' && this.wakeLock === null) {
+      if (document.visibilityState === "visible" && this.wakeLock === null) {
         await this.request();
       }
     };
 
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
     return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }
 }
@@ -441,15 +473,15 @@ export class InstallPromptManager {
   private installCallback: (() => void) | null = null;
 
   constructor() {
-    if (typeof window !== 'undefined') {
-      window.addEventListener('beforeinstallprompt', (e) => {
+    if (typeof window !== "undefined") {
+      window.addEventListener("beforeinstallprompt", (e) => {
         e.preventDefault();
         this.deferredPrompt = e as BeforeInstallPromptEvent;
         this.installCallback?.();
       });
 
-      window.addEventListener('appinstalled', () => {
-        console.log('[PWA] App installed');
+      window.addEventListener("appinstalled", () => {
+        console.log("[PWA] App installed");
         this.deferredPrompt = null;
       });
     }
@@ -466,7 +498,7 @@ export class InstallPromptManager {
     }
   }
 
-  async prompt(): Promise<'accepted' | 'dismissed' | null> {
+  async prompt(): Promise<"accepted" | "dismissed" | null> {
     if (!this.deferredPrompt) {
       return null;
     }
@@ -479,11 +511,12 @@ export class InstallPromptManager {
 
   isInstalled(): boolean {
     // Check if running in standalone mode
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       return (
-        window.matchMedia('(display-mode: standalone)').matches ||
-        (window.navigator as Navigator & { standalone?: boolean }).standalone === true ||
-        document.referrer.includes('android-app://')
+        window.matchMedia("(display-mode: standalone)").matches ||
+        (window.navigator as Navigator & { standalone?: boolean })
+          .standalone === true ||
+        document.referrer.includes("android-app://")
       );
     }
     return false;
@@ -496,16 +529,19 @@ export class InstallPromptManager {
 export class StorageManager {
   async requestPersistence(): Promise<boolean> {
     if (!pwaCapabilities.persistentStorage) {
-      console.warn('[PWA] Persistent storage not supported');
+      console.warn("[PWA] Persistent storage not supported");
       return false;
     }
 
     try {
       const isPersisted = await navigator.storage.persist();
-      console.log('[PWA] Persistent storage:', isPersisted ? 'granted' : 'denied');
+      console.log(
+        "[PWA] Persistent storage:",
+        isPersisted ? "granted" : "denied"
+      );
       return isPersisted;
     } catch (error) {
-      console.error('[PWA] Persistence request failed:', error);
+      console.error("[PWA] Persistence request failed:", error);
       return false;
     }
   }
@@ -525,7 +561,7 @@ export class StorageManager {
         quota: estimate.quota || 0,
       };
     } catch (error) {
-      console.error('[PWA] Storage estimate failed:', error);
+      console.error("[PWA] Storage estimate failed:", error);
       return null;
     }
   }
@@ -536,19 +572,19 @@ export class StorageManager {
  */
 export function registerProtocolHandler(): void {
   if (!pwaCapabilities.protocol) {
-    console.warn('[PWA] Protocol handler not supported');
+    console.warn("[PWA] Protocol handler not supported");
     return;
   }
 
   try {
     navigator.registerProtocolHandler(
-      'web+betaforge',
+      "web+betaforge",
       `${window.location.origin}/protocol?type=%s`,
-      'BetaForge'
+      "BetaForge"
     );
-    console.log('[PWA] Protocol handler registered');
+    console.log("[PWA] Protocol handler registered");
   } catch (error) {
-    console.error('[PWA] Protocol handler registration failed:', error);
+    console.error("[PWA] Protocol handler registration failed:", error);
   }
 }
 
@@ -557,7 +593,7 @@ export function registerProtocolHandler(): void {
  */
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[];
-  readonly userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+  readonly userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
   prompt(): Promise<void>;
 }
 
@@ -596,7 +632,7 @@ export class PWAManager {
     if (this.initialized) return;
 
     const registration = await this.sw.register();
-    
+
     if (registration) {
       this.push = new PushNotificationManager(registration);
       this.sync = new BackgroundSyncManager(registration);
@@ -606,8 +642,8 @@ export class PWAManager {
     await this.storage.requestPersistence();
 
     this.initialized = true;
-    console.log('[PWA] Manager initialized');
-    console.log('[PWA] Capabilities:', pwaCapabilities);
+    console.log("[PWA] Manager initialized");
+    console.log("[PWA] Capabilities:", pwaCapabilities);
   }
 
   getCapabilities() {

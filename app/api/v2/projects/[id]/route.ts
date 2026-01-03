@@ -45,10 +45,7 @@ async function handleGet(
     throw result.error;
   }
 
-  return success(
-    { project: result.value },
-    { requestId: ctx.requestId }
-  );
+  return success({ project: result.value }, { requestId: ctx.requestId });
 }
 
 // ============================================================================
@@ -81,10 +78,7 @@ async function handlePut(
     throw result.error;
   }
 
-  return success(
-    { project: result.value },
-    { requestId: ctx.requestId }
-  );
+  return success({ project: result.value }, { requestId: ctx.requestId });
 }
 
 // ============================================================================

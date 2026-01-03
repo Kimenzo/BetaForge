@@ -205,13 +205,25 @@ export class AppError extends Error {
   }
 
   private categorizeError(code: ErrorCode): ErrorCategory {
-    if (code.startsWith("VALIDATION") || code.startsWith("INVALID") || code.startsWith("MISSING")) {
+    if (
+      code.startsWith("VALIDATION") ||
+      code.startsWith("INVALID") ||
+      code.startsWith("MISSING")
+    ) {
       return ErrorCategory.VALIDATION;
     }
-    if (code.includes("UNAUTHENTICATED") || code.includes("TOKEN") || code.includes("CREDENTIALS")) {
+    if (
+      code.includes("UNAUTHENTICATED") ||
+      code.includes("TOKEN") ||
+      code.includes("CREDENTIALS")
+    ) {
       return ErrorCategory.AUTHENTICATION;
     }
-    if (code.includes("UNAUTHORIZED") || code.includes("PERMISSION") || code.includes("ACCESS_DENIED")) {
+    if (
+      code.includes("UNAUTHORIZED") ||
+      code.includes("PERMISSION") ||
+      code.includes("ACCESS_DENIED")
+    ) {
       return ErrorCategory.AUTHORIZATION;
     }
     if (code.includes("NOT_FOUND")) {
@@ -220,13 +232,28 @@ export class AppError extends Error {
     if (code.includes("RATE") || code.includes("TOO_MANY")) {
       return ErrorCategory.RATE_LIMIT;
     }
-    if (code.includes("EXTERNAL") || code.includes("SUPABASE") || code.includes("ANTHROPIC") || code.includes("EMBEDDING")) {
+    if (
+      code.includes("EXTERNAL") ||
+      code.includes("SUPABASE") ||
+      code.includes("ANTHROPIC") ||
+      code.includes("EMBEDDING")
+    ) {
       return ErrorCategory.EXTERNAL_SERVICE;
     }
-    if (code.includes("DATABASE") || code.includes("CONFIGURATION") || code.includes("SERVICE_UNAVAILABLE")) {
+    if (
+      code.includes("DATABASE") ||
+      code.includes("CONFIGURATION") ||
+      code.includes("SERVICE_UNAVAILABLE")
+    ) {
       return ErrorCategory.INFRASTRUCTURE;
     }
-    if (code.includes("BUSINESS") || code.includes("STATE") || code.includes("DUPLICATE") || code.includes("LIMIT") || code.includes("SESSION_ALREADY")) {
+    if (
+      code.includes("BUSINESS") ||
+      code.includes("STATE") ||
+      code.includes("DUPLICATE") ||
+      code.includes("LIMIT") ||
+      code.includes("SESSION_ALREADY")
+    ) {
       return ErrorCategory.BUSINESS;
     }
     return ErrorCategory.INTERNAL;
@@ -313,7 +340,11 @@ export class AuthorizationError extends AppError {
 }
 
 export class NotFoundError extends AppError {
-  constructor(resourceType: string, resourceId?: string, context?: ErrorContext) {
+  constructor(
+    resourceType: string,
+    resourceId?: string,
+    context?: ErrorContext
+  ) {
     const message = resourceId
       ? `${resourceType} with ID '${resourceId}' not found`
       : `${resourceType} not found`;
@@ -327,14 +358,23 @@ export class NotFoundError extends AppError {
 }
 
 export class BusinessError extends AppError {
-  constructor(message: string, code: ErrorCode = ErrorCode.BUSINESS_RULE_VIOLATION, context?: ErrorContext) {
+  constructor(
+    message: string,
+    code: ErrorCode = ErrorCode.BUSINESS_RULE_VIOLATION,
+    context?: ErrorContext
+  ) {
     super(code, message, context);
     this.name = "BusinessError";
   }
 }
 
 export class ExternalServiceError extends AppError {
-  constructor(service: string, message: string, cause?: Error, context?: ErrorContext) {
+  constructor(
+    service: string,
+    message: string,
+    cause?: Error,
+    context?: ErrorContext
+  ) {
     super(ErrorCode.EXTERNAL_SERVICE_ERROR, `${service}: ${message}`, {
       ...context,
       cause,
@@ -348,7 +388,11 @@ export class RateLimitError extends AppError {
   public readonly retryAfter: number;
 
   constructor(retryAfter = 60, context?: ErrorContext) {
-    super(ErrorCode.RATE_LIMITED, `Rate limit exceeded. Retry after ${retryAfter} seconds`, context);
+    super(
+      ErrorCode.RATE_LIMITED,
+      `Rate limit exceeded. Retry after ${retryAfter} seconds`,
+      context
+    );
     this.name = "RateLimitError";
     this.retryAfter = retryAfter;
   }
@@ -359,34 +403,69 @@ export class RateLimitError extends AppError {
 // ============================================================================
 
 export const Errors = {
-  validation: (message: string, context?: ErrorContext) => new ValidationError(message, context),
+  validation: (message: string, context?: ErrorContext) =>
+    new ValidationError(message, context),
   invalidInput: (field: string, reason: string, context?: ErrorContext) =>
-    new AppError(ErrorCode.INVALID_INPUT, `Invalid ${field}: ${reason}`, context),
+    new AppError(
+      ErrorCode.INVALID_INPUT,
+      `Invalid ${field}: ${reason}`,
+      context
+    ),
   missingField: (field: string, context?: ErrorContext) =>
-    new AppError(ErrorCode.MISSING_REQUIRED_FIELD, `Missing required field: ${field}`, context),
+    new AppError(
+      ErrorCode.MISSING_REQUIRED_FIELD,
+      `Missing required field: ${field}`,
+      context
+    ),
 
-  unauthenticated: (context?: ErrorContext) => new AuthenticationError("Authentication required", context),
-  invalidToken: (context?: ErrorContext) => new AppError(ErrorCode.INVALID_TOKEN, "Invalid or expired token", context),
-  unauthorized: (context?: ErrorContext) => new AuthorizationError("Access denied", context),
+  unauthenticated: (context?: ErrorContext) =>
+    new AuthenticationError("Authentication required", context),
+  invalidToken: (context?: ErrorContext) =>
+    new AppError(ErrorCode.INVALID_TOKEN, "Invalid or expired token", context),
+  unauthorized: (context?: ErrorContext) =>
+    new AuthorizationError("Access denied", context),
 
-  notFound: (resourceType: string, resourceId?: string, context?: ErrorContext) =>
-    new NotFoundError(resourceType, resourceId, context),
+  notFound: (
+    resourceType: string,
+    resourceId?: string,
+    context?: ErrorContext
+  ) => new NotFoundError(resourceType, resourceId, context),
   projectNotFound: (id: string, context?: ErrorContext) =>
-    new AppError(ErrorCode.PROJECT_NOT_FOUND, `Project '${id}' not found`, { ...context, resourceId: id, resourceType: "project" }),
-  sessionNotFound: (id: string, context?: ErrorContext) =>
-    new AppError(ErrorCode.SESSION_NOT_FOUND, `Test session '${id}' not found`, { ...context, resourceId: id, resourceType: "session" }),
-  reportNotFound: (id: string, context?: ErrorContext) =>
-    new AppError(ErrorCode.REPORT_NOT_FOUND, `Bug report '${id}' not found`, { ...context, resourceId: id, resourceType: "report" }),
-
-  businessRule: (message: string, context?: ErrorContext) => new BusinessError(message, ErrorCode.BUSINESS_RULE_VIOLATION, context),
-  duplicate: (resourceType: string, context?: ErrorContext) =>
-    new AppError(ErrorCode.DUPLICATE_ENTRY, `${resourceType} already exists`, { ...context, resourceType }),
-  sessionAlreadyRunning: (projectId: string, context?: ErrorContext) =>
-    new AppError(ErrorCode.SESSION_ALREADY_RUNNING, "A test session is already running for this project", {
+    new AppError(ErrorCode.PROJECT_NOT_FOUND, `Project '${id}' not found`, {
       ...context,
-      resourceId: projectId,
+      resourceId: id,
       resourceType: "project",
     }),
+  sessionNotFound: (id: string, context?: ErrorContext) =>
+    new AppError(
+      ErrorCode.SESSION_NOT_FOUND,
+      `Test session '${id}' not found`,
+      { ...context, resourceId: id, resourceType: "session" }
+    ),
+  reportNotFound: (id: string, context?: ErrorContext) =>
+    new AppError(ErrorCode.REPORT_NOT_FOUND, `Bug report '${id}' not found`, {
+      ...context,
+      resourceId: id,
+      resourceType: "report",
+    }),
+
+  businessRule: (message: string, context?: ErrorContext) =>
+    new BusinessError(message, ErrorCode.BUSINESS_RULE_VIOLATION, context),
+  duplicate: (resourceType: string, context?: ErrorContext) =>
+    new AppError(ErrorCode.DUPLICATE_ENTRY, `${resourceType} already exists`, {
+      ...context,
+      resourceType,
+    }),
+  sessionAlreadyRunning: (projectId: string, context?: ErrorContext) =>
+    new AppError(
+      ErrorCode.SESSION_ALREADY_RUNNING,
+      "A test session is already running for this project",
+      {
+        ...context,
+        resourceId: projectId,
+        resourceType: "project",
+      }
+    ),
 
   supabase: (message: string, cause?: Error, context?: ErrorContext) =>
     new ExternalServiceError("Supabase", message, cause, context),
@@ -395,10 +474,16 @@ export const Errors = {
   embedding: (message: string, cause?: Error, context?: ErrorContext) =>
     new ExternalServiceError("EmbeddingService", message, cause, context),
 
-  rateLimited: (retryAfter?: number, context?: ErrorContext) => new RateLimitError(retryAfter, context),
+  rateLimited: (retryAfter?: number, context?: ErrorContext) =>
+    new RateLimitError(retryAfter, context),
 
   internal: (message: string, cause?: Error, context?: ErrorContext) =>
-    new AppError(ErrorCode.INTERNAL_ERROR, message, { ...context, cause }, false),
+    new AppError(
+      ErrorCode.INTERNAL_ERROR,
+      message,
+      { ...context, cause },
+      false
+    ),
   configuration: (message: string, context?: ErrorContext) =>
     new AppError(ErrorCode.CONFIGURATION_ERROR, message, context, false),
 };
@@ -420,10 +505,5 @@ export function toAppError(error: unknown, context?: ErrorContext): AppError {
     );
   }
 
-  return new AppError(
-    ErrorCode.INTERNAL_ERROR,
-    String(error),
-    context,
-    false
-  );
+  return new AppError(ErrorCode.INTERNAL_ERROR, String(error), context, false);
 }

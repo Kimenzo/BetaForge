@@ -1,7 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, Download, Sparkles, Smartphone, Monitor, Zap, Bell } from "lucide-react";
+import {
+  X,
+  Download,
+  Sparkles,
+  Smartphone,
+  Monitor,
+  Zap,
+  Bell,
+} from "lucide-react";
 import { useInstallPrompt } from "@/lib/pwa";
 
 interface InstallPromptProps {
@@ -9,14 +17,17 @@ interface InstallPromptProps {
   onDismiss?: () => void;
 }
 
-export function InstallPrompt({ variant = "toast", onDismiss }: InstallPromptProps) {
+export function InstallPrompt({
+  variant = "toast",
+  onDismiss,
+}: InstallPromptProps) {
   const { canInstall, isInstalled, promptInstall } = useInstallPrompt();
   const [isDismissed, setIsDismissed] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     // Check if user has dismissed before
-    const dismissed = localStorage.getItem('pwa-install-dismissed');
+    const dismissed = localStorage.getItem("pwa-install-dismissed");
     if (dismissed) {
       const dismissedTime = parseInt(dismissed, 10);
       // Show again after 7 days
@@ -35,13 +46,13 @@ export function InstallPrompt({ variant = "toast", onDismiss }: InstallPromptPro
 
   const handleDismiss = () => {
     setIsDismissed(true);
-    localStorage.setItem('pwa-install-dismissed', Date.now().toString());
+    localStorage.setItem("pwa-install-dismissed", Date.now().toString());
     onDismiss?.();
   };
 
   const handleInstall = async () => {
     const result = await promptInstall();
-    if (result === 'accepted') {
+    if (result === "accepted") {
       setIsDismissed(true);
     }
   };
@@ -60,7 +71,9 @@ export function InstallPrompt({ variant = "toast", onDismiss }: InstallPromptPro
             </div>
             <div>
               <p className="font-semibold">Install BetaForge</p>
-              <p className="text-sm text-white/80">Get quick access from your home screen</p>
+              <p className="text-sm text-white/80">
+                Get quick access from your home screen
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -98,7 +111,9 @@ export function InstallPrompt({ variant = "toast", onDismiss }: InstallPromptPro
             <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center mb-4">
               <Sparkles className="w-10 h-10 text-white" />
             </div>
-            <h2 className="text-2xl font-bold text-white mb-2">Install BetaForge</h2>
+            <h2 className="text-2xl font-bold text-white mb-2">
+              Install BetaForge
+            </h2>
             <p className="text-gray-400">
               Add BetaForge to your device for a faster, app-like experience
             </p>
@@ -111,7 +126,10 @@ export function InstallPrompt({ variant = "toast", onDismiss }: InstallPromptPro
               { icon: Monitor, text: "Works offline with cached data" },
               { icon: Smartphone, text: "Native app experience" },
             ].map((feature, i) => (
-              <div key={i} className="flex items-center gap-3 text-sm text-gray-300">
+              <div
+                key={i}
+                className="flex items-center gap-3 text-sm text-gray-300"
+              >
                 <div className="w-8 h-8 rounded-lg bg-orange-500/10 flex items-center justify-center">
                   <feature.icon className="w-4 h-4 text-orange-500" />
                 </div>
@@ -231,12 +249,12 @@ export function OfflineIndicator() {
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
 
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
 
     return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
     };
   }, []);
 

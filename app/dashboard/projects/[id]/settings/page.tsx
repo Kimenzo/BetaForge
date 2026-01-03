@@ -32,7 +32,9 @@ export default function ProjectSettingsPage() {
 
   // Form state
   const [name, setName] = useState("My Project");
-  const [description, setDescription] = useState("A web application for testing");
+  const [description, setDescription] = useState(
+    "A web application for testing"
+  );
   const [accessUrl, setAccessUrl] = useState("https://my-app.com");
   const [platform, setPlatform] = useState<"web" | "mobile" | "desktop">("web");
   const [selectedAgents, setSelectedAgents] = useState<string[]>(
@@ -85,7 +87,9 @@ export default function ProjectSettingsPage() {
             <Settings className="w-6 h-6 text-electric-cyan" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-ghost-white">Project Settings</h1>
+            <h1 className="text-3xl font-bold text-ghost-white">
+              Project Settings
+            </h1>
             <p className="text-phantom-gray">
               Update settings, agents, and test parameters
             </p>
@@ -226,7 +230,7 @@ export default function ProjectSettingsPage() {
                   : "✨"}
               </div>
               <p className="font-medium text-ghost-white">{agent.name}</p>
-              <p className="text-xs text-mist-gray">{agent.archetype}</p>
+              <p className="text-xs text-mist-gray">{agent.specialization}</p>
             </button>
           ))}
         </div>
@@ -241,7 +245,9 @@ export default function ProjectSettingsPage() {
         <div className="space-y-4">
           <label className="flex items-center justify-between p-4 rounded-xl bg-void-elevated border border-white/5 cursor-pointer hover:border-white/10 transition-all">
             <div>
-              <p className="font-medium text-ghost-white">Critical Bug Alerts</p>
+              <p className="font-medium text-ghost-white">
+                Critical Bug Alerts
+              </p>
               <p className="text-sm text-phantom-gray">
                 Get notified immediately when critical bugs are found
               </p>
@@ -280,7 +286,8 @@ export default function ProjectSettingsPage() {
           <div>
             <p className="font-medium text-ghost-white">Auto-test on Deploy</p>
             <p className="text-sm text-phantom-gray">
-              Automatically run tests when new deployments are detected via webhook
+              Automatically run tests when new deployments are detected via
+              webhook
             </p>
           </div>
           <input

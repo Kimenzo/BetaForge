@@ -24,23 +24,41 @@ export const sortSchema = z.object({
   sortOrder: z.enum(["asc", "desc"]).default("desc"),
 });
 
-export const dateRangeSchema = z.object({
-  startDate: z.coerce.date().optional(),
-  endDate: z.coerce.date().optional(),
-}).refine(
-  (data) => !data.startDate || !data.endDate || data.startDate <= data.endDate,
-  { message: "Start date must be before end date" }
-);
+export const dateRangeSchema = z
+  .object({
+    startDate: z.coerce.date().optional(),
+    endDate: z.coerce.date().optional(),
+  })
+  .refine(
+    (data) =>
+      !data.startDate || !data.endDate || data.startDate <= data.endDate,
+    { message: "Start date must be before end date" }
+  );
 
 // ============================================================================
 // Platform & Status Enums
 // ============================================================================
 
 export const platformSchema = z.enum(["web", "mobile", "desktop"]);
-export const projectStatusSchema = z.enum(["active", "testing", "idle", "error"]);
-export const testStatusSchema = z.enum(["queued", "running", "completed", "failed"]);
+export const projectStatusSchema = z.enum([
+  "active",
+  "testing",
+  "idle",
+  "error",
+]);
+export const testStatusSchema = z.enum([
+  "queued",
+  "running",
+  "completed",
+  "failed",
+]);
 export const bugSeveritySchema = z.enum(["critical", "high", "medium", "low"]);
-export const bugStatusSchema = z.enum(["open", "fixed", "wont_fix", "duplicate"]);
+export const bugStatusSchema = z.enum([
+  "open",
+  "fixed",
+  "wont_fix",
+  "duplicate",
+]);
 export const triggerTypeSchema = z.enum(["manual", "webhook", "scheduled"]);
 
 // ============================================================================
@@ -79,11 +97,13 @@ export const projectIdParamSchema = z.object({
   id: uuidSchema,
 });
 
-export const listProjectsQuerySchema = paginationSchema.merge(sortSchema).extend({
-  status: projectStatusSchema.optional(),
-  platform: platformSchema.optional(),
-  search: z.string().max(100).optional(),
-});
+export const listProjectsQuerySchema = paginationSchema
+  .merge(sortSchema)
+  .extend({
+    status: projectStatusSchema.optional(),
+    platform: platformSchema.optional(),
+    search: z.string().max(100).optional(),
+  });
 
 // ============================================================================
 // Test Session Schemas
@@ -128,19 +148,27 @@ export const createBugReportSchema = z.object({
   expectedBehavior: z.string().optional(),
   actualBehavior: z.string().optional(),
   screenshots: z.array(z.string().url()).default([]),
-  consoleErrors: z.array(z.object({
-    type: z.enum(["error", "warning", "log"]),
-    message: z.string(),
-    source: z.string().optional(),
-    line: z.number().optional(),
-  })).default([]),
-  networkLogs: z.array(z.object({
-    url: z.string(),
-    method: z.string(),
-    status: z.number(),
-    duration: z.number(),
-    error: z.string().optional(),
-  })).default([]),
+  consoleErrors: z
+    .array(
+      z.object({
+        type: z.enum(["error", "warning", "log"]),
+        message: z.string(),
+        source: z.string().optional(),
+        line: z.number().optional(),
+      })
+    )
+    .default([]),
+  networkLogs: z
+    .array(
+      z.object({
+        url: z.string(),
+        method: z.string(),
+        status: z.number(),
+        duration: z.number(),
+        error: z.string().optional(),
+      })
+    )
+    .default([]),
   environmentInfo: z.record(z.string(), z.unknown()).default({}),
 });
 
@@ -166,34 +194,44 @@ export const bugReportIdParamSchema = z.object({
 // Webhook Schemas
 // ============================================================================
 
-export const webhookPayloadSchema = z.object({
-  event: z.string(),
-  projectId: uuidSchema,
-  timestamp: z.coerce.date().optional(),
-  data: z.record(z.string(), z.unknown()).optional(),
-}).catchall(z.unknown());
+export const webhookPayloadSchema = z
+  .object({
+    event: z.string(),
+    projectId: uuidSchema,
+    timestamp: z.coerce.date().optional(),
+    data: z.record(z.string(), z.unknown()).optional(),
+  })
+  .catchall(z.unknown());
 
-export const githubWebhookSchema = z.object({
-  action: z.string().optional(),
-  ref: z.string().optional(),
-  repository: z.object({
-    id: z.number(),
-    name: z.string(),
-    full_name: z.string(),
-  }).optional(),
-  sender: z.object({
-    login: z.string(),
-    id: z.number(),
-  }).optional(),
-  head_commit: z.object({
-    id: z.string(),
-    message: z.string(),
-    author: z.object({
-      name: z.string(),
-      email: z.string(),
-    }),
-  }).optional(),
-}).passthrough();
+export const githubWebhookSchema = z
+  .object({
+    action: z.string().optional(),
+    ref: z.string().optional(),
+    repository: z
+      .object({
+        id: z.number(),
+        name: z.string(),
+        full_name: z.string(),
+      })
+      .optional(),
+    sender: z
+      .object({
+        login: z.string(),
+        id: z.number(),
+      })
+      .optional(),
+    head_commit: z
+      .object({
+        id: z.string(),
+        message: z.string(),
+        author: z.object({
+          name: z.string(),
+          email: z.string(),
+        }),
+      })
+      .optional(),
+  })
+  .passthrough();
 
 // ============================================================================
 // Type Exports

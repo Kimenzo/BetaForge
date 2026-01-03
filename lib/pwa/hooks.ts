@@ -27,12 +27,12 @@ export function usePWA() {
     const handleOffline = () => setIsOnline(false);
 
     setIsOnline(navigator.onLine);
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
 
     return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
     };
   }, []);
 
@@ -65,22 +65,22 @@ export function useInstallPrompt() {
     });
 
     // Listen for display mode changes
-    const mediaQuery = window.matchMedia('(display-mode: standalone)');
+    const mediaQuery = window.matchMedia("(display-mode: standalone)");
     const handleChange = (e: MediaQueryListEvent) => {
       setIsInstalled(e.matches);
     };
 
-    mediaQuery.addEventListener('change', handleChange);
+    mediaQuery.addEventListener("change", handleChange);
 
     return () => {
-      mediaQuery.removeEventListener('change', handleChange);
+      mediaQuery.removeEventListener("change", handleChange);
     };
   }, []);
 
   const promptInstall = useCallback(async () => {
     if (!managerRef.current) return null;
     const result = await managerRef.current.install.prompt();
-    if (result === 'accepted') {
+    if (result === "accepted") {
       setCanInstall(false);
     }
     return result;
@@ -97,8 +97,11 @@ export function useInstallPrompt() {
  * Hook for push notifications
  */
 export function usePushNotifications() {
-  const [permission, setPermission] = useState<NotificationPermission>('default');
-  const [subscription, setSubscription] = useState<PushSubscription | null>(null);
+  const [permission, setPermission] =
+    useState<NotificationPermission>("default");
+  const [subscription, setSubscription] = useState<PushSubscription | null>(
+    null
+  );
   const [isSupported, setIsSupported] = useState(false);
   const managerRef = useRef<PWAManager | null>(null);
 
@@ -108,7 +111,9 @@ export function usePushNotifications() {
       await manager.initialize();
       managerRef.current = manager;
 
-      setIsSupported(pwaCapabilities.notifications && pwaCapabilities.pushManager);
+      setIsSupported(
+        pwaCapabilities.notifications && pwaCapabilities.pushManager
+      );
 
       if (pwaCapabilities.notifications) {
         setPermission(Notification.permission);
@@ -124,7 +129,7 @@ export function usePushNotifications() {
   }, []);
 
   const requestPermission = useCallback(async () => {
-    if (!managerRef.current?.push) return 'denied' as NotificationPermission;
+    if (!managerRef.current?.push) return "denied" as NotificationPermission;
     const perm = await managerRef.current.push.requestPermission();
     setPermission(perm);
     return perm;
@@ -179,10 +184,13 @@ export function useBackgroundSync() {
     return managerRef.current.sync.registerSync(tag);
   }, []);
 
-  const registerPeriodicSync = useCallback(async (tag: string, minInterval?: number) => {
-    if (!managerRef.current?.sync) return false;
-    return managerRef.current.sync.registerPeriodicSync(tag, minInterval);
-  }, []);
+  const registerPeriodicSync = useCallback(
+    async (tag: string, minInterval?: number) => {
+      if (!managerRef.current?.sync) return false;
+      return managerRef.current.sync.registerPeriodicSync(tag, minInterval);
+    },
+    []
+  );
 
   return {
     isSupported,
@@ -260,7 +268,7 @@ export function useWakeLock() {
 
     // Auto-reacquire on visibility change
     const cleanup = managerRef.current.wakeLock.setupAutoReacquire();
-    
+
     return cleanup;
   }, []);
 
@@ -324,7 +332,10 @@ export function useServiceWorkerUpdate() {
  */
 export function useStorageManager() {
   const [isPersisted, setIsPersisted] = useState(false);
-  const [storageEstimate, setStorageEstimate] = useState<{ usage: number; quota: number } | null>(null);
+  const [storageEstimate, setStorageEstimate] = useState<{
+    usage: number;
+    quota: number;
+  } | null>(null);
   const managerRef = useRef<PWAManager | null>(null);
 
   useEffect(() => {

@@ -3,11 +3,19 @@
 // Ultra-fast utilities for top 1% performance
 // ===========================================
 
-export { preloadCriticalResources, prefetchRoute, preconnectOrigins } from "./preload";
-export { measureWebVitals, PerformanceMonitor, reportPerformance } from "./monitoring";
-export { 
-  memoWithDeepCompare, 
-  createOptimizedContext, 
+export {
+  preloadCriticalResources,
+  prefetchRoute,
+  preconnectOrigins,
+} from "./preload";
+export {
+  measureWebVitals,
+  PerformanceMonitor,
+  reportPerformance,
+} from "./monitoring";
+export {
+  memoWithDeepCompare,
+  createOptimizedContext,
   useStableCallback,
   useDeferredValue,
   useThrottledValue,

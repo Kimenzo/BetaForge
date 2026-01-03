@@ -1,2 +1,2 @@
 // Payment Components Exports
-export { CheckoutModal } from './CheckoutModal';
+export { CheckoutModal } from "./CheckoutModal";

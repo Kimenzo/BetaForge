@@ -1,2 +1,2 @@
-export * from './pwa-manager';
-export * from './hooks';
+export * from "./pwa-manager";
+export * from "./hooks";

@@ -1,6 +1,14 @@
 "use client";
 
-import { Share2, Link, Twitter, Linkedin, Mail, Copy, Check } from "lucide-react";
+import {
+  Share2,
+  Link,
+  Twitter,
+  Linkedin,
+  Mail,
+  Copy,
+  Check,
+} from "lucide-react";
 import { useState } from "react";
 import { useWebShare } from "@/lib/pwa";
 
@@ -13,10 +21,15 @@ interface ShareButtonProps {
 
 /**
  * Share Button Component
- * 
+ *
  * Uses Web Share API when available, falls back to copy link
  */
-export function ShareButton({ title, text, url, variant = "button" }: ShareButtonProps) {
+export function ShareButton({
+  title,
+  text,
+  url,
+  variant = "button",
+}: ShareButtonProps) {
   const { isSupported, share, canShare } = useWebShare();
   const [showMenu, setShowMenu] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -45,17 +58,23 @@ export function ShareButton({ title, text, url, variant = "button" }: ShareButto
     {
       name: "Twitter",
       icon: Twitter,
-      url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`,
+      url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+        title
+      )}&url=${encodeURIComponent(url)}`,
     },
     {
       name: "LinkedIn",
       icon: Linkedin,
-      url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
+      url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+        url
+      )}`,
     },
     {
       name: "Email",
       icon: Mail,
-      url: `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(text || title + "\n" + url)}`,
+      url: `mailto:?subject=${encodeURIComponent(
+        title
+      )}&body=${encodeURIComponent(text || title + "\n" + url)}`,
     },
   ];
 
@@ -134,10 +153,15 @@ interface ShareReportButtonProps {
   severity: string;
 }
 
-export function ShareReportButton({ reportId, reportTitle, severity }: ShareReportButtonProps) {
-  const url = typeof window !== "undefined" 
-    ? `${window.location.origin}/reports/${reportId}` 
-    : `/reports/${reportId}`;
+export function ShareReportButton({
+  reportId,
+  reportTitle,
+  severity,
+}: ShareReportButtonProps) {
+  const url =
+    typeof window !== "undefined"
+      ? `${window.location.origin}/reports/${reportId}`
+      : `/reports/${reportId}`;
 
   return (
     <ShareButton

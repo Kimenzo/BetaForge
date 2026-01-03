@@ -143,7 +143,9 @@ export default function ProjectAnalyticsPage() {
               </div>
               <span
                 className={`flex items-center gap-1 text-sm ${
-                  stat.trend === "up" ? "text-quantum-green" : "text-electric-cyan"
+                  stat.trend === "up"
+                    ? "text-quantum-green"
+                    : "text-electric-cyan"
                 }`}
               >
                 {stat.trend === "up" ? (
@@ -172,7 +174,9 @@ export default function ProjectAnalyticsPage() {
             {severityBreakdown.map((item) => (
               <div key={item.label}>
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm text-phantom-gray">{item.label}</span>
+                  <span className="text-sm text-phantom-gray">
+                    {item.label}
+                  </span>
                   <span className="text-sm text-ghost-white font-medium">
                     {item.count} ({item.percentage}%)
                   </span>
@@ -196,7 +200,10 @@ export default function ProjectAnalyticsPage() {
           </h3>
           <div className="flex items-end justify-between h-40 gap-2">
             {recentActivity.map((day, index) => (
-              <div key={index} className="flex-1 flex flex-col items-center gap-1">
+              <div
+                key={index}
+                className="flex-1 flex flex-col items-center gap-1"
+              >
                 <div className="w-full flex flex-col gap-1">
                   <div
                     className="w-full bg-ember-orange/60 rounded-t"
@@ -254,12 +261,21 @@ export default function ProjectAnalyticsPage() {
             </thead>
             <tbody>
               {agentPerformance.map((agent) => (
-                <tr key={agent.name} className="border-b border-white/5 hover:bg-white/5">
+                <tr
+                  key={agent.name}
+                  className="border-b border-white/5 hover:bg-white/5"
+                >
                   <td className="py-3 px-4">
-                    <span className="font-medium text-ghost-white">{agent.name}</span>
+                    <span className="font-medium text-ghost-white">
+                      {agent.name}
+                    </span>
                   </td>
-                  <td className="py-3 px-4 text-phantom-gray">{agent.testsRun}</td>
-                  <td className="py-3 px-4 text-phantom-gray">{agent.bugsFound}</td>
+                  <td className="py-3 px-4 text-phantom-gray">
+                    {agent.testsRun}
+                  </td>
+                  <td className="py-3 px-4 text-phantom-gray">
+                    {agent.bugsFound}
+                  </td>
                   <td className="py-3 px-4">
                     <div className="flex items-center gap-2">
                       <div className="flex-1 h-2 bg-void-elevated rounded-full overflow-hidden max-w-[100px]">
@@ -268,7 +284,9 @@ export default function ProjectAnalyticsPage() {
                           style={{ width: `${agent.efficiency}%` }}
                         />
                       </div>
-                      <span className="text-sm text-quantum-green">{agent.efficiency}%</span>
+                      <span className="text-sm text-quantum-green">
+                        {agent.efficiency}%
+                      </span>
                     </div>
                   </td>
                 </tr>

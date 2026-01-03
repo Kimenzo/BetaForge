@@ -29,7 +29,8 @@ export default function GlobalError({ error, reset }: ErrorBoundaryProps) {
     }
   }, [error]);
 
-  const isNetworkError = error.message?.includes("fetch") || error.message?.includes("network");
+  const isNetworkError =
+    error.message?.includes("fetch") || error.message?.includes("network");
   const isTimeout = error.message?.includes("timeout");
 
   return (

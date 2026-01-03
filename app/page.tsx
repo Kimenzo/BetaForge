@@ -33,27 +33,33 @@ export default function HomePage() {
 
         {/* Final CTA */}
         <section className="py-32 px-6 relative overflow-hidden">
-            <div className="absolute inset-0 bg-gray-900 z-0">
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+          <div className="absolute inset-0 bg-gray-900 z-0">
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+          </div>
+
+          <div className="relative z-10 max-w-4xl mx-auto text-center">
+            <h2 className="text-4xl md:text-6xl font-bold text-white mb-8 tracking-tight">
+              Ready to build the <br />
+              <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-600 pb-1">
+                future of software?
+              </span>
+            </h2>
+            <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
+              Stop letting bugs reach production. Deploy your autonomous QA team
+              today.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link
+                href="/signup"
+                className="w-full sm:w-auto px-8 py-4 rounded-full bg-white text-gray-900 font-bold text-lg hover:bg-gray-100 transition-all hover:scale-105 shadow-xl shadow-white/10 flex items-center justify-center gap-2"
+              >
+                Get Started Free <ArrowRight className="w-5 h-5" />
+              </Link>
+              <p className="text-sm text-gray-400 mt-4 sm:mt-0">
+                No credit card required
+              </p>
             </div>
-            
-            <div className="relative z-10 max-w-4xl mx-auto text-center">
-                <h2 className="text-4xl md:text-6xl font-bold text-white mb-8 tracking-tight">
-                    Ready to build the <br/>
-                    <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-600 pb-1">
-                        future of software?
-                    </span>
-                </h2>
-                <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
-                    Stop letting bugs reach production. Deploy your autonomous QA team today.
-                </p>
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                     <Link href="/signup" className="w-full sm:w-auto px-8 py-4 rounded-full bg-white text-gray-900 font-bold text-lg hover:bg-gray-100 transition-all hover:scale-105 shadow-xl shadow-white/10 flex items-center justify-center gap-2">
-                        Get Started Free <ArrowRight className="w-5 h-5" />
-                     </Link>
-                     <p className="text-sm text-gray-400 mt-4 sm:mt-0">No credit card required</p>
-                </div>
-            </div>
+          </div>
         </section>
       </main>
 

@@ -102,7 +102,9 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(
           {
             error: "bad_request",
-            message: `No valid agents found. Available: ${AGENTS.map((a) => a.name).join(", ")}`,
+            message: `No valid agents found. Available: ${AGENTS.map(
+              (a) => a.name
+            ).join(", ")}`,
           },
           { status: 400 }
         );
@@ -140,7 +142,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Create session ID
-    const sessionId = `sess_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+    const sessionId = `sess_${Date.now()}_${Math.random()
+      .toString(36)
+      .substring(2, 9)}`;
 
     // Create session in database (if Supabase is configured)
     let dbSession: { id: string } | null = null;
@@ -199,7 +203,8 @@ export async function POST(request: NextRequest) {
           success: true,
           sessionId: actualSessionId,
           status: "queued",
-          message: "Test session queued. Use GET /api/v1/sessions/:id to check status.",
+          message:
+            "Test session queued. Use GET /api/v1/sessions/:id to check status.",
           dashboardUrl: `https://app.betaforge.ai/sessions/${actualSessionId}`,
           agents: agentsToUse.map((a) => a.name),
         },
@@ -376,8 +381,18 @@ interface TestResults {
   }>;
 }
 
-async function runTestSession(params: RunTestSessionParams): Promise<TestResults> {
-  const { sessionId, projectId, projectName, testUrl, agents, timeout, supabase } = params;
+async function runTestSession(
+  params: RunTestSessionParams
+): Promise<TestResults> {
+  const {
+    sessionId,
+    projectId,
+    projectName,
+    testUrl,
+    agents,
+    timeout,
+    supabase,
+  } = params;
   const startTime = Date.now();
   const bugs: TestResults["bugs"] = [];
 
@@ -412,9 +427,15 @@ async function runTestSession(params: RunTestSessionParams): Promise<TestResults
         // Handle bug found
         if (event.type === "agent_bug_found" && event.data) {
           const bug = {
-            id: `bug_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
-            title: (event.data as Record<string, unknown>).title as string || "Untitled Bug",
-            severity: (event.data as Record<string, unknown>).severity as string || "medium",
+            id: `bug_${Date.now()}_${Math.random()
+              .toString(36)
+              .substring(2, 6)}`,
+            title:
+              ((event.data as Record<string, unknown>).title as string) ||
+              "Untitled Bug",
+            severity:
+              ((event.data as Record<string, unknown>).severity as string) ||
+              "medium",
             agent: event.agentName || "Unknown",
           };
           bugs.push(bug);

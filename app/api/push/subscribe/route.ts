@@ -19,9 +19,10 @@ function isPushConfigured(): boolean {
 export async function POST(request: NextRequest) {
   if (!isPushConfigured()) {
     return NextResponse.json(
-      { 
+      {
         error: "Push notifications not configured",
-        message: "Set NEXT_PUBLIC_VAPID_PUBLIC_KEY and VAPID_PRIVATE_KEY environment variables",
+        message:
+          "Set NEXT_PUBLIC_VAPID_PUBLIC_KEY and VAPID_PRIVATE_KEY environment variables",
       },
       { status: 503 }
     );
@@ -39,9 +40,14 @@ export async function POST(request: NextRequest) {
 
     // Note: Requires push_subscriptions table in Supabase
     // For now, return success to indicate the endpoint works
-    console.log("[Push] Subscription received for user:", userId, "endpoint:", subscription.endpoint);
-    
-    return NextResponse.json({ 
+    console.log(
+      "[Push] Subscription received for user:",
+      userId,
+      "endpoint:",
+      subscription.endpoint
+    );
+
+    return NextResponse.json({
       success: true,
       message: "Push notifications require database table setup",
     });
@@ -67,14 +73,11 @@ export async function DELETE(request: NextRequest) {
     const { endpoint } = await request.json();
 
     if (!endpoint) {
-      return NextResponse.json(
-        { error: "Endpoint required" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Endpoint required" }, { status: 400 });
     }
 
     console.log("[Push] Unsubscribe requested for endpoint:", endpoint);
-    
+
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("[Push] Unsubscribe error:", error);

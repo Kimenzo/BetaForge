@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import {
   X,
   CreditCard,
@@ -10,13 +10,13 @@ import {
   Check,
   Shield,
   Building2,
-} from 'lucide-react';
+} from "lucide-react";
 import {
   useCountryDetection,
   useCheckout,
   formatPrice,
   isAfricanCountry,
-} from '@/lib/hooks/use-payments';
+} from "@/lib/hooks/use-payments";
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -27,32 +27,32 @@ interface CheckoutModalProps {
     price: { monthly: number; yearly: number };
     description: string;
   };
-  billingInterval: 'monthly' | 'yearly';
+  billingInterval: "monthly" | "yearly";
 }
 
 // Country list for dropdown
 const COUNTRIES = [
-  { code: 'US', name: 'United States' },
-  { code: 'GB', name: 'United Kingdom' },
-  { code: 'CA', name: 'Canada' },
-  { code: 'AU', name: 'Australia' },
-  { code: 'DE', name: 'Germany' },
-  { code: 'FR', name: 'France' },
-  { code: 'IN', name: 'India' },
-  { code: 'BR', name: 'Brazil' },
-  { code: 'JP', name: 'Japan' },
+  { code: "US", name: "United States" },
+  { code: "GB", name: "United Kingdom" },
+  { code: "CA", name: "Canada" },
+  { code: "AU", name: "Australia" },
+  { code: "DE", name: "Germany" },
+  { code: "FR", name: "France" },
+  { code: "IN", name: "India" },
+  { code: "BR", name: "Brazil" },
+  { code: "JP", name: "Japan" },
   // African countries (Paystack)
-  { code: 'NG', name: 'Nigeria', provider: 'paystack' },
-  { code: 'GH', name: 'Ghana', provider: 'paystack' },
-  { code: 'ZA', name: 'South Africa', provider: 'paystack' },
-  { code: 'KE', name: 'Kenya', provider: 'paystack' },
-  { code: 'CI', name: "Côte d'Ivoire", provider: 'paystack' },
+  { code: "NG", name: "Nigeria", provider: "paystack" },
+  { code: "GH", name: "Ghana", provider: "paystack" },
+  { code: "ZA", name: "South Africa", provider: "paystack" },
+  { code: "KE", name: "Kenya", provider: "paystack" },
+  { code: "CI", name: "Côte d'Ivoire", provider: "paystack" },
   // More countries
-  { code: 'NL', name: 'Netherlands' },
-  { code: 'ES', name: 'Spain' },
-  { code: 'IT', name: 'Italy' },
-  { code: 'MX', name: 'Mexico' },
-  { code: 'SG', name: 'Singapore' },
+  { code: "NL", name: "Netherlands" },
+  { code: "ES", name: "Spain" },
+  { code: "IT", name: "Italy" },
+  { code: "MX", name: "Mexico" },
+  { code: "SG", name: "Singapore" },
 ].sort((a, b) => a.name.localeCompare(b.name));
 
 export function CheckoutModal({
@@ -61,21 +61,22 @@ export function CheckoutModal({
   plan,
   billingInterval,
 }: CheckoutModalProps) {
-  const { country: detectedCountry, loading: detectingCountry } = useCountryDetection();
+  const { country: detectedCountry, loading: detectingCountry } =
+    useCountryDetection();
   const { createCheckout, loading: checkoutLoading, error } = useCheckout();
-  
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [selectedCountry, setSelectedCountry] = useState('');
-  const [formError, setFormError] = useState('');
-  
+
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [formError, setFormError] = useState("");
+
   // B2B fields for Team/Enterprise plans
   const [isB2B, setIsB2B] = useState(false);
-  const [companyName, setCompanyName] = useState('');
-  const [taxId, setTaxId] = useState('');
-  
+  const [companyName, setCompanyName] = useState("");
+  const [taxId, setTaxId] = useState("");
+
   // Determine if this is a B2B plan (Team or Enterprise)
-  const isB2BPlan = plan.id === 'team' || plan.id === 'enterprise';
+  const isB2BPlan = plan.id === "team" || plan.id === "enterprise";
   // Set country when detected
   useEffect(() => {
     if (detectedCountry && !selectedCountry) {
@@ -86,17 +87,18 @@ export function CheckoutModal({
   // Prevent body scroll when modal is open
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [isOpen]);
 
   // Calculate price
-  const price = billingInterval === 'yearly' ? plan.price.yearly : plan.price.monthly;
+  const price =
+    billingInterval === "yearly" ? plan.price.yearly : plan.price.monthly;
   const yearlyTotal = price * 12;
   const monthlySavings = plan.price.monthly - plan.price.yearly;
   const yearlySavings = monthlySavings * 12;
@@ -104,66 +106,66 @@ export function CheckoutModal({
   // Estimate VAT based on country (approximate rates)
   const vatRates: Record<string, { rate: number; name: string }> = {
     // EU countries
-    'DE': { rate: 0.19, name: 'VAT' },
-    'FR': { rate: 0.20, name: 'VAT' },
-    'GB': { rate: 0.20, name: 'VAT' },
-    'IT': { rate: 0.22, name: 'VAT' },
-    'ES': { rate: 0.21, name: 'VAT' },
-    'NL': { rate: 0.21, name: 'VAT' },
-    'BE': { rate: 0.21, name: 'VAT' },
-    'AT': { rate: 0.20, name: 'VAT' },
-    'PL': { rate: 0.23, name: 'VAT' },
-    'SE': { rate: 0.25, name: 'VAT' },
-    'DK': { rate: 0.25, name: 'VAT' },
-    'FI': { rate: 0.24, name: 'VAT' },
-    'IE': { rate: 0.23, name: 'VAT' },
-    'PT': { rate: 0.23, name: 'VAT' },
+    DE: { rate: 0.19, name: "VAT" },
+    FR: { rate: 0.2, name: "VAT" },
+    GB: { rate: 0.2, name: "VAT" },
+    IT: { rate: 0.22, name: "VAT" },
+    ES: { rate: 0.21, name: "VAT" },
+    NL: { rate: 0.21, name: "VAT" },
+    BE: { rate: 0.21, name: "VAT" },
+    AT: { rate: 0.2, name: "VAT" },
+    PL: { rate: 0.23, name: "VAT" },
+    SE: { rate: 0.25, name: "VAT" },
+    DK: { rate: 0.25, name: "VAT" },
+    FI: { rate: 0.24, name: "VAT" },
+    IE: { rate: 0.23, name: "VAT" },
+    PT: { rate: 0.23, name: "VAT" },
     // Other regions
-    'AU': { rate: 0.10, name: 'GST' },
-    'NZ': { rate: 0.15, name: 'GST' },
-    'CA': { rate: 0.13, name: 'HST' },
-    'IN': { rate: 0.18, name: 'GST' },
-    'SG': { rate: 0.09, name: 'GST' },
-    'JP': { rate: 0.10, name: 'JCT' },
+    AU: { rate: 0.1, name: "GST" },
+    NZ: { rate: 0.15, name: "GST" },
+    CA: { rate: 0.13, name: "HST" },
+    IN: { rate: 0.18, name: "GST" },
+    SG: { rate: 0.09, name: "GST" },
+    JP: { rate: 0.1, name: "JCT" },
     // African countries
-    'NG': { rate: 0.075, name: 'VAT' },
-    'ZA': { rate: 0.15, name: 'VAT' },
-    'KE': { rate: 0.16, name: 'VAT' },
-    'GH': { rate: 0.15, name: 'VAT' },
+    NG: { rate: 0.075, name: "VAT" },
+    ZA: { rate: 0.15, name: "VAT" },
+    KE: { rate: 0.16, name: "VAT" },
+    GH: { rate: 0.15, name: "VAT" },
   };
-  
+
   const countryVat = selectedCountry ? vatRates[selectedCountry] : null;
   const vatRate = countryVat?.rate || 0;
-  const vatName = countryVat?.name || 'Tax';
-  
+  const vatName = countryVat?.name || "Tax";
+
   // B2B with valid tax ID = no VAT (reverse charge)
   const hasVatExemption = (isB2B || isB2BPlan) && taxId && taxId.length > 5;
   const effectiveVatRate = hasVatExemption ? 0 : vatRate;
-  
+
   // Calculate estimated amounts
-  const chargeToday = billingInterval === 'yearly' ? yearlyTotal : price;
+  const chargeToday = billingInterval === "yearly" ? yearlyTotal : price;
   const estimatedVat = chargeToday * effectiveVatRate;
   const estimatedTotal = chargeToday + estimatedVat;
 
   // Determine provider
   const isAfrica = isAfricanCountry(selectedCountry);
-  const provider = isAfrica ? 'Paystack' : 'Dodo Payments';
+  const provider = isAfrica ? "Paystack" : "Dodo Payments";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormError('');
+    setFormError("");
 
     // Validation
     if (!email) {
-      setFormError('Email is required');
+      setFormError("Email is required");
       return;
     }
-    if (!email.includes('@')) {
-      setFormError('Please enter a valid email');
+    if (!email.includes("@")) {
+      setFormError("Please enter a valid email");
       return;
     }
     if (!selectedCountry) {
-      setFormError('Please select your country');
+      setFormError("Please select your country");
       return;
     }
 
@@ -224,7 +226,7 @@ export function CheckoutModal({
                 ${price}/mo
               </span>
             </div>
-            {billingInterval === 'yearly' && (
+            {billingInterval === "yearly" && (
               <>
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-phantom-gray">Billed annually</span>
@@ -238,16 +240,18 @@ export function CheckoutModal({
                 </div>
               </>
             )}
-            
+
             {/* Tax estimate - only show when country is selected */}
             {selectedCountry && (
               <div className="mt-3 pt-3 border-t border-white/5 space-y-2">
                 {/* Subtotal */}
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-phantom-gray">Subtotal</span>
-                  <span className="text-ghost-white">${chargeToday.toFixed(2)}</span>
+                  <span className="text-ghost-white">
+                    ${chargeToday.toFixed(2)}
+                  </span>
                 </div>
-                
+
                 {/* VAT/Tax line */}
                 {effectiveVatRate > 0 ? (
                   <div className="flex items-center justify-between text-sm">
@@ -275,25 +279,28 @@ export function CheckoutModal({
                     </span>
                   </div>
                 ) : null}
-                
+
                 {/* Total */}
                 <div className="flex items-center justify-between pt-2 border-t border-white/5">
-                  <span className="text-ghost-white font-semibold">Charge today</span>
+                  <span className="text-ghost-white font-semibold">
+                    Charge today
+                  </span>
                   <span className="text-ghost-white font-bold text-lg">
                     ${estimatedTotal.toFixed(2)}
                   </span>
                 </div>
-                
+
                 {/* Tax disclaimer */}
                 <p className="text-xs text-mist-gray mt-2">
-                  {hasVatExemption 
+                  {hasVatExemption
                     ? `VAT reverse charge applied for business with Tax ID`
-                    : `Estimated ${vatName || 'tax'} based on your location. Final amount calculated at checkout.`
-                  }
+                    : `Estimated ${
+                        vatName || "tax"
+                      } based on your location. Final amount calculated at checkout.`}
                 </p>
               </div>
             )}
-            
+
             {/* Show generic message if no country selected */}
             {!selectedCountry && (
               <div className="mt-3 pt-3 border-t border-white/5">
@@ -336,7 +343,10 @@ export function CheckoutModal({
           {/* B2B Toggle - Show for non-B2B plans, auto-enabled for B2B plans */}
           {!isB2BPlan && (
             <div className="flex items-center justify-between p-4 rounded-xl bg-void-black border border-white/10">
-              <label htmlFor="b2b-toggle" className="text-sm text-ghost-white font-medium cursor-pointer">
+              <label
+                htmlFor="b2b-toggle"
+                className="text-sm text-ghost-white font-medium cursor-pointer"
+              >
                 I&apos;m purchasing for a business
               </label>
               <button
@@ -346,12 +356,14 @@ export function CheckoutModal({
                 role="switch"
                 aria-checked={isB2B}
                 className={`relative w-12 h-6 rounded-full transition-all duration-300 ${
-                  isB2B ? 'bg-neural shadow-[0_0_10px_rgba(139,92,246,0.3)]' : 'bg-white/10'
+                  isB2B
+                    ? "bg-neural shadow-[0_0_10px_rgba(139,92,246,0.3)]"
+                    : "bg-white/10"
                 }`}
               >
                 <span
                   className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-all duration-300 shadow-lg ${
-                    isB2B ? 'translate-x-6' : 'translate-x-0'
+                    isB2B ? "translate-x-6" : "translate-x-0"
                   }`}
                 />
               </button>
@@ -365,7 +377,7 @@ export function CheckoutModal({
                 <Building2 className="w-4 h-4" />
                 <span>Business Information</span>
               </div>
-              
+
               {/* Company Name */}
               <div>
                 <label className="block text-sm font-medium text-ghost-white mb-2">
@@ -393,7 +405,8 @@ export function CheckoutModal({
                   className="w-full px-4 py-3 rounded-xl bg-void-black border border-white/10 text-ghost-white placeholder:text-mist-gray focus:border-neural/50 focus:outline-none focus:ring-1 focus:ring-neural/50 transition-all"
                 />
                 <p className="text-xs text-mist-gray mt-2">
-                  EU businesses with valid VAT numbers may qualify for VAT exemption (reverse charge)
+                  EU businesses with valid VAT numbers may qualify for VAT
+                  exemption (reverse charge)
                 </p>
               </div>
             </div>
@@ -401,7 +414,10 @@ export function CheckoutModal({
 
           {/* Country */}
           <div>
-            <label htmlFor="country-select" className="block text-sm font-medium text-ghost-white mb-2">
+            <label
+              htmlFor="country-select"
+              className="block text-sm font-medium text-ghost-white mb-2"
+            >
               Country *
             </label>
             <div className="relative">

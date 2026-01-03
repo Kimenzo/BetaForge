@@ -2,13 +2,13 @@
 // Payment Hooks for Client
 // ========================
 
-'use client';
+"use client";
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from "react";
 
 interface PaymentProvider {
   country: string;
-  provider: 'paystack' | 'dodo';
+  provider: "paystack" | "dodo";
   currency: string;
   configured: boolean;
 }
@@ -40,15 +40,15 @@ export function useCountryDetection() {
         // Try multiple detection methods
         // 1. Check browser timezone
         const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        
+
         // 2. Try IP geolocation (free service)
-        const response = await fetch('https://ipapi.co/json/', { 
-          cache: 'force-cache' 
+        const response = await fetch("https://ipapi.co/json/", {
+          cache: "force-cache",
         });
-        
+
         if (response.ok) {
           const data = await response.json();
-          setCountry(data.country_code || 'US');
+          setCountry(data.country_code || "US");
         } else {
           // Fallback based on timezone
           const countryFromTimezone = getCountryFromTimezone(timezone);
@@ -56,7 +56,7 @@ export function useCountryDetection() {
         }
       } catch {
         // Default to US on error
-        setCountry('US');
+        setCountry("US");
       } finally {
         setLoading(false);
       }
@@ -76,16 +76,18 @@ export function usePaymentProvider(country: string | null) {
   useEffect(() => {
     async function fetchProvider() {
       if (!country) return;
-      
+
       setLoading(true);
       try {
-        const response = await fetch(`/api/payments/checkout?country=${country}`);
+        const response = await fetch(
+          `/api/payments/checkout?country=${country}`
+        );
         if (response.ok) {
           const data = await response.json();
           setProvider(data);
         }
       } catch (error) {
-        console.error('Failed to fetch payment provider:', error);
+        console.error("Failed to fetch payment provider:", error);
       } finally {
         setLoading(false);
       }
@@ -102,65 +104,68 @@ export function useCheckout() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const createCheckout = useCallback(async (
-    planId: string,
-    billingInterval: 'monthly' | 'yearly',
-    email: string,
-    name?: string,
-    country?: string,
-    taxId?: string,
-    companyName?: string,
-    userId?: string
-  ): Promise<CheckoutResult> => {
-    setLoading(true);
-    setError(null);
+  const createCheckout = useCallback(
+    async (
+      planId: string,
+      billingInterval: "monthly" | "yearly",
+      email: string,
+      name?: string,
+      country?: string,
+      taxId?: string,
+      companyName?: string,
+      userId?: string
+    ): Promise<CheckoutResult> => {
+      setLoading(true);
+      setError(null);
 
-    try {
-      const response = await fetch('/api/payments/checkout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          planId,
-          billingInterval,
-          email,
-          name,
-          country,
-          userId,
-          // B2B fields
-          taxId: taxId || undefined,
-          companyName: companyName || undefined,
-          isB2B: !!(taxId || companyName),
-        }),
-      });
+      try {
+        const response = await fetch("/api/payments/checkout", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            planId,
+            billingInterval,
+            email,
+            name,
+            country,
+            userId,
+            // B2B fields
+            taxId: taxId || undefined,
+            companyName: companyName || undefined,
+            isB2B: !!(taxId || companyName),
+          }),
+        });
 
-      const data = await response.json();
+        const data = await response.json();
 
-      if (!response.ok) {
-        setError(data.error || 'Failed to create checkout');
-        return { success: false, error: data.error };
+        if (!response.ok) {
+          setError(data.error || "Failed to create checkout");
+          return { success: false, error: data.error };
+        }
+
+        // Redirect to checkout
+        if (data.checkoutUrl) {
+          window.location.href = data.checkoutUrl;
+        }
+
+        return {
+          success: true,
+          checkoutUrl: data.checkoutUrl,
+          sessionId: data.sessionId,
+          provider: data.provider,
+        };
+      } catch (err) {
+        const message = err instanceof Error ? err.message : "Checkout failed";
+        setError(message);
+        return { success: false, error: message };
+      } finally {
+        setLoading(false);
       }
-
-      // Redirect to checkout
-      if (data.checkoutUrl) {
-        window.location.href = data.checkoutUrl;
-      }
-
-      return {
-        success: true,
-        checkoutUrl: data.checkoutUrl,
-        sessionId: data.sessionId,
-        provider: data.provider,
-      };
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Checkout failed';
-      setError(message);
-      return { success: false, error: message };
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+    },
+    []
+  );
 
   return { createCheckout, loading, error };
 }
@@ -180,15 +185,19 @@ export function useSubscription(userId: string | null) {
 
     setLoading(true);
     try {
-      const response = await fetch(`/api/payments/subscription?userId=${userId}`);
+      const response = await fetch(
+        `/api/payments/subscription?userId=${userId}`
+      );
       if (response.ok) {
         const data = await response.json();
         setSubscription(data);
       } else {
-        setError('Failed to fetch subscription');
+        setError("Failed to fetch subscription");
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch subscription');
+      setError(
+        err instanceof Error ? err.message : "Failed to fetch subscription"
+      );
     } finally {
       setLoading(false);
     }
@@ -198,69 +207,78 @@ export function useSubscription(userId: string | null) {
     fetchSubscription();
   }, [fetchSubscription]);
 
-  const cancelSubscription = useCallback(async (cancelImmediately = false) => {
-    if (!userId) return { success: false, error: 'No user ID' };
+  const cancelSubscription = useCallback(
+    async (cancelImmediately = false) => {
+      if (!userId) return { success: false, error: "No user ID" };
 
-    try {
-      const response = await fetch('/api/payments/subscription', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userId, cancelImmediately }),
-      });
+      try {
+        const response = await fetch("/api/payments/subscription", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userId, cancelImmediately }),
+        });
 
-      const data = await response.json();
+        const data = await response.json();
 
-      if (response.ok) {
-        await fetchSubscription(); // Refresh
-        return { success: true, message: data.message };
-      } else {
-        return { success: false, error: data.error };
+        if (response.ok) {
+          await fetchSubscription(); // Refresh
+          return { success: true, message: data.message };
+        } else {
+          return { success: false, error: data.error };
+        }
+      } catch (err) {
+        return {
+          success: false,
+          error: err instanceof Error ? err.message : "Failed to cancel",
+        };
       }
-    } catch (err) {
-      return { 
-        success: false, 
-        error: err instanceof Error ? err.message : 'Failed to cancel' 
-      };
-    }
-  }, [userId, fetchSubscription]);
+    },
+    [userId, fetchSubscription]
+  );
 
-  return { subscription, loading, error, cancelSubscription, refresh: fetchSubscription };
+  return {
+    subscription,
+    loading,
+    error,
+    cancelSubscription,
+    refresh: fetchSubscription,
+  };
 }
 
 // Helper: Get country from timezone
 function getCountryFromTimezone(timezone: string): string {
   const timezoneCountryMap: Record<string, string> = {
-    'Africa/Lagos': 'NG',
-    'Africa/Accra': 'GH',
-    'Africa/Johannesburg': 'ZA',
-    'Africa/Nairobi': 'KE',
-    'Africa/Abidjan': 'CI',
-    'America/New_York': 'US',
-    'America/Los_Angeles': 'US',
-    'America/Chicago': 'US',
-    'America/Denver': 'US',
-    'Europe/London': 'GB',
-    'Europe/Paris': 'FR',
-    'Europe/Berlin': 'DE',
-    'Asia/Kolkata': 'IN',
-    'Asia/Tokyo': 'JP',
-    'Australia/Sydney': 'AU',
+    "Africa/Lagos": "NG",
+    "Africa/Accra": "GH",
+    "Africa/Johannesburg": "ZA",
+    "Africa/Nairobi": "KE",
+    "Africa/Abidjan": "CI",
+    "America/New_York": "US",
+    "America/Los_Angeles": "US",
+    "America/Chicago": "US",
+    "America/Denver": "US",
+    "Europe/London": "GB",
+    "Europe/Paris": "FR",
+    "Europe/Berlin": "DE",
+    "Asia/Kolkata": "IN",
+    "Asia/Tokyo": "JP",
+    "Australia/Sydney": "AU",
     // Add more as needed
   };
 
-  return timezoneCountryMap[timezone] || 'US';
+  return timezoneCountryMap[timezone] || "US";
 }
 
 // Format price for display
 export function formatPrice(
   amount: number,
-  currency: string = 'USD',
-  locale: string = 'en-US'
+  currency: string = "USD",
+  locale: string = "en-US"
 ): string {
   return new Intl.NumberFormat(locale, {
-    style: 'currency',
+    style: "currency",
     currency,
     minimumFractionDigits: 0,
     maximumFractionDigits: 2,
@@ -268,12 +286,12 @@ export function formatPrice(
 }
 
 // Get provider display name
-export function getProviderDisplayName(provider: 'paystack' | 'dodo'): string {
-  return provider === 'paystack' ? 'Paystack' : 'Dodo Payments';
+export function getProviderDisplayName(provider: "paystack" | "dodo"): string {
+  return provider === "paystack" ? "Paystack" : "Dodo Payments";
 }
 
 // Check if country is in Africa (Paystack)
 export function isAfricanCountry(countryCode: string): boolean {
-  const africanCountries = ['NG', 'GH', 'ZA', 'KE', 'CI'];
+  const africanCountries = ["NG", "GH", "ZA", "KE", "CI"];
   return africanCountries.includes(countryCode.toUpperCase());
 }

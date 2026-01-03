@@ -77,9 +77,30 @@ export default {
         "2xl": "1.5rem",
       },
       fontFamily: {
-        sans: ["var(--font-primary)", "system-ui", "sans-serif"],
-        display: ["var(--font-primary)", "system-ui", "sans-serif"],
-        mono: ["var(--font-mono)", "JetBrains Mono", "monospace"],
+        sans: [
+          "system-ui",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica Neue",
+          "Arial",
+          "sans-serif",
+        ],
+        display: [
+          "system-ui",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "sans-serif",
+        ],
+        mono: [
+          "Consolas",
+          "Monaco",
+          "Courier New",
+          "monospace",
+        ],
       },
       fontSize: {
         "fluid-xs": "var(--text-xs)",
@@ -196,22 +217,22 @@ export default {
         "out-expo": "cubic-bezier(0.16, 1, 0.3, 1)",
         "out-back": "cubic-bezier(0.34, 1.56, 0.64, 1)",
         "in-out-circ": "cubic-bezier(0.85, 0, 0.15, 1)",
-        "spring": "cubic-bezier(0.34, 1.2, 0.64, 1)",
+        spring: "cubic-bezier(0.34, 1.2, 0.64, 1)",
       },
       backdropBlur: {
         xs: "2px",
       },
       // GPU-accelerated animation presets
       transitionProperty: {
-        "gpu": "transform, opacity",
+        gpu: "transform, opacity",
         "colors-gpu": "color, background-color, border-color, opacity",
       },
       // Performance-optimized durations
       transitionDuration: {
-        "instant": "50ms",
-        "fast": "150ms",
-        "normal": "300ms",
-        "slow": "500ms",
+        instant: "50ms",
+        fast: "150ms",
+        normal: "300ms",
+        slow: "500ms",
       },
     },
   },

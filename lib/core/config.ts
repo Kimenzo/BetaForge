@@ -16,7 +16,9 @@ import { z } from "zod";
  */
 const envSchema = z.object({
   // Node environment
-  NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
+  NODE_ENV: z
+    .enum(["development", "production", "test"])
+    .default("development"),
 
   // Application
   APP_NAME: z.string().default("betaforge"),
@@ -111,7 +113,9 @@ export const config = {
   // Service availability
   get isSupabaseConfigured() {
     const env = this.env;
-    return Boolean(env.NEXT_PUBLIC_SUPABASE_URL && env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+    return Boolean(
+      env.NEXT_PUBLIC_SUPABASE_URL && env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    );
   },
 
   get isAnthropicConfigured() {
@@ -126,7 +130,10 @@ export const config = {
   // Feature flags
   features: {
     get aiTesting() {
-      return validateEnv().FEATURE_AI_TESTING && Boolean(validateEnv().ANTHROPIC_API_KEY);
+      return (
+        validateEnv().FEATURE_AI_TESTING &&
+        Boolean(validateEnv().ANTHROPIC_API_KEY)
+      );
     },
     get webhooks() {
       return validateEnv().FEATURE_WEBHOOKS;
@@ -182,17 +189,16 @@ export const config = {
 /**
  * Feature flag checker with fallback behavior
  */
-export function isFeatureEnabled(feature: keyof typeof config.features): boolean {
+export function isFeatureEnabled(
+  feature: keyof typeof config.features
+): boolean {
   return config.features[feature];
 }
 
 /**
  * Require a specific configuration to be present
  */
-export function requireConfig<T>(
-  value: T | undefined | null,
-  name: string
-): T {
+export function requireConfig<T>(value: T | undefined | null, name: string): T {
   if (value === undefined || value === null) {
     throw new Error(`Missing required configuration: ${name}`);
   }
@@ -202,6 +208,9 @@ export function requireConfig<T>(
 /**
  * Get config with graceful degradation
  */
-export function getConfigOrDefault<T>(value: T | undefined, defaultValue: T): T {
+export function getConfigOrDefault<T>(
+  value: T | undefined,
+  defaultValue: T
+): T {
   return value ?? defaultValue;
 }

@@ -8,11 +8,11 @@ import type { Metric } from "web-vitals";
 // Performance thresholds (top 1% targets)
 const THRESHOLDS = {
   LCP: { good: 1200, poor: 2500 }, // Largest Contentful Paint
-  FID: { good: 50, poor: 100 },    // First Input Delay
-  CLS: { good: 0.05, poor: 0.1 },  // Cumulative Layout Shift
-  FCP: { good: 900, poor: 1800 },  // First Contentful Paint
-  TTFB: { good: 200, poor: 500 },  // Time to First Byte
-  INP: { good: 100, poor: 200 },   // Interaction to Next Paint
+  FID: { good: 50, poor: 100 }, // First Input Delay
+  CLS: { good: 0.05, poor: 0.1 }, // Cumulative Layout Shift
+  FCP: { good: 900, poor: 1800 }, // First Contentful Paint
+  TTFB: { good: 200, poor: 500 }, // Time to First Byte
+  INP: { good: 100, poor: 200 }, // Interaction to Next Paint
 };
 
 export type MetricName = keyof typeof THRESHOLDS;
@@ -27,7 +27,10 @@ export interface PerformanceReport {
 /**
  * Rate a metric value based on thresholds
  */
-function rateMetric(name: MetricName, value: number): PerformanceReport["rating"] {
+function rateMetric(
+  name: MetricName,
+  value: number
+): PerformanceReport["rating"] {
   const threshold = THRESHOLDS[name];
   if (!threshold) return "needs-improvement";
   if (value <= threshold.good) return "good";
@@ -44,7 +47,9 @@ export async function measureWebVitals(
 ): Promise<void> {
   if (typeof window === "undefined") return;
 
-  const { onLCP, onFID, onCLS, onFCP, onTTFB, onINP } = await import("web-vitals");
+  const { onLCP, onFID, onCLS, onFCP, onTTFB, onINP } = await import(
+    "web-vitals"
+  );
 
   const handleMetric = (metric: Metric) => {
     const name = metric.name as MetricName;
@@ -84,12 +89,12 @@ export class PerformanceMonitor {
   measure(name: string, markName?: string): number {
     const start = markName ? this.marks.get(markName) : 0;
     const duration = performance.now() - (start || 0);
-    
+
     if (!this.metrics.has(name)) {
       this.metrics.set(name, []);
     }
     this.metrics.get(name)!.push(duration);
-    
+
     return duration;
   }
 
@@ -125,8 +130,9 @@ export class PerformanceMonitor {
    * Get full report
    */
   getReport(): Record<string, { avg: number; p95: number; count: number }> {
-    const report: Record<string, { avg: number; p95: number; count: number }> = {};
-    
+    const report: Record<string, { avg: number; p95: number; count: number }> =
+      {};
+
     this.metrics.forEach((values, name) => {
       report[name] = {
         avg: this.getAverage(name),
@@ -134,7 +140,7 @@ export class PerformanceMonitor {
         count: values.length,
       };
     });
-    
+
     return report;
   }
 }
@@ -145,8 +151,13 @@ export class PerformanceMonitor {
 export function reportPerformance(report: PerformanceReport): void {
   // Log in development
   if (process.env.NODE_ENV === "development") {
-    const emoji = report.rating === "good" ? "✅" : report.rating === "poor" ? "❌" : "⚠️";
-    console.log(`${emoji} ${report.metric}: ${report.value.toFixed(2)}ms (${report.rating})`);
+    const emoji =
+      report.rating === "good" ? "✅" : report.rating === "poor" ? "❌" : "⚠️";
+    console.log(
+      `${emoji} ${report.metric}: ${report.value.toFixed(2)}ms (${
+        report.rating
+      })`
+    );
   }
 
   // Send to analytics in production

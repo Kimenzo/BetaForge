@@ -2,12 +2,8 @@
 // Dodo Payments Provider (Global)
 // ========================
 
-import { dodoConfig } from './config';
-import {
-  CustomerInfo,
-  CreateCheckoutResponse,
-  BillingInterval,
-} from './types';
+import { dodoConfig } from "./config";
+import { CustomerInfo, CreateCheckoutResponse, BillingInterval } from "./types";
 
 interface DodoCheckoutSession {
   session_id: string;
@@ -31,7 +27,7 @@ interface DodoSubscriptionResponse {
 }
 
 // Direct checkout URL (no API call needed)
-const DODO_CHECKOUT_BASE_URL = 'https://checkout.dodopayments.com/buy';
+const DODO_CHECKOUT_BASE_URL = "https://checkout.dodopayments.com/buy";
 
 // Generate direct checkout URL as fallback
 export function getDodoDirectCheckoutUrl(
@@ -55,10 +51,10 @@ export async function createDodoCheckoutSession(
 
   try {
     const response = await fetch(`${dodoConfig.baseUrl}/checkouts`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Authorization': `Bearer ${dodoConfig.apiKey}`,
-        'Content-Type': 'application/json',
+        Authorization: `Bearer ${dodoConfig.apiKey}`,
+        "Content-Type": "application/json",
       },
       signal: controller.signal,
       body: JSON.stringify({
@@ -68,10 +64,12 @@ export async function createDodoCheckoutSession(
             quantity,
           },
         ],
-        customer: customer.email ? {
-          email: customer.email,
-          name: customer.companyName || customer.name || undefined,
-        } : undefined,
+        customer: customer.email
+          ? {
+              email: customer.email,
+              name: customer.companyName || customer.name || undefined,
+            }
+          : undefined,
         return_url: returnUrl,
         // B2B Tax ID for VAT reverse charge
         ...(customer.taxId && { tax_id: customer.taxId }),
@@ -83,7 +81,7 @@ export async function createDodoCheckoutSession(
         metadata: {
           user_id: customer.userId,
           country: customer.country,
-          is_b2b: customer.isB2B ? 'true' : 'false',
+          is_b2b: customer.isB2B ? "true" : "false",
           company_name: customer.companyName,
         },
       }),
@@ -101,7 +99,9 @@ export async function createDodoCheckoutSession(
         }
       } catch {
         // Response wasn't JSON, use status text
-        errorMessage = `HTTP ${response.status}: ${response.statusText || 'Failed to create checkout'}`;
+        errorMessage = `HTTP ${response.status}: ${
+          response.statusText || "Failed to create checkout"
+        }`;
       }
       return {
         success: false,
@@ -115,20 +115,20 @@ export async function createDodoCheckoutSession(
       success: true,
       checkoutUrl: data.checkout_url,
       sessionId: data.session_id,
-      provider: 'dodo',
+      provider: "dodo",
     };
   } catch (error) {
     clearTimeout(timeoutId);
-    
+
     // Fallback to direct checkout URL on timeout or fetch failure
-    console.warn('Dodo API failed, using direct checkout URL:', error);
+    console.warn("Dodo API failed, using direct checkout URL:", error);
     const fallbackUrl = getDodoDirectCheckoutUrl(productId, quantity);
-    
+
     return {
       success: true,
       checkoutUrl: fallbackUrl,
       sessionId: `fallback_${Date.now()}`,
-      provider: 'dodo',
+      provider: "dodo",
     };
   }
 }
@@ -142,23 +142,23 @@ export async function createDodoPayment(
 ): Promise<CreateCheckoutResponse> {
   try {
     const response = await fetch(`${dodoConfig.baseUrl}/payments`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Authorization': `Bearer ${dodoConfig.apiKey}`,
-        'Content-Type': 'application/json',
+        Authorization: `Bearer ${dodoConfig.apiKey}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         payment_link: true,
         billing: {
-          city: 'Unknown',
-          country: customer.country || 'US',
-          state: 'Unknown',
-          street: 'Unknown',
+          city: "Unknown",
+          country: customer.country || "US",
+          state: "Unknown",
+          street: "Unknown",
           zipcode: 0,
         },
         customer: {
           email: customer.email,
-          name: customer.name || 'Customer',
+          name: customer.name || "Customer",
         },
         product_cart: [
           {
@@ -183,7 +183,9 @@ export async function createDodoPayment(
           errorMessage = errorData.message || errorData.error || errorMessage;
         }
       } catch {
-        errorMessage = `HTTP ${response.status}: ${response.statusText || 'Failed to create payment'}`;
+        errorMessage = `HTTP ${response.status}: ${
+          response.statusText || "Failed to create payment"
+        }`;
       }
       return {
         success: false,
@@ -197,13 +199,14 @@ export async function createDodoPayment(
       success: true,
       checkoutUrl: data.payment_link,
       sessionId: data.payment_id,
-      provider: 'dodo',
+      provider: "dodo",
     };
   } catch (error) {
-    console.error('Dodo payment error:', error);
+    console.error("Dodo payment error:", error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to create payment',
+      error:
+        error instanceof Error ? error.message : "Failed to create payment",
     };
   }
 }
@@ -216,7 +219,13 @@ export async function createDodoSubscription(
   trialDays?: number
 ): Promise<CreateCheckoutResponse> {
   // Use checkout session for subscriptions (recommended)
-  return createDodoCheckoutSession(productId, customer, returnUrl, 1, trialDays);
+  return createDodoCheckoutSession(
+    productId,
+    customer,
+    returnUrl,
+    1,
+    trialDays
+  );
 }
 
 // Retrieve a payment
@@ -226,11 +235,14 @@ export async function getDodoPayment(paymentId: string): Promise<{
   error?: string;
 }> {
   try {
-    const response = await fetch(`${dodoConfig.baseUrl}/payments/${paymentId}`, {
-      headers: {
-        'Authorization': `Bearer ${dodoConfig.apiKey}`,
-      },
-    });
+    const response = await fetch(
+      `${dodoConfig.baseUrl}/payments/${paymentId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${dodoConfig.apiKey}`,
+        },
+      }
+    );
 
     if (!response.ok) {
       return {
@@ -246,10 +258,11 @@ export async function getDodoPayment(paymentId: string): Promise<{
       data,
     };
   } catch (error) {
-    console.error('Dodo get payment error:', error);
+    console.error("Dodo get payment error:", error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to retrieve payment',
+      error:
+        error instanceof Error ? error.message : "Failed to retrieve payment",
     };
   }
 }
@@ -261,11 +274,14 @@ export async function getDodoSubscription(subscriptionId: string): Promise<{
   error?: string;
 }> {
   try {
-    const response = await fetch(`${dodoConfig.baseUrl}/subscriptions/${subscriptionId}`, {
-      headers: {
-        'Authorization': `Bearer ${dodoConfig.apiKey}`,
-      },
-    });
+    const response = await fetch(
+      `${dodoConfig.baseUrl}/subscriptions/${subscriptionId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${dodoConfig.apiKey}`,
+        },
+      }
+    );
 
     if (!response.ok) {
       return {
@@ -281,10 +297,13 @@ export async function getDodoSubscription(subscriptionId: string): Promise<{
       data,
     };
   } catch (error) {
-    console.error('Dodo get subscription error:', error);
+    console.error("Dodo get subscription error:", error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to retrieve subscription',
+      error:
+        error instanceof Error
+          ? error.message
+          : "Failed to retrieve subscription",
     };
   }
 }
@@ -295,31 +314,37 @@ export async function cancelDodoSubscription(
   cancelAtPeriodEnd: boolean = true
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    const response = await fetch(`${dodoConfig.baseUrl}/subscriptions/${subscriptionId}`, {
-      method: 'PATCH',
-      headers: {
-        'Authorization': `Bearer ${dodoConfig.apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        cancel_at_period_end: cancelAtPeriodEnd,
-      }),
-    });
+    const response = await fetch(
+      `${dodoConfig.baseUrl}/subscriptions/${subscriptionId}`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${dodoConfig.apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          cancel_at_period_end: cancelAtPeriodEnd,
+        }),
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json();
       return {
         success: false,
-        error: errorData.message || 'Failed to cancel subscription',
+        error: errorData.message || "Failed to cancel subscription",
       };
     }
 
     return { success: true };
   } catch (error) {
-    console.error('Dodo subscription cancellation error:', error);
+    console.error("Dodo subscription cancellation error:", error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to cancel subscription',
+      error:
+        error instanceof Error
+          ? error.message
+          : "Failed to cancel subscription",
     };
   }
 }
@@ -328,42 +353,45 @@ export async function cancelDodoSubscription(
 export async function validateDodoWebhook(
   body: string,
   headers: {
-    'webhook-id': string;
-    'webhook-signature': string;
-    'webhook-timestamp': string;
+    "webhook-id": string;
+    "webhook-signature": string;
+    "webhook-timestamp": string;
   }
 ): Promise<boolean> {
   try {
     const webhookSecret = process.env.DODO_WEBHOOK_KEY;
     if (!webhookSecret) {
-      console.error('DODO_WEBHOOK_KEY not configured');
+      console.error("DODO_WEBHOOK_KEY not configured");
       return false;
     }
 
     // Standard Webhooks verification
-    const crypto = require('crypto');
-    const signedContent = `${headers['webhook-id']}.${headers['webhook-timestamp']}.${body}`;
-    
+    const crypto = require("crypto");
+    const signedContent = `${headers["webhook-id"]}.${headers["webhook-timestamp"]}.${body}`;
+
     // The secret is base64 encoded, decode it
-    const secretBytes = Buffer.from(webhookSecret.split('_').pop() || webhookSecret, 'base64');
-    
+    const secretBytes = Buffer.from(
+      webhookSecret.split("_").pop() || webhookSecret,
+      "base64"
+    );
+
     const expectedSignature = crypto
-      .createHmac('sha256', secretBytes)
+      .createHmac("sha256", secretBytes)
       .update(signedContent)
-      .digest('base64');
+      .digest("base64");
 
     // webhook-signature format: v1,<base64_signature>
-    const signatures = headers['webhook-signature'].split(' ');
+    const signatures = headers["webhook-signature"].split(" ");
     for (const sig of signatures) {
-      const [version, signature] = sig.split(',');
-      if (version === 'v1' && signature === expectedSignature) {
+      const [version, signature] = sig.split(",");
+      if (version === "v1" && signature === expectedSignature) {
         return true;
       }
     }
 
     return false;
   } catch (error) {
-    console.error('Dodo webhook validation error:', error);
+    console.error("Dodo webhook validation error:", error);
     return false;
   }
 }
@@ -376,10 +404,10 @@ export async function createDodoRefund(
 ): Promise<{ success: boolean; refundId?: string; error?: string }> {
   try {
     const response = await fetch(`${dodoConfig.baseUrl}/refunds`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Authorization': `Bearer ${dodoConfig.apiKey}`,
-        'Content-Type': 'application/json',
+        Authorization: `Bearer ${dodoConfig.apiKey}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         payment_id: paymentId,
@@ -392,7 +420,7 @@ export async function createDodoRefund(
       const errorData = await response.json();
       return {
         success: false,
-        error: errorData.message || 'Failed to create refund',
+        error: errorData.message || "Failed to create refund",
       };
     }
 
@@ -403,10 +431,10 @@ export async function createDodoRefund(
       refundId: data.refund_id,
     };
   } catch (error) {
-    console.error('Dodo refund error:', error);
+    console.error("Dodo refund error:", error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to create refund',
+      error: error instanceof Error ? error.message : "Failed to create refund",
     };
   }
 }

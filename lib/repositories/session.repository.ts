@@ -5,7 +5,11 @@
 // ============================================================================
 
 import { SupabaseClient } from "@supabase/supabase-js";
-import { BaseRepository, QueryOptions, PaginatedResult } from "../core/repository";
+import {
+  BaseRepository,
+  QueryOptions,
+  PaginatedResult,
+} from "../core/repository";
 import { Result, ok, err } from "../core/result";
 import { AppError, Errors } from "../core/errors";
 import type { Database } from "../database.types";
@@ -90,7 +94,9 @@ export class TestSessionRepository extends BaseRepository<
       progress: (row.progress as number) || 0,
       bugsFound: (row.bugs_found as number) || 0,
       startedAt: row.started_at ? new Date(row.started_at as string) : null,
-      completedAt: row.completed_at ? new Date(row.completed_at as string) : null,
+      completedAt: row.completed_at
+        ? new Date(row.completed_at as string)
+        : null,
       createdAt: new Date(row.created_at as string),
     };
   }
@@ -111,8 +117,10 @@ export class TestSessionRepository extends BaseRepository<
     if (data.status !== undefined) row.status = data.status;
     if (data.progress !== undefined) row.progress = data.progress;
     if (data.bugsFound !== undefined) row.bugs_found = data.bugsFound;
-    if (data.startedAt !== undefined) row.started_at = data.startedAt.toISOString();
-    if (data.completedAt !== undefined) row.completed_at = data.completedAt.toISOString();
+    if (data.startedAt !== undefined)
+      row.started_at = data.startedAt.toISOString();
+    if (data.completedAt !== undefined)
+      row.completed_at = data.completedAt.toISOString();
     return row;
   }
 
@@ -123,14 +131,17 @@ export class TestSessionRepository extends BaseRepository<
     options: SessionQueryOptions = {}
   ): Promise<Result<PaginatedResult<TestSessionWithDetails>, AppError>> {
     const timer = this.log.startTimer("sessions.findWithDetails");
-    const { page = 1, limit = 20, sortBy = "created_at", sortOrder = "desc" } = options;
+    const {
+      page = 1,
+      limit = 20,
+      sortBy = "created_at",
+      sortOrder = "desc",
+    } = options;
     const offset = (page - 1) * limit;
 
     try {
-      let query = this.db
-        .from("test_sessions")
-        .select(
-          `
+      let query = this.db.from("test_sessions").select(
+        `
           *,
           projects (
             id,
@@ -145,8 +156,8 @@ export class TestSessionRepository extends BaseRepository<
             progress
           )
         `,
-          { count: "exact" }
-        );
+        { count: "exact" }
+      );
 
       // Apply filters
       if (options.projectId) {
@@ -188,7 +199,9 @@ export class TestSessionRepository extends BaseRepository<
   /**
    * Get session by ID with full details
    */
-  async findByIdWithDetails(id: string): Promise<Result<TestSessionWithDetails, AppError>> {
+  async findByIdWithDetails(
+    id: string
+  ): Promise<Result<TestSessionWithDetails, AppError>> {
     const timer = this.log.startTimer("sessions.findByIdWithDetails");
 
     try {
@@ -233,7 +246,9 @@ export class TestSessionRepository extends BaseRepository<
   /**
    * Check if project has a running session
    */
-  async hasRunningSession(projectId: string): Promise<Result<boolean, AppError>> {
+  async hasRunningSession(
+    projectId: string
+  ): Promise<Result<boolean, AppError>> {
     try {
       const { count, error } = await this.db
         .from("test_sessions")
@@ -264,7 +279,10 @@ export class TestSessionRepository extends BaseRepository<
   /**
    * Complete a session
    */
-  async completeSession(id: string, bugsFound: number): Promise<Result<TestSession, AppError>> {
+  async completeSession(
+    id: string,
+    bugsFound: number
+  ): Promise<Result<TestSession, AppError>> {
     return this.update(id, {
       status: "completed",
       completedAt: new Date(),
@@ -283,10 +301,13 @@ export class TestSessionRepository extends BaseRepository<
     });
   }
 
-  private toSessionWithDetails(row: Record<string, unknown>): TestSessionWithDetails {
+  private toSessionWithDetails(
+    row: Record<string, unknown>
+  ): TestSessionWithDetails {
     const session = this.toEntity(row);
     const projectData = row.projects as Record<string, unknown> | null;
-    const agentsData = (row.agent_executions as Array<Record<string, unknown>>) || [];
+    const agentsData =
+      (row.agent_executions as Array<Record<string, unknown>>) || [];
 
     return {
       ...session,
@@ -314,7 +335,9 @@ export class TestSessionRepository extends BaseRepository<
 
 let sessionRepository: TestSessionRepository | null = null;
 
-export function getSessionRepository(db: SupabaseClient<Database>): TestSessionRepository {
+export function getSessionRepository(
+  db: SupabaseClient<Database>
+): TestSessionRepository {
   if (!sessionRepository) {
     sessionRepository = new TestSessionRepository(db);
   }

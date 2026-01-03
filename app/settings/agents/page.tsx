@@ -102,12 +102,18 @@ export default function AgentsSettingsPage() {
     },
   ]);
 
-  const [newAgent, setNewAgent] = useState({
+  const [newAgent, setNewAgent] = useState<{
+    name: string;
+    personality: string;
+    testingStrategy: string;
+    devicePreference: "mobile" | "desktop" | "tablet";
+    traits: string[];
+  }>({
     name: "",
     personality: "",
     testingStrategy: "",
-    devicePreference: "desktop" as const,
-    traits: [] as string[],
+    devicePreference: "desktop",
+    traits: [],
   });
   const [newTrait, setNewTrait] = useState("");
 
@@ -331,162 +337,173 @@ export default function AgentsSettingsPage() {
             onClick={() => setShowCreateModal(false)}
           />
           <div className="fixed inset-0 flex items-center justify-center p-4 pointer-events-none overflow-y-auto">
-          <div className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto bg-void-elevated rounded-2xl border border-white/10 pointer-events-auto">
-            <div className="p-6 border-b border-white/10">
-              <button
-                onClick={() => setShowCreateModal(false)}
-                className="absolute top-4 right-4 p-2 rounded-lg hover:bg-white/5 transition-colors"
-              >
-                <X className="w-5 h-5 text-phantom-gray" />
-              </button>
-              <h3 className="text-xl font-bold text-white">
-                Create Custom Agent
-              </h3>
-              <p className="text-phantom-gray text-sm mt-1">
-                Define a new AI testing persona
-              </p>
-            </div>
-
-            <div className="p-6 space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-phantom-gray mb-2">
-                  Agent Name *
-                </label>
-                <input
-                  type="text"
-                  value={newAgent.name}
-                  onChange={(e) =>
-                    setNewAgent({ ...newAgent, name: e.target.value })
-                  }
-                  placeholder="e.g., Security Tester"
-                  className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-neural transition-all"
-                />
+            <div className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto bg-void-elevated rounded-2xl border border-white/10 pointer-events-auto">
+              <div className="p-6 border-b border-white/10">
+                <button
+                  onClick={() => setShowCreateModal(false)}
+                  className="absolute top-4 right-4 p-2 rounded-lg hover:bg-white/5 transition-colors"
+                >
+                  <X className="w-5 h-5 text-phantom-gray" />
+                </button>
+                <h3 className="text-xl font-bold text-white">
+                  Create Custom Agent
+                </h3>
+                <p className="text-phantom-gray text-sm mt-1">
+                  Define a new AI testing persona
+                </p>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-phantom-gray mb-2">
-                  Personality *
-                </label>
-                <input
-                  type="text"
-                  value={newAgent.personality}
-                  onChange={(e) =>
-                    setNewAgent({ ...newAgent, personality: e.target.value })
-                  }
-                  placeholder="e.g., Methodical and security-conscious"
-                  className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-neural transition-all"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-phantom-gray mb-2">
-                  Testing Strategy *
-                </label>
-                <textarea
-                  value={newAgent.testingStrategy}
-                  onChange={(e) =>
-                    setNewAgent({ ...newAgent, testingStrategy: e.target.value })
-                  }
-                  placeholder="Describe how this agent should approach testing..."
-                  rows={3}
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-neural transition-all resize-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-phantom-gray mb-2">
-                  Device Preference
-                </label>
-                <div className="grid grid-cols-3 gap-3">
-                  {([
-                    { id: "desktop" as const, icon: Monitor, label: "Desktop" },
-                    { id: "mobile" as const, icon: Smartphone, label: "Mobile" },
-                    { id: "tablet" as const, icon: Globe, label: "Tablet" },
-                  ]).map((device) => {
-                    const Icon = device.icon;
-                    return (
-                      <button
-                        key={device.id}
-                        onClick={() =>
-                          setNewAgent({
-                            ...newAgent,
-                            devicePreference: device.id,
-                          })
-                        }
-                        className={`p-3 rounded-xl border transition-all flex flex-col items-center gap-2 ${
-                          newAgent.devicePreference === device.id
-                            ? "bg-neural/20 border-neural/30 text-white"
-                            : "bg-white/5 border-white/10 text-phantom-gray hover:bg-white/10"
-                        }`}
-                      >
-                        <Icon className="w-5 h-5" />
-                        <span className="text-sm">{device.label}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-phantom-gray mb-2">
-                  Personality Traits (up to 5)
-                </label>
-                <div className="flex gap-2 mb-2">
+              <div className="p-6 space-y-6">
+                <div>
+                  <label className="block text-sm font-medium text-phantom-gray mb-2">
+                    Agent Name *
+                  </label>
                   <input
                     type="text"
-                    value={newTrait}
-                    onChange={(e) => setNewTrait(e.target.value)}
-                    placeholder="e.g., Patient"
-                    className="flex-1 h-10 px-4 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-neural transition-all"
-                    onKeyPress={(e) => e.key === "Enter" && handleAddTrait()}
+                    value={newAgent.name}
+                    onChange={(e) =>
+                      setNewAgent({ ...newAgent, name: e.target.value })
+                    }
+                    placeholder="e.g., Security Tester"
+                    className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-neural transition-all"
                   />
-                  <button
-                    onClick={handleAddTrait}
-                    disabled={!newTrait || newAgent.traits.length >= 5}
-                    className="px-4 h-10 rounded-lg bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all disabled:opacity-50"
-                  >
-                    Add
-                  </button>
                 </div>
-                <div className="flex gap-2 flex-wrap">
-                  {newAgent.traits.map((trait) => (
-                    <span
-                      key={trait}
-                      className="px-3 py-1 rounded-lg bg-neural/20 text-neural-bright text-sm flex items-center gap-2"
+
+                <div>
+                  <label className="block text-sm font-medium text-phantom-gray mb-2">
+                    Personality *
+                  </label>
+                  <input
+                    type="text"
+                    value={newAgent.personality}
+                    onChange={(e) =>
+                      setNewAgent({ ...newAgent, personality: e.target.value })
+                    }
+                    placeholder="e.g., Methodical and security-conscious"
+                    className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-neural transition-all"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-phantom-gray mb-2">
+                    Testing Strategy *
+                  </label>
+                  <textarea
+                    value={newAgent.testingStrategy}
+                    onChange={(e) =>
+                      setNewAgent({
+                        ...newAgent,
+                        testingStrategy: e.target.value,
+                      })
+                    }
+                    placeholder="Describe how this agent should approach testing..."
+                    rows={3}
+                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-neural transition-all resize-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-phantom-gray mb-2">
+                    Device Preference
+                  </label>
+                  <div className="grid grid-cols-3 gap-3">
+                    {[
+                      {
+                        id: "desktop" as const,
+                        icon: Monitor,
+                        label: "Desktop",
+                      },
+                      {
+                        id: "mobile" as const,
+                        icon: Smartphone,
+                        label: "Mobile",
+                      },
+                      { id: "tablet" as const, icon: Globe, label: "Tablet" },
+                    ].map((device) => {
+                      const Icon = device.icon;
+                      return (
+                        <button
+                          key={device.id}
+                          onClick={() =>
+                            setNewAgent({
+                              ...newAgent,
+                              devicePreference: device.id,
+                            })
+                          }
+                          className={`p-3 rounded-xl border transition-all flex flex-col items-center gap-2 ${
+                            newAgent.devicePreference === device.id
+                              ? "bg-neural/20 border-neural/30 text-white"
+                              : "bg-white/5 border-white/10 text-phantom-gray hover:bg-white/10"
+                          }`}
+                        >
+                          <Icon className="w-5 h-5" />
+                          <span className="text-sm">{device.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-phantom-gray mb-2">
+                    Personality Traits (up to 5)
+                  </label>
+                  <div className="flex gap-2 mb-2">
+                    <input
+                      type="text"
+                      value={newTrait}
+                      onChange={(e) => setNewTrait(e.target.value)}
+                      placeholder="e.g., Patient"
+                      className="flex-1 h-10 px-4 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-neural transition-all"
+                      onKeyPress={(e) => e.key === "Enter" && handleAddTrait()}
+                    />
+                    <button
+                      onClick={handleAddTrait}
+                      disabled={!newTrait || newAgent.traits.length >= 5}
+                      className="px-4 h-10 rounded-lg bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all disabled:opacity-50"
                     >
-                      {trait}
-                      <button
-                        onClick={() => handleRemoveTrait(trait)}
-                        className="hover:text-white transition-colors"
+                      Add
+                    </button>
+                  </div>
+                  <div className="flex gap-2 flex-wrap">
+                    {newAgent.traits.map((trait) => (
+                      <span
+                        key={trait}
+                        className="px-3 py-1 rounded-lg bg-neural/20 text-neural-bright text-sm flex items-center gap-2"
                       >
-                        <X className="w-3 h-3" />
-                      </button>
-                    </span>
-                  ))}
+                        {trait}
+                        <button
+                          onClick={() => handleRemoveTrait(trait)}
+                          className="hover:text-white transition-colors"
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="p-6 border-t border-white/10 flex gap-3">
-              <button
-                onClick={() => setShowCreateModal(false)}
-                className="flex-1 py-3 rounded-xl border border-white/10 text-white font-medium hover:bg-white/5 transition-all"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleCreateAgent}
-                disabled={
-                  !newAgent.name ||
-                  !newAgent.personality ||
-                  !newAgent.testingStrategy
-                }
-                className="flex-1 py-3 rounded-xl bg-gradient-to-r from-neural to-electric-cyan text-white font-medium hover:shadow-glow transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Create Agent
-              </button>
+              <div className="p-6 border-t border-white/10 flex gap-3">
+                <button
+                  onClick={() => setShowCreateModal(false)}
+                  className="flex-1 py-3 rounded-xl border border-white/10 text-white font-medium hover:bg-white/5 transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleCreateAgent}
+                  disabled={
+                    !newAgent.name ||
+                    !newAgent.personality ||
+                    !newAgent.testingStrategy
+                  }
+                  className="flex-1 py-3 rounded-xl bg-gradient-to-r from-neural to-electric-cyan text-white font-medium hover:shadow-glow transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Create Agent
+                </button>
+              </div>
             </div>
-          </div>
           </div>
         </div>
       )}

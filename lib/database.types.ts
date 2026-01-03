@@ -666,7 +666,12 @@ export type Database = {
       test_status: "queued" | "running" | "completed" | "failed";
       trigger_type: "manual" | "webhook" | "scheduled";
       payment_status: "pending" | "succeeded" | "failed" | "refunded";
-      subscription_status: "active" | "cancelled" | "past_due" | "incomplete" | "trialing";
+      subscription_status:
+        | "active"
+        | "cancelled"
+        | "past_due"
+        | "incomplete"
+        | "trialing";
       payment_provider: "paystack" | "dodo";
     };
     CompositeTypes: {
@@ -715,8 +720,19 @@ export const ProjectStatus = ["active", "testing", "idle", "error"] as const;
 export const TestStatus = ["queued", "running", "completed", "failed"] as const;
 export const TriggerType = ["manual", "webhook", "scheduled"] as const;
 export const PlatformType = ["web", "mobile", "desktop"] as const;
-export const PaymentStatus = ["pending", "succeeded", "failed", "refunded"] as const;
-export const SubscriptionStatus = ["active", "cancelled", "past_due", "incomplete", "trialing"] as const;
+export const PaymentStatus = [
+  "pending",
+  "succeeded",
+  "failed",
+  "refunded",
+] as const;
+export const SubscriptionStatus = [
+  "active",
+  "cancelled",
+  "past_due",
+  "incomplete",
+  "trialing",
+] as const;
 export const PaymentProvider = ["paystack", "dodo"] as const;
 export const AgentEventType = [
   "agent_started",

@@ -69,9 +69,15 @@ export const VirtualList = memo(function VirtualList<T>({
   // Calculate visible range
   const { startIndex, endIndex, totalHeight, offsetY } = useMemo(() => {
     const totalHeight = items.length * itemHeight;
-    const startIndex = Math.max(0, Math.floor(scrollTop / itemHeight) - overscan);
+    const startIndex = Math.max(
+      0,
+      Math.floor(scrollTop / itemHeight) - overscan
+    );
     const visibleCount = Math.ceil(containerHeight / itemHeight);
-    const endIndex = Math.min(items.length - 1, startIndex + visibleCount + overscan * 2);
+    const endIndex = Math.min(
+      items.length - 1,
+      startIndex + visibleCount + overscan * 2
+    );
     const offsetY = startIndex * itemHeight;
 
     return { startIndex, endIndex, totalHeight, offsetY };
@@ -119,8 +125,13 @@ export const VirtualList = memo(function VirtualList<T>({
   // Empty state
   if (items.length === 0 && !isLoading) {
     return (
-      <div className={cn("flex items-center justify-center", className)} style={{ height: containerHeight }}>
-        {emptyComponent || <p className="text-phantom-gray">No items to display</p>}
+      <div
+        className={cn("flex items-center justify-center", className)}
+        style={{ height: containerHeight }}
+      >
+        {emptyComponent || (
+          <p className="text-phantom-gray">No items to display</p>
+        )}
       </div>
     );
   }
@@ -200,7 +211,8 @@ export const VirtualGrid = memo(function VirtualGrid<T>({
   const [scrollTop, setScrollTop] = useState(0);
 
   // Calculate grid dimensions
-  const columnsCount = Math.floor((containerWidth + gap) / (itemWidth + gap)) || 1;
+  const columnsCount =
+    Math.floor((containerWidth + gap) / (itemWidth + gap)) || 1;
   const rowsCount = Math.ceil(items.length / columnsCount);
   const rowHeight = itemHeight + gap;
   const totalHeight = rowsCount * rowHeight;
@@ -209,7 +221,10 @@ export const VirtualGrid = memo(function VirtualGrid<T>({
   const { startRow, endRow, offsetY } = useMemo(() => {
     const startRow = Math.max(0, Math.floor(scrollTop / rowHeight) - overscan);
     const visibleRows = Math.ceil(containerHeight / rowHeight);
-    const endRow = Math.min(rowsCount - 1, startRow + visibleRows + overscan * 2);
+    const endRow = Math.min(
+      rowsCount - 1,
+      startRow + visibleRows + overscan * 2
+    );
     const offsetY = startRow * rowHeight;
 
     return { startRow, endRow, offsetY };
@@ -217,7 +232,8 @@ export const VirtualGrid = memo(function VirtualGrid<T>({
 
   // Get visible items
   const visibleItems = useMemo(() => {
-    const result: Array<{ item: T; index: number; row: number; col: number }> = [];
+    const result: Array<{ item: T; index: number; row: number; col: number }> =
+      [];
 
     for (let row = startRow; row <= endRow; row++) {
       for (let col = 0; col < columnsCount; col++) {

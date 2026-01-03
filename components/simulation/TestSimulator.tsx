@@ -24,7 +24,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { SimulatedCursor } from "./SimulatedCursor";
 import { useSimulation } from "@/lib/hooks/useSimulation";
-import type { SimulationConfig, SimulationAction } from "@/lib/simulation/types";
+import type {
+  SimulationConfig,
+  SimulationAction,
+} from "@/lib/simulation/types";
 import { AGENTS } from "@/lib/agents";
 
 interface TestSimulatorProps {
@@ -171,7 +174,9 @@ export function TestSimulator({
             {state.status === "running" && (
               <span className="w-1.5 h-1.5 rounded-full bg-electric-cyan animate-pulse" />
             )}
-            {state.status === "loading" && <Loader2 className="w-3 h-3 animate-spin" />}
+            {state.status === "loading" && (
+              <Loader2 className="w-3 h-3 animate-spin" />
+            )}
             {state.status.charAt(0).toUpperCase() + state.status.slice(1)}
           </div>
 
@@ -210,7 +215,9 @@ export function TestSimulator({
                   {state.status === "loading" ? (
                     <>
                       <Loader2 className="w-12 h-12 text-neural-bright animate-spin mb-4" />
-                      <p className="text-ghost-white font-medium">Loading simulation...</p>
+                      <p className="text-ghost-white font-medium">
+                        Loading simulation...
+                      </p>
                       <p className="text-phantom-gray text-sm mt-1">
                         Preparing {agentName}&apos;s test environment
                       </p>
@@ -237,8 +244,8 @@ export function TestSimulator({
                         Ready to Test
                       </h3>
                       <p className="text-phantom-gray text-center max-w-sm mb-6">
-                        Watch as {agentName} explores your application with realistic
-                        interactions
+                        Watch as {agentName} explores your application with
+                        realistic interactions
                       </p>
                       <Button
                         onClick={start}
@@ -259,7 +266,9 @@ export function TestSimulator({
               src={targetUrl}
               title={`Preview of ${targetUrl}`}
               className={`absolute inset-0 w-full h-full border-0 transition-opacity duration-300 ${
-                state.status !== "idle" && state.status !== "loading" ? "opacity-100" : "opacity-30"
+                state.status !== "idle" && state.status !== "loading"
+                  ? "opacity-100"
+                  : "opacity-30"
               }`}
               sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
               onLoad={() => setIframeLoaded(true)}
@@ -270,10 +279,12 @@ export function TestSimulator({
             {iframeError && (
               <div className="absolute inset-0 flex flex-col items-center justify-center bg-void-black/95">
                 <AlertCircle className="w-12 h-12 text-ember-orange mb-4" />
-                <p className="text-ghost-white font-medium">Unable to load preview</p>
+                <p className="text-ghost-white font-medium">
+                  Unable to load preview
+                </p>
                 <p className="text-phantom-gray text-sm mt-1 max-w-sm text-center">
-                  The target URL may have X-Frame-Options restrictions. The simulation will
-                  continue with a placeholder view.
+                  The target URL may have X-Frame-Options restrictions. The
+                  simulation will continue with a placeholder view.
                 </p>
               </div>
             )}
@@ -440,7 +451,10 @@ export function TestSimulator({
                       style={{ backgroundColor: `${agentColor}20` }}
                     >
                       {state.currentAction.type === "click" && (
-                        <MousePointer className="w-4 h-4" style={{ color: agentColor }} />
+                        <MousePointer
+                          className="w-4 h-4"
+                          style={{ color: agentColor }}
+                        />
                       )}
                       {state.currentAction.type === "type" && (
                         <span style={{ color: agentColor }}>⌨️</span>
@@ -449,13 +463,19 @@ export function TestSimulator({
                         <span style={{ color: agentColor }}>📜</span>
                       )}
                       {state.currentAction.type === "hover" && (
-                        <Eye className="w-4 h-4" style={{ color: agentColor }} />
+                        <Eye
+                          className="w-4 h-4"
+                          style={{ color: agentColor }}
+                        />
                       )}
                       {state.currentAction.type === "navigate" && (
                         <span style={{ color: agentColor }}>🌐</span>
                       )}
                       {state.currentAction.type === "wait" && (
-                        <Clock className="w-4 h-4" style={{ color: agentColor }} />
+                        <Clock
+                          className="w-4 h-4"
+                          style={{ color: agentColor }}
+                        />
                       )}
                       {state.currentAction.type === "screenshot" && (
                         <span style={{ color: agentColor }}>📸</span>

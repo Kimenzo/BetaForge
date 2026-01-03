@@ -15,7 +15,10 @@ import {
   Activity,
 } from "lucide-react";
 import { Loading, CardSkeleton } from "@/components/ui/loading";
-import { MetricCardSkeleton, DashboardSkeleton } from "@/components/ui/skeletons";
+import {
+  MetricCardSkeleton,
+  DashboardSkeleton,
+} from "@/components/ui/skeletons";
 import { Button } from "@/components/ui/button";
 import { MetricCard } from "@/components/ui/card";
 import { ProjectCard } from "@/components/ui/projectcard";
@@ -51,7 +54,7 @@ const ACTIVITY_ACTIONS: Record<string, string> = {
   session_completed: "finished session for",
 };
 
-const getActivityAction = (eventType: string): string => 
+const getActivityAction = (eventType: string): string =>
   ACTIVITY_ACTIONS[eventType] || "interacted with";
 
 // Agent avatars - constant
@@ -79,10 +82,10 @@ const AGENT_CONFIG: Record<string, { emoji: string; color: string }> = {
 // ===========================================
 
 // Memoized Stats Grid
-const StatsGrid = memo(function StatsGrid({ 
-  stats, 
-  isLoading 
-}: { 
+const StatsGrid = memo(function StatsGrid({
+  stats,
+  isLoading,
+}: {
   stats: ReturnType<typeof useDashboardStats>["stats"];
   isLoading: boolean;
 }) {
@@ -139,10 +142,10 @@ const StatsGrid = memo(function StatsGrid({
 });
 
 // Memoized Agent Card
-const AgentStatusCard = memo(function AgentStatusCard({ 
-  agent 
-}: { 
-  agent: typeof AGENTS[0];
+const AgentStatusCard = memo(function AgentStatusCard({
+  agent,
+}: {
+  agent: (typeof AGENTS)[0];
 }) {
   return (
     <div className="group flex items-center gap-3 px-4 py-3 rounded-xl bg-void-elevated/50 border border-white/5 hover:border-neural/30 transition-gpu hover:-translate-y-1 gpu-accelerate">
@@ -158,9 +161,7 @@ const AgentStatusCard = memo(function AgentStatusCard({
         <p className="text-sm font-medium text-ghost-white">
           {agent.name.split(" ")[0]}
         </p>
-        <p className="text-xs text-mist-gray">
-          {agent.specialization}
-        </p>
+        <p className="text-xs text-mist-gray">{agent.specialization}</p>
       </div>
       <div className="w-2 h-2 rounded-full bg-quantum-green ml-2" />
     </div>
@@ -196,9 +197,9 @@ const AgentStatusBar = memo(function AgentStatusBar() {
 });
 
 // Memoized Activity Item
-const ActivityItem = memo(function ActivityItem({ 
-  activity 
-}: { 
+const ActivityItem = memo(function ActivityItem({
+  activity,
+}: {
   activity: {
     id: string;
     agentName?: string | null;
@@ -224,9 +225,7 @@ const ActivityItem = memo(function ActivityItem({
       </div>
       <div className="flex-1 min-w-0">
         <p className="text-sm text-ghost-white">
-          <span className="font-semibold">
-            {activity.agentName || "Agent"}
-          </span>{" "}
+          <span className="font-semibold">{activity.agentName || "Agent"}</span>{" "}
           <span className="text-phantom-gray">
             {getActivityAction(activity.eventType)}
           </span>{" "}
@@ -256,7 +255,10 @@ export default function DashboardPage() {
 
   // Memoize sliced projects
   const displayedProjects = useMemo(() => projects.slice(0, 6), [projects]);
-  const displayedActivities = useMemo(() => activities.slice(0, 5), [activities]);
+  const displayedActivities = useMemo(
+    () => activities.slice(0, 5),
+    [activities]
+  );
 
   return (
     <div className="space-y-8">

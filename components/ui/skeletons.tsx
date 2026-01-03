@@ -17,10 +17,10 @@ interface SkeletonProps {
 /**
  * Base skeleton component with shimmer animation
  */
-export const Skeleton = memo(function Skeleton({ 
-  className, 
+export const Skeleton = memo(function Skeleton({
+  className,
   animate = true,
-  style
+  style,
 }: SkeletonProps) {
   return (
     <div
@@ -50,10 +50,7 @@ export const TextSkeleton = memo(function TextSkeleton({
       {Array.from({ length: lines }).map((_, i) => (
         <Skeleton
           key={i}
-          className={cn(
-            "h-4",
-            i === lines - 1 ? "w-3/4" : "w-full"
-          )}
+          className={cn("h-4", i === lines - 1 ? "w-3/4" : "w-full")}
         />
       ))}
     </div>
@@ -77,15 +74,17 @@ export const AvatarSkeleton = memo(function AvatarSkeleton({
     xl: "w-16 h-16",
   };
 
-  return (
-    <Skeleton className={cn("rounded-full", sizes[size], className)} />
-  );
+  return <Skeleton className={cn("rounded-full", sizes[size], className)} />;
 });
 
 /**
  * Card skeleton for project/report cards
  */
-export const CardSkeleton = memo(function CardSkeleton({ className }: { className?: string }) {
+export const CardSkeleton = memo(function CardSkeleton({
+  className,
+}: {
+  className?: string;
+}) {
   return (
     <div
       className={cn(
@@ -113,10 +112,10 @@ export const CardSkeleton = memo(function CardSkeleton({ className }: { classNam
 /**
  * Metric card skeleton
  */
-export const MetricCardSkeleton = memo(function MetricCardSkeleton({ 
-  className 
-}: { 
-  className?: string 
+export const MetricCardSkeleton = memo(function MetricCardSkeleton({
+  className,
+}: {
+  className?: string;
 }) {
   return (
     <div
@@ -162,10 +161,7 @@ export const TableSkeleton = memo(function TableSkeleton({
           {Array.from({ length: columns }).map((_, colIndex) => (
             <Skeleton
               key={colIndex}
-              className={cn(
-                "h-4 flex-1",
-                colIndex === 0 && "flex-[2]"
-              )}
+              className={cn("h-4 flex-1", colIndex === 0 && "flex-[2]")}
             />
           ))}
         </div>
@@ -241,7 +237,10 @@ export const ListSkeleton = memo(function ListSkeleton({
   return (
     <div className={cn("space-y-3", className)} aria-hidden="true">
       {Array.from({ length: items }).map((_, i) => (
-        <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-void-surface/50">
+        <div
+          key={i}
+          className="flex items-center gap-3 p-3 rounded-xl bg-void-surface/50"
+        >
           {showAvatar && <AvatarSkeleton size="sm" />}
           <div className="flex-1 space-y-2">
             <Skeleton className="h-4 w-3/4" />
@@ -257,30 +256,31 @@ export const ListSkeleton = memo(function ListSkeleton({
 /**
  * Chart skeleton
  */
-export const ChartSkeleton = memo(function ChartSkeleton({ 
+export const ChartSkeleton = memo(function ChartSkeleton({
   className,
   type = "bar",
-}: { 
+}: {
   className?: string;
   type?: "bar" | "line" | "pie";
 }) {
   return (
-    <div 
+    <div
       className={cn(
         "bg-void-surface/80 border border-white/5 rounded-2xl p-6",
         className
-      )} 
+      )}
       aria-hidden="true"
     >
       <Skeleton className="h-5 w-32 mb-4" />
       <div className="h-48 flex items-end gap-2">
-        {type === "bar" && Array.from({ length: 7 }).map((_, i) => (
-          <Skeleton
-            key={i}
-            className="flex-1 rounded-t"
-            style={{ height: `${30 + Math.random() * 70}%` }}
-          />
-        ))}
+        {type === "bar" &&
+          Array.from({ length: 7 }).map((_, i) => (
+            <Skeleton
+              key={i}
+              className="flex-1 rounded-t"
+              style={{ height: `${30 + Math.random() * 70}%` }}
+            />
+          ))}
         {type === "line" && (
           <Skeleton className="w-full h-full rounded-lg opacity-50" />
         )}
@@ -295,10 +295,10 @@ export const ChartSkeleton = memo(function ChartSkeleton({
 /**
  * Agent card skeleton
  */
-export const AgentCardSkeleton = memo(function AgentCardSkeleton({ 
-  className 
-}: { 
-  className?: string 
+export const AgentCardSkeleton = memo(function AgentCardSkeleton({
+  className,
+}: {
+  className?: string;
 }) {
   return (
     <div

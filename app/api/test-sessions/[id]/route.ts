@@ -12,7 +12,7 @@ function generateDemoSession(id: string) {
   const agents = AGENTS.slice(0, 4);
   const now = new Date();
   const startedAt = new Date(now.getTime() - 45000); // 45 seconds ago
-  
+
   // Simulate progress based on time
   const elapsedMs = now.getTime() - startedAt.getTime();
   const progress = Math.min(100, Math.floor(elapsedMs / 1200)); // ~2 min for 100%
@@ -39,13 +39,17 @@ function generateDemoSession(id: string) {
         accessUrl: "https://demo.betaforge.dev",
       },
       agents: agents.map((agent, i) => {
-        const agentProgress = Math.min(100, progress + (i * 5));
+        const agentProgress = Math.min(100, progress + i * 5);
         const agentComplete = agentProgress >= 100;
         return {
           id: `exec_${i + 1}`,
           agentId: agent.id,
           name: agent.name,
-          status: agentComplete ? "completed" : (progress > i * 10 ? "running" : "queued"),
+          status: agentComplete
+            ? "completed"
+            : progress > i * 10
+            ? "running"
+            : "queued",
           progress: Math.min(100, Math.max(0, agentProgress)),
           environmentConfig: agent.deviceConfig,
           interactionLog: [],
@@ -69,46 +73,71 @@ function generateDemoSession(id: string) {
           agentName: agent.name,
           message: `${agent.name} began testing`,
           data: { focus: agent.specialization },
-          timestamp: new Date(startedAt.getTime() + (i + 1) * 8000).toISOString(),
+          timestamp: new Date(
+            startedAt.getTime() + (i + 1) * 8000
+          ).toISOString(),
         })),
-        ...(progress > 60 ? [{
-          id: "log_bug_1",
-          type: "bug_found",
-          agentName: agents[0].name,
-          message: "Found accessibility issue: Missing alt text on hero image",
-          data: { severity: "medium" },
-          timestamp: new Date(startedAt.getTime() + 35000).toISOString(),
-        }] : []),
+        ...(progress > 60
+          ? [
+              {
+                id: "log_bug_1",
+                type: "bug_found",
+                agentName: agents[0].name,
+                message:
+                  "Found accessibility issue: Missing alt text on hero image",
+                data: { severity: "medium" },
+                timestamp: new Date(startedAt.getTime() + 35000).toISOString(),
+              },
+            ]
+          : []),
       ],
-      bugReports: progress > 60 ? [
-        {
-          id: "bug_1",
-          severity: "medium",
-          status: "open",
-          title: "Missing alt text on hero image",
-          description: "The main hero image lacks alternative text, affecting screen reader users.",
-          agentName: agents[0].name,
-          createdAt: new Date(startedAt.getTime() + 35000).toISOString(),
-        },
-        ...(progress > 80 ? [{
-          id: "bug_2",
-          severity: "low",
-          status: "open",
-          title: "Button focus state not visible",
-          description: "The primary CTA button does not show a visible focus indicator when navigating with keyboard.",
-          agentName: agents[2].name,
-          createdAt: new Date(startedAt.getTime() + 50000).toISOString(),
-        }] : []),
-        ...(isComplete ? [{
-          id: "bug_3",
-          severity: "high",
-          status: "open",
-          title: "Form submission fails silently",
-          description: "The contact form shows no error message when server returns 500 error.",
-          agentName: agents[4]?.name || agents[0].name,
-          createdAt: new Date(startedAt.getTime() + 80000).toISOString(),
-        }] : []),
-      ] : [],
+      bugReports:
+        progress > 60
+          ? [
+              {
+                id: "bug_1",
+                severity: "medium",
+                status: "open",
+                title: "Missing alt text on hero image",
+                description:
+                  "The main hero image lacks alternative text, affecting screen reader users.",
+                agentName: agents[0].name,
+                createdAt: new Date(startedAt.getTime() + 35000).toISOString(),
+              },
+              ...(progress > 80
+                ? [
+                    {
+                      id: "bug_2",
+                      severity: "low",
+                      status: "open",
+                      title: "Button focus state not visible",
+                      description:
+                        "The primary CTA button does not show a visible focus indicator when navigating with keyboard.",
+                      agentName: agents[2].name,
+                      createdAt: new Date(
+                        startedAt.getTime() + 50000
+                      ).toISOString(),
+                    },
+                  ]
+                : []),
+              ...(isComplete
+                ? [
+                    {
+                      id: "bug_3",
+                      severity: "high",
+                      status: "open",
+                      title: "Form submission fails silently",
+                      description:
+                        "The contact form shows no error message when server returns 500 error.",
+                      agentName: agents[4]?.name || agents[0].name,
+                      createdAt: new Date(
+                        startedAt.getTime() + 80000
+                      ).toISOString(),
+                    },
+                  ]
+                : []),
+            ]
+          : [],
     },
   };
 }
@@ -116,7 +145,7 @@ function generateDemoSession(id: string) {
 // GET /api/test-sessions/[id] - Get detailed session information
 export async function GET(request: NextRequest, { params }: RouteParams) {
   const { id } = await params;
-  
+
   // Check if this is a demo session
   if (id.startsWith("demo_")) {
     return NextResponse.json(generateDemoSession(id));
@@ -125,8 +154,8 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
   // Check if Supabase is configured
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  
-  if (!supabaseUrl || !supabaseKey || supabaseUrl.includes('your-project')) {
+
+  if (!supabaseUrl || !supabaseKey || supabaseUrl.includes("your-project")) {
     // Return demo data when Supabase isn't configured
     return NextResponse.json(generateDemoSession(id));
   }

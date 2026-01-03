@@ -5,7 +5,11 @@
 // ============================================================================
 
 import { SupabaseClient } from "@supabase/supabase-js";
-import { BaseRepository, QueryOptions, PaginatedResult } from "../core/repository";
+import {
+  BaseRepository,
+  QueryOptions,
+  PaginatedResult,
+} from "../core/repository";
 import { Result, ok, err } from "../core/result";
 import { AppError, Errors } from "../core/errors";
 import type { Database } from "../database.types";
@@ -117,7 +121,12 @@ export class ProjectRepository extends BaseRepository<
     options: ProjectQueryOptions = {}
   ): Promise<Result<PaginatedResult<ProjectWithStats>, AppError>> {
     const timer = this.log.startTimer("projects.findByUserId");
-    const { page = 1, limit = 20, sortBy = "created_at", sortOrder = "desc" } = options;
+    const {
+      page = 1,
+      limit = 20,
+      sortBy = "created_at",
+      sortOrder = "desc",
+    } = options;
     const offset = (page - 1) * limit;
 
     try {
@@ -145,7 +154,9 @@ export class ProjectRepository extends BaseRepository<
         query = query.contains("platform", [options.platform]);
       }
       if (options.search) {
-        query = query.or(`name.ilike.%${options.search}%,description.ilike.%${options.search}%`);
+        query = query.or(
+          `name.ilike.%${options.search}%,description.ilike.%${options.search}%`
+        );
       }
 
       // Apply sorting and pagination
@@ -184,14 +195,17 @@ export class ProjectRepository extends BaseRepository<
     options: ProjectQueryOptions = {}
   ): Promise<Result<PaginatedResult<ProjectWithStats>, AppError>> {
     const timer = this.log.startTimer("projects.findAllWithStats");
-    const { page = 1, limit = 20, sortBy = "created_at", sortOrder = "desc" } = options;
+    const {
+      page = 1,
+      limit = 20,
+      sortBy = "created_at",
+      sortOrder = "desc",
+    } = options;
     const offset = (page - 1) * limit;
 
     try {
-      let query = this.db
-        .from("projects")
-        .select(
-          `
+      let query = this.db.from("projects").select(
+        `
           *,
           test_sessions (
             id,
@@ -200,8 +214,8 @@ export class ProjectRepository extends BaseRepository<
             completed_at
           )
         `,
-          { count: "exact" }
-        );
+        { count: "exact" }
+      );
 
       // Apply filters
       if (options.status) {
@@ -211,7 +225,9 @@ export class ProjectRepository extends BaseRepository<
         query = query.contains("platform", [options.platform]);
       }
       if (options.search) {
-        query = query.or(`name.ilike.%${options.search}%,description.ilike.%${options.search}%`);
+        query = query.or(
+          `name.ilike.%${options.search}%,description.ilike.%${options.search}%`
+        );
       }
 
       // Apply sorting and pagination
@@ -248,7 +264,8 @@ export class ProjectRepository extends BaseRepository<
    */
   private toProjectWithStats(row: Record<string, unknown>): ProjectWithStats {
     const project = this.toEntity(row);
-    const sessions = (row.test_sessions as Array<Record<string, unknown>>) || [];
+    const sessions =
+      (row.test_sessions as Array<Record<string, unknown>>) || [];
     const lastSession = sessions[0];
     const totalBugs = sessions.reduce(
       (sum, s) => sum + ((s.bugs_found as number) || 0),
@@ -270,7 +287,10 @@ export class ProjectRepository extends BaseRepository<
   /**
    * Check if user owns project
    */
-  async isOwner(projectId: string, userId: string): Promise<Result<boolean, AppError>> {
+  async isOwner(
+    projectId: string,
+    userId: string
+  ): Promise<Result<boolean, AppError>> {
     try {
       const { count, error } = await this.db
         .from("projects")
@@ -295,7 +315,9 @@ export class ProjectRepository extends BaseRepository<
 
 let projectRepository: ProjectRepository | null = null;
 
-export function getProjectRepository(db: SupabaseClient<Database>): ProjectRepository {
+export function getProjectRepository(
+  db: SupabaseClient<Database>
+): ProjectRepository {
   if (!projectRepository) {
     projectRepository = new ProjectRepository(db);
   }

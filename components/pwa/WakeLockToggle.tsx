@@ -10,12 +10,13 @@ interface WakeLockToggleProps {
 
 /**
  * Wake Lock Toggle Component
- * 
+ *
  * Keeps the screen awake during long-running test sessions.
  * Useful when monitoring real-time test progress.
  */
 export function WakeLockToggle({ onStatusChange }: WakeLockToggleProps) {
-  const { isSupported, isActive, requestWakeLock, releaseWakeLock } = useWakeLock();
+  const { isSupported, isActive, requestWakeLock, releaseWakeLock } =
+    useWakeLock();
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -67,11 +68,12 @@ export function WakeLockToggle({ onStatusChange }: WakeLockToggleProps) {
 
 /**
  * Auto Wake Lock Hook
- * 
+ *
  * Automatically enables wake lock when a test session is running
  */
 export function useAutoWakeLock(isTestRunning: boolean) {
-  const { isSupported, isActive, requestWakeLock, releaseWakeLock } = useWakeLock();
+  const { isSupported, isActive, requestWakeLock, releaseWakeLock } =
+    useWakeLock();
 
   useEffect(() => {
     if (!isSupported) return;

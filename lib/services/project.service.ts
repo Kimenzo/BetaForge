@@ -208,9 +208,7 @@ export class ProjectService {
     const hasRunning = await sessionRepo.hasRunningSession(id);
     if (hasRunning.isOk() && hasRunning.value) {
       return err(
-        Errors.businessRule(
-          "Cannot delete project with running test sessions"
-        )
+        Errors.businessRule("Cannot delete project with running test sessions")
       );
     }
 

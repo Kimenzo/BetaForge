@@ -43,18 +43,17 @@ export async function GET() {
     const limits = planLimits[planId];
 
     // Count actual usage
-    const { count: projectCount } = await supabase
+    const { count: projectCount, data: projects } = await supabase
       .from("projects")
-      .select("id", { count: "exact", head: true })
+      .select("id", { count: "exact" })
       .eq("user_id", users.id);
 
+    const projectIds = projects?.map(p => p.id) || [];
+    
     const { count: sessionCount } = await supabase
       .from("test_sessions")
       .select("id", { count: "exact", head: true })
-      .in(
-        "project_id",
-        supabase.from("projects").select("id").eq("user_id", users.id)
-      );
+      .in("project_id", projectIds.length > 0 ? projectIds : ["none"]);
 
     return NextResponse.json({
       usage: {

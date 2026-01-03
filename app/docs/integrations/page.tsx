@@ -482,7 +482,11 @@ export default function IntegrationsPage() {
                 </div>
                 {selectedIntegration.hasDetailPage && (
                   <Link
-                    href={selectedIntegration.id === "webhook" ? "/docs/integrations/webhooks" : `/docs/integrations/${selectedIntegration.id}`}
+                    href={
+                      selectedIntegration.id === "webhook"
+                        ? "/docs/integrations/webhooks"
+                        : `/docs/integrations/${selectedIntegration.id}`
+                    }
                     className="flex items-center gap-2 px-4 py-2 rounded-lg bg-neural/20 text-neural-bright text-sm font-medium hover:bg-neural/30 transition-colors"
                   >
                     Full Documentation

@@ -29,12 +29,14 @@ export function preconnectOrigins(origins: string[]): void {
 /**
  * Preload critical resources (fonts, images, scripts)
  */
-export function preloadCriticalResources(resources: Array<{
-  href: string;
-  as: "font" | "image" | "script" | "style" | "fetch";
-  type?: string;
-  crossOrigin?: "anonymous" | "use-credentials";
-}>): void {
+export function preloadCriticalResources(
+  resources: Array<{
+    href: string;
+    as: "font" | "image" | "script" | "style" | "fetch";
+    type?: string;
+    crossOrigin?: "anonymous" | "use-credentials";
+  }>
+): void {
   if (typeof window === "undefined") return;
 
   resources.forEach((resource) => {
@@ -56,7 +58,9 @@ export function prefetchRoute(href: string): void {
   if (typeof window === "undefined") return;
 
   // Check if already prefetched
-  const existing = document.querySelector(`link[rel="prefetch"][href="${href}"]`);
+  const existing = document.querySelector(
+    `link[rel="prefetch"][href="${href}"]`
+  );
   if (existing) return;
 
   const link = document.createElement("link");

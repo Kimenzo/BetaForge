@@ -2,10 +2,15 @@
 // Payment Types & Configuration
 // ========================
 
-export type PaymentProvider = 'paystack' | 'dodo';
-export type PaymentStatus = 'pending' | 'succeeded' | 'failed' | 'refunded';
-export type SubscriptionStatus = 'active' | 'cancelled' | 'expired' | 'on_hold' | 'trialing';
-export type BillingInterval = 'monthly' | 'yearly';
+export type PaymentProvider = "paystack" | "dodo";
+export type PaymentStatus = "pending" | "succeeded" | "failed" | "refunded";
+export type SubscriptionStatus =
+  | "active"
+  | "cancelled"
+  | "expired"
+  | "on_hold"
+  | "trialing";
+export type BillingInterval = "monthly" | "yearly";
 
 // Pricing Plans
 export interface PricingPlan {
@@ -42,22 +47,22 @@ export interface PlanLimits {
 
 // African countries supported by Paystack
 export const PAYSTACK_COUNTRIES = [
-  'NG', // Nigeria
-  'GH', // Ghana
-  'ZA', // South Africa
-  'KE', // Kenya
-  'CI', // Côte d'Ivoire
+  "NG", // Nigeria
+  "GH", // Ghana
+  "ZA", // South Africa
+  "KE", // Kenya
+  "CI", // Côte d'Ivoire
 ] as const;
 
-export type PaystackCountry = typeof PAYSTACK_COUNTRIES[number];
+export type PaystackCountry = (typeof PAYSTACK_COUNTRIES)[number];
 
 // Paystack currencies
 export const PAYSTACK_CURRENCIES: Record<PaystackCountry, string> = {
-  NG: 'NGN',
-  GH: 'GHS',
-  ZA: 'ZAR',
-  KE: 'KES',
-  CI: 'XOF',
+  NG: "NGN",
+  GH: "GHS",
+  ZA: "ZAR",
+  KE: "KES",
+  CI: "XOF",
 };
 
 // Customer Information
@@ -83,7 +88,7 @@ export interface CheckoutSession {
   currency: string;
   checkoutUrl: string;
   returnUrl: string;
-  status: 'pending' | 'completed' | 'expired';
+  status: "pending" | "completed" | "expired";
   createdAt: Date;
   expiresAt: Date;
 }
@@ -155,6 +160,6 @@ export interface PaystackConfig {
 
 export interface DodoConfig {
   apiKey: string;
-  environment: 'test_mode' | 'live_mode';
+  environment: "test_mode" | "live_mode";
   baseUrl: string;
 }

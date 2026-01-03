@@ -30,7 +30,9 @@ interface HealthStatus {
 
 const startTime = Date.now();
 
-export async function GET(request: NextRequest): Promise<NextResponse<HealthStatus>> {
+export async function GET(
+  request: NextRequest
+): Promise<NextResponse<HealthStatus>> {
   const url = new URL(request.url);
   const verbose = url.searchParams.get("verbose") === "true";
 
@@ -42,7 +44,7 @@ export async function GET(request: NextRequest): Promise<NextResponse<HealthStat
     try {
       const start = performance.now();
       const supabase = createServerClient();
-      
+
       // Simple query to check connection
       const { error } = await supabase
         .from("projects")
@@ -52,7 +54,11 @@ export async function GET(request: NextRequest): Promise<NextResponse<HealthStat
       const latency = Math.round(performance.now() - start);
 
       if (error) {
-        checks.database = { status: "fail", latencyMs: latency, message: error.message };
+        checks.database = {
+          status: "fail",
+          latencyMs: latency,
+          message: error.message,
+        };
         overallStatus = "unhealthy";
       } else {
         checks.database = { status: "pass", latencyMs: latency };
@@ -104,7 +110,10 @@ export async function GET(request: NextRequest): Promise<NextResponse<HealthStat
   if (config.isAuthConfigured) {
     checks.auth = { status: "pass", message: "Auth provider configured" };
   } else {
-    checks.auth = { status: "warn", message: "Auth not configured (guest mode)" };
+    checks.auth = {
+      status: "warn",
+      message: "Auth not configured (guest mode)",
+    };
   }
 
   const response: HealthStatus = {

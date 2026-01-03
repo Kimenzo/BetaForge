@@ -11,10 +11,10 @@ export { useDashboardStats } from "./use-dashboard-stats";
 export { useTestSession, useSessionDetails } from "./use-test-session";
 
 // Performance-optimized hooks
-export { 
-  useOptimizedFetch, 
-  useOptimizedPagination, 
-  useOptimizedInfiniteScroll 
+export {
+  useOptimizedFetch,
+  useOptimizedPagination,
+  useOptimizedInfiniteScroll,
 } from "./use-optimized-fetch";
 
 // Simulation hooks

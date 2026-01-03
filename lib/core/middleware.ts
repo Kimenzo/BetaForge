@@ -36,9 +36,7 @@ export type ApiHandler<T = unknown> = (
 /**
  * Middleware function signature
  */
-export type Middleware = (
-  handler: ApiHandler
-) => ApiHandler;
+export type Middleware = (handler: ApiHandler) => ApiHandler;
 
 // ============================================================================
 // Rate Limiter (In-Memory for development, use Redis in production)
@@ -63,7 +61,11 @@ function getRateLimitKey(request: NextRequest, ctx: RequestContext): string {
 /**
  * Check rate limit
  */
-function checkRateLimit(key: string): { allowed: boolean; remaining: number; resetAt: number } {
+function checkRateLimit(key: string): {
+  allowed: boolean;
+  remaining: number;
+  resetAt: number;
+} {
   const now = Date.now();
   const windowMs = 60 * 1000; // 1 minute window
   const maxRequests = config.rateLimit.requestsPerMinute;
@@ -117,8 +119,11 @@ export function withErrorHandling(handler: ApiHandler): ApiHandler {
  */
 export function withLogging(handler: ApiHandler): ApiHandler {
   return async (request, ctx, params) => {
-    const log = logger.child({ traceId: ctx.traceId, requestId: ctx.requestId });
-    
+    const log = logger.child({
+      traceId: ctx.traceId,
+      requestId: ctx.requestId,
+    });
+
     log.debug(`→ ${ctx.method} ${ctx.path}`, {
       ip: ctx.ip,
       userAgent: ctx.userAgent,
@@ -146,15 +151,24 @@ export function withRateLimit(handler: ApiHandler): ApiHandler {
 
     if (!allowed) {
       const retryAfter = Math.ceil((resetAt - Date.now()) / 1000);
-      return errorResponse(Errors.rateLimited(retryAfter, { requestId: ctx.requestId }), ctx);
+      return errorResponse(
+        Errors.rateLimited(retryAfter, { requestId: ctx.requestId }),
+        ctx
+      );
     }
 
     const response = await handler(request, ctx, params);
 
     // Add rate limit headers
-    response.headers.set("X-RateLimit-Limit", String(config.rateLimit.requestsPerMinute));
+    response.headers.set(
+      "X-RateLimit-Limit",
+      String(config.rateLimit.requestsPerMinute)
+    );
     response.headers.set("X-RateLimit-Remaining", String(remaining));
-    response.headers.set("X-RateLimit-Reset", String(Math.ceil(resetAt / 1000)));
+    response.headers.set(
+      "X-RateLimit-Reset",
+      String(Math.ceil(resetAt / 1000))
+    );
 
     return response;
   };
@@ -175,7 +189,10 @@ export function withAuth(handler: ApiHandler): ApiHandler {
         return handler(request, ctx, params);
       }
 
-      return errorResponse(Errors.unauthenticated({ requestId: ctx.requestId }), ctx);
+      return errorResponse(
+        Errors.unauthenticated({ requestId: ctx.requestId }),
+        ctx
+      );
     }
 
     // TODO: Validate token with your auth provider
@@ -188,7 +205,9 @@ export function withAuth(handler: ApiHandler): ApiHandler {
 /**
  * Check feature flag
  */
-export function withFeatureFlag(flag: keyof typeof config.features): Middleware {
+export function withFeatureFlag(
+  flag: keyof typeof config.features
+): Middleware {
   return (handler) => async (request, ctx, params) => {
     if (!config.features[flag]) {
       return errorResponse(
@@ -207,25 +226,27 @@ export function withFeatureFlag(flag: keyof typeof config.features): Middleware 
 /**
  * CORS middleware
  */
-export function withCors(
-  allowedOrigins: string[] = ["*"]
-): Middleware {
+export function withCors(allowedOrigins: string[] = ["*"]): Middleware {
   return (handler) => async (request, ctx, params) => {
     // Handle preflight
     if (request.method === "OPTIONS") {
       return new NextResponse(null, {
         status: 204,
         headers: {
-          "Access-Control-Allow-Origin": allowedOrigins.includes("*") ? "*" : allowedOrigins.join(", "),
-          "Access-Control-Allow-Methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS",
-          "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Request-ID, X-Trace-ID",
+          "Access-Control-Allow-Origin": allowedOrigins.includes("*")
+            ? "*"
+            : allowedOrigins.join(", "),
+          "Access-Control-Allow-Methods":
+            "GET, POST, PUT, PATCH, DELETE, OPTIONS",
+          "Access-Control-Allow-Headers":
+            "Content-Type, Authorization, X-Request-ID, X-Trace-ID",
           "Access-Control-Max-Age": "86400",
         },
       });
     }
 
     const response = await handler(request, ctx, params);
-    
+
     response.headers.set(
       "Access-Control-Allow-Origin",
       allowedOrigins.includes("*") ? "*" : allowedOrigins.join(", ")
@@ -270,10 +291,7 @@ export function createApiHandler(
     featureFlag?: keyof typeof config.features;
   } = {}
 ): (request: NextRequest, context: NextRouteContext) => Promise<NextResponse> {
-  const middlewares: Middleware[] = [
-    withErrorHandling,
-    withLogging,
-  ];
+  const middlewares: Middleware[] = [withErrorHandling, withLogging];
 
   if (options.rateLimit !== false) {
     middlewares.push(withRateLimit);
@@ -291,10 +309,10 @@ export function createApiHandler(
 
   return async (request: NextRequest, context: NextRouteContext) => {
     const ctx = createRequestContext(request);
-    
+
     // Handle Promise-based params (Next.js 16+)
     const resolvedParams = await context.params;
-    
+
     return composed(request, ctx, resolvedParams);
   };
 }
@@ -326,11 +344,9 @@ export function createRouteHandler(
 ) {
   const methodNotAllowed: ApiHandler = async (_, ctx) => {
     return errorResponse(
-      new AppError(
-        ErrorCode.VALIDATION_FAILED,
-        "Method not allowed",
-        { requestId: ctx.requestId }
-      ),
+      new AppError(ErrorCode.VALIDATION_FAILED, "Method not allowed", {
+        requestId: ctx.requestId,
+      }),
       ctx
     );
   };

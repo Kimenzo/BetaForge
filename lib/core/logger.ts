@@ -163,7 +163,12 @@ export class Logger {
   /**
    * Internal log method
    */
-  private log(level: keyof typeof LogLevel, message: string, data?: Record<string, unknown>, error?: Error): void {
+  private log(
+    level: keyof typeof LogLevel,
+    message: string,
+    data?: Record<string, unknown>,
+    error?: Error
+  ): void {
     const levelValue = LogLevel[level];
     if (levelValue < getCurrentLogLevel()) {
       return;
@@ -194,9 +199,10 @@ export class Logger {
     }
 
     // Output as JSON in production, pretty print in development
-    const output = process.env.NODE_ENV === "production"
-      ? JSON.stringify(entry)
-      : this.formatPretty(entry);
+    const output =
+      process.env.NODE_ENV === "production"
+        ? JSON.stringify(entry)
+        : this.formatPretty(entry);
 
     switch (level) {
       case "ERROR":
@@ -217,22 +223,27 @@ export class Logger {
   private formatPretty(entry: LogEntry): string {
     const levelColors: Record<string, string> = {
       DEBUG: "\x1b[36m", // Cyan
-      INFO: "\x1b[32m",  // Green
-      WARN: "\x1b[33m",  // Yellow
+      INFO: "\x1b[32m", // Green
+      WARN: "\x1b[33m", // Yellow
       ERROR: "\x1b[31m", // Red
       FATAL: "\x1b[35m", // Magenta
     };
     const reset = "\x1b[0m";
     const dim = "\x1b[2m";
 
-    let output = `${levelColors[entry.level]}[${entry.level}]${reset} ${entry.message}`;
+    let output = `${levelColors[entry.level]}[${entry.level}]${reset} ${
+      entry.message
+    }`;
 
     if (entry.traceId) {
       output += ` ${dim}(trace: ${entry.traceId.slice(0, 8)})${reset}`;
     }
 
     if (entry.data && Object.keys(entry.data).length > 0) {
-      output += `\n  ${dim}${JSON.stringify(entry.data, null, 2).replace(/\n/g, "\n  ")}${reset}`;
+      output += `\n  ${dim}${JSON.stringify(entry.data, null, 2).replace(
+        /\n/g,
+        "\n  "
+      )}${reset}`;
     }
 
     if (entry.error) {
@@ -269,7 +280,11 @@ export class Logger {
   /**
    * Log HTTP request details
    */
-  httpRequest(req: { method: string; url: string; headers?: Record<string, string> }, statusCode: number, duration: number): void {
+  httpRequest(
+    req: { method: string; url: string; headers?: Record<string, string> },
+    statusCode: number,
+    duration: number
+  ): void {
     this.log("INFO", `${req.method} ${req.url} ${statusCode}`, {
       httpRequest: {
         method: req.method,

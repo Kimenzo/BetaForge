@@ -1,6 +1,6 @@
 "use client";
 
-import { X, Check, Clock, Bug, UserX, AlertTriangle, Zap, check, ShieldCheck } from "lucide-react";
+import { X, Check, Clock, Bug, UserX, AlertTriangle, Zap, ShieldCheck } from "lucide-react";
 
 export function ProblemSolution() {
   return (

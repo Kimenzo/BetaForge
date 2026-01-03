@@ -5,7 +5,11 @@
 // ============================================================================
 
 import { SupabaseClient } from "@supabase/supabase-js";
-import { BaseRepository, QueryOptions, PaginatedResult } from "../core/repository";
+import {
+  BaseRepository,
+  QueryOptions,
+  PaginatedResult,
+} from "../core/repository";
 import { Result, ok, err } from "../core/result";
 import { AppError, Errors } from "../core/errors";
 import type { Database } from "../database.types";
@@ -162,14 +166,17 @@ export class BugReportRepository extends BaseRepository<
     options: BugReportQueryOptions = {}
   ): Promise<Result<PaginatedResult<BugReportWithContext>, AppError>> {
     const timer = this.log.startTimer("reports.findWithContext");
-    const { page = 1, limit = 20, sortBy = "created_at", sortOrder = "desc" } = options;
+    const {
+      page = 1,
+      limit = 20,
+      sortBy = "created_at",
+      sortOrder = "desc",
+    } = options;
     const offset = (page - 1) * limit;
 
     try {
-      let query = this.db
-        .from("bug_reports")
-        .select(
-          `
+      let query = this.db.from("bug_reports").select(
+        `
           *,
           agent_executions (
             id,
@@ -184,8 +191,8 @@ export class BugReportRepository extends BaseRepository<
             )
           )
         `,
-          { count: "exact" }
-        );
+        { count: "exact" }
+      );
 
       // Apply filters
       if (options.projectId) {
@@ -230,7 +237,9 @@ export class BugReportRepository extends BaseRepository<
   /**
    * Get report by ID with full context
    */
-  async findByIdWithContext(id: string): Promise<Result<BugReportWithContext, AppError>> {
+  async findByIdWithContext(
+    id: string
+  ): Promise<Result<BugReportWithContext, AppError>> {
     const timer = this.log.startTimer("reports.findByIdWithContext");
 
     try {
@@ -313,7 +322,9 @@ export class BugReportRepository extends BaseRepository<
     }
   }
 
-  private toReportWithContext(row: Record<string, unknown>): BugReportWithContext {
+  private toReportWithContext(
+    row: Record<string, unknown>
+  ): BugReportWithContext {
     const report = this.toEntity(row);
     const execution = row.agent_executions as Record<string, unknown> | null;
     const session = execution?.test_sessions as Record<string, unknown> | null;
@@ -333,7 +344,9 @@ export class BugReportRepository extends BaseRepository<
 
 let reportRepository: BugReportRepository | null = null;
 
-export function getReportRepository(db: SupabaseClient<Database>): BugReportRepository {
+export function getReportRepository(
+  db: SupabaseClient<Database>
+): BugReportRepository {
   if (!reportRepository) {
     reportRepository = new BugReportRepository(db);
   }

@@ -9,10 +9,10 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
-    
-    const title = formData.get("title") as string || "";
-    const text = formData.get("text") as string || "";
-    const url = formData.get("url") as string || "";
+
+    const title = (formData.get("title") as string) || "";
+    const text = (formData.get("text") as string) || "";
+    const url = (formData.get("url") as string) || "";
 
     console.log("[Share Target] Received:", { title, text, url });
 
@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
 
     // Redirect to project creation with the shared URL
     const redirectUrl = new URL("/dashboard/projects/new", request.url);
-    
+
     if (targetUrl) {
       redirectUrl.searchParams.set("url", targetUrl);
     }
@@ -46,13 +46,13 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
   // Handle GET requests from share target (for text/url shares)
   const searchParams = request.nextUrl.searchParams;
-  
+
   const title = searchParams.get("title") || "";
   const text = searchParams.get("text") || "";
   const url = searchParams.get("url") || "";
 
   const redirectUrl = new URL("/dashboard/projects/new", request.url);
-  
+
   if (url) {
     redirectUrl.searchParams.set("url", url);
   }

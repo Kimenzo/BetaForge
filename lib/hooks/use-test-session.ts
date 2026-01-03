@@ -24,48 +24,52 @@ export function useTestSession(): UseTestSessionReturn {
   const [isStarting, setIsStarting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const startTest = useCallback(async (projectId: string): Promise<StartTestResult> => {
-    setIsStarting(true);
-    setError(null);
+  const startTest = useCallback(
+    async (projectId: string): Promise<StartTestResult> => {
+      setIsStarting(true);
+      setError(null);
 
-    try {
-      // Create a new test session
-      const response = await fetch("/api/test-sessions", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          projectId,
-          triggerType: "manual",
-        }),
-      });
+      try {
+        // Create a new test session
+        const response = await fetch("/api/test-sessions", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            projectId,
+            triggerType: "manual",
+          }),
+        });
 
-      const data = await response.json();
+        const data = await response.json();
 
-      if (!response.ok) {
-        const errorMessage = data.error || "Failed to start test session";
+        if (!response.ok) {
+          const errorMessage = data.error || "Failed to start test session";
+          setError(errorMessage);
+          return { success: false, error: errorMessage };
+        }
+
+        const sessionId = data.session?.id;
+
+        if (!sessionId) {
+          setError("No session ID returned");
+          return { success: false, error: "No session ID returned" };
+        }
+
+        // Navigate to the session detail page
+        router.push(`/sessions/${sessionId}`);
+
+        return { success: true, sessionId };
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error ? err.message : "Failed to start test";
         setError(errorMessage);
         return { success: false, error: errorMessage };
+      } finally {
+        setIsStarting(false);
       }
-
-      const sessionId = data.session?.id;
-      
-      if (!sessionId) {
-        setError("No session ID returned");
-        return { success: false, error: "No session ID returned" };
-      }
-
-      // Navigate to the session detail page
-      router.push(`/sessions/${sessionId}`);
-
-      return { success: true, sessionId };
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "Failed to start test";
-      setError(errorMessage);
-      return { success: false, error: errorMessage };
-    } finally {
-      setIsStarting(false);
-    }
-  }, [router]);
+    },
+    [router]
+  );
 
   return {
     startTest,
@@ -128,10 +132,10 @@ export function useSessionDetails(sessionId: string) {
       setLoading(false);
       return;
     }
-    
+
     try {
       const response = await fetch(`/api/test-sessions/${sessionId}`);
-      
+
       if (!response.ok) {
         const errorText = await response.text();
         console.error("Session fetch failed:", errorText);

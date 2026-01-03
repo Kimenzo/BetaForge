@@ -328,40 +328,98 @@ const cliCommands = [
     description: "Run AI-powered tests against a URL",
     flags: [
       { name: "--url", description: "Target URL to test", required: true },
-      { name: "--project-id", description: "BetaForge project ID", required: true },
-      { name: "--agents", description: "Comma-separated agent IDs", required: false },
-      { name: "--wait", description: "Wait for results before exiting", required: false },
-      { name: "--timeout", description: "Timeout in minutes (default: 30)", required: false },
-      { name: "--fail-on", description: "Severity to fail on: critical,high,medium,low", required: false },
-      { name: "--output", description: "Output format: json, junit, html", required: false },
-      { name: "--depth", description: "Test depth: shallow, standard, comprehensive", required: false },
-      { name: "--viewport", description: "Viewport: mobile, tablet, desktop, or custom", required: false },
+      {
+        name: "--project-id",
+        description: "BetaForge project ID",
+        required: true,
+      },
+      {
+        name: "--agents",
+        description: "Comma-separated agent IDs",
+        required: false,
+      },
+      {
+        name: "--wait",
+        description: "Wait for results before exiting",
+        required: false,
+      },
+      {
+        name: "--timeout",
+        description: "Timeout in minutes (default: 30)",
+        required: false,
+      },
+      {
+        name: "--fail-on",
+        description: "Severity to fail on: critical,high,medium,low",
+        required: false,
+      },
+      {
+        name: "--output",
+        description: "Output format: json, junit, html",
+        required: false,
+      },
+      {
+        name: "--depth",
+        description: "Test depth: shallow, standard, comprehensive",
+        required: false,
+      },
+      {
+        name: "--viewport",
+        description: "Viewport: mobile, tablet, desktop, or custom",
+        required: false,
+      },
     ],
   },
   {
     command: "betaforge report",
     description: "Generate or combine test reports",
     flags: [
-      { name: "combine", description: "Combine multiple JSON result files", required: false },
-      { name: "summary", description: "Generate a summary report", required: false },
-      { name: "--files", description: "Input file pattern (glob)", required: true },
+      {
+        name: "combine",
+        description: "Combine multiple JSON result files",
+        required: false,
+      },
+      {
+        name: "summary",
+        description: "Generate a summary report",
+        required: false,
+      },
+      {
+        name: "--files",
+        description: "Input file pattern (glob)",
+        required: true,
+      },
       { name: "--output", description: "Output filename", required: false },
-      { name: "--format", description: "Output format: json, html, markdown", required: false },
+      {
+        name: "--format",
+        description: "Output format: json, html, markdown",
+        required: false,
+      },
     ],
   },
   {
     command: "betaforge auth",
     description: "Authenticate with BetaForge",
     flags: [
-      { name: "--api-key", description: "API key (or use BETAFORGE_API_KEY env)", required: false },
+      {
+        name: "--api-key",
+        description: "API key (or use BETAFORGE_API_KEY env)",
+        required: false,
+      },
       { name: "login", description: "Interactive login flow", required: false },
-      { name: "status", description: "Check authentication status", required: false },
+      {
+        name: "status",
+        description: "Check authentication status",
+        required: false,
+      },
     ],
   },
 ];
 
 export default function GitLabIntegrationPage() {
-  const [activeTab, setActiveTab] = useState<"basic" | "advanced" | "scheduled" | "docker">("basic");
+  const [activeTab, setActiveTab] = useState<
+    "basic" | "advanced" | "scheduled" | "docker"
+  >("basic");
   const [copied, setCopied] = useState<string | null>(null);
 
   const copyCode = (code: string, id: string) => {
@@ -388,7 +446,9 @@ export default function GitLabIntegrationPage() {
                 <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-neural-bright to-electric-cyan flex items-center justify-center">
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-xl font-bold gradient-text">BetaForge</span>
+                <span className="text-xl font-bold gradient-text">
+                  BetaForge
+                </span>
               </Link>
             </div>
             <div className="flex items-center gap-4">
@@ -414,9 +474,19 @@ export default function GitLabIntegrationPage() {
         <div className="max-w-5xl mx-auto">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-sm text-phantom-gray mb-8">
-            <Link href="/docs" className="hover:text-ghost-white transition-colors">Docs</Link>
+            <Link
+              href="/docs"
+              className="hover:text-ghost-white transition-colors"
+            >
+              Docs
+            </Link>
             <ChevronRight className="w-4 h-4" />
-            <Link href="/docs/integrations" className="hover:text-ghost-white transition-colors">Integrations</Link>
+            <Link
+              href="/docs/integrations"
+              className="hover:text-ghost-white transition-colors"
+            >
+              Integrations
+            </Link>
             <ChevronRight className="w-4 h-4" />
             <span className="text-ghost-white">GitLab CI</span>
           </div>
@@ -428,14 +498,17 @@ export default function GitLabIntegrationPage() {
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-4xl font-bold text-ghost-white">GitLab CI/CD</h1>
+                <h1 className="text-4xl font-bold text-ghost-white">
+                  GitLab CI/CD
+                </h1>
                 <span className="px-2 py-1 text-xs bg-quantum-green/20 text-quantum-green rounded-full">
                   Official
                 </span>
               </div>
               <p className="text-lg text-phantom-gray mb-6">
-                Seamlessly integrate BetaForge into your GitLab CI/CD pipelines. 
-                Test merge requests, deployments, and run scheduled comprehensive tests.
+                Seamlessly integrate BetaForge into your GitLab CI/CD pipelines.
+                Test merge requests, deployments, and run scheduled
+                comprehensive tests.
               </p>
               <div className="flex items-center gap-4">
                 <a
@@ -473,7 +546,9 @@ export default function GitLabIntegrationPage() {
               <div className="text-sm text-phantom-gray">Image Size</div>
             </div>
             <div className="p-4 bg-void-elevated border border-white/5 rounded-xl text-center">
-              <div className="text-2xl font-bold text-ghost-white">SaaS+Self</div>
+              <div className="text-2xl font-bold text-ghost-white">
+                SaaS+Self
+              </div>
               <div className="text-sm text-phantom-gray">GitLab Support</div>
             </div>
           </div>
@@ -495,7 +570,9 @@ export default function GitLabIntegrationPage() {
                 1
               </div>
               <Key className="w-8 h-8 text-orange-500 mb-4" />
-              <h3 className="text-lg font-semibold text-ghost-white mb-2">Get API Key</h3>
+              <h3 className="text-lg font-semibold text-ghost-white mb-2">
+                Get API Key
+              </h3>
               <p className="text-sm text-phantom-gray mb-4">
                 Generate an API key from your BetaForge dashboard.
               </p>
@@ -513,12 +590,23 @@ export default function GitLabIntegrationPage() {
                 2
               </div>
               <Variable className="w-8 h-8 text-orange-500 mb-4" />
-              <h3 className="text-lg font-semibold text-ghost-white mb-2">Add CI Variables</h3>
+              <h3 className="text-lg font-semibold text-ghost-white mb-2">
+                Add CI Variables
+              </h3>
               <p className="text-sm text-phantom-gray mb-4">
-                Add <code className="px-1.5 py-0.5 bg-void-black rounded text-electric-cyan">BETAFORGE_API_KEY</code> and{" "}
-                <code className="px-1.5 py-0.5 bg-void-black rounded text-electric-cyan">BETAFORGE_PROJECT_ID</code> as CI/CD variables.
+                Add{" "}
+                <code className="px-1.5 py-0.5 bg-void-black rounded text-electric-cyan">
+                  BETAFORGE_API_KEY
+                </code>{" "}
+                and{" "}
+                <code className="px-1.5 py-0.5 bg-void-black rounded text-electric-cyan">
+                  BETAFORGE_PROJECT_ID
+                </code>{" "}
+                as CI/CD variables.
               </p>
-              <p className="text-xs text-mist-gray">Settings → CI/CD → Variables</p>
+              <p className="text-xs text-mist-gray">
+                Settings → CI/CD → Variables
+              </p>
             </div>
 
             {/* Step 3 */}
@@ -527,7 +615,9 @@ export default function GitLabIntegrationPage() {
                 3
               </div>
               <FileCode className="w-8 h-8 text-orange-500 mb-4" />
-              <h3 className="text-lg font-semibold text-ghost-white mb-2">Update .gitlab-ci.yml</h3>
+              <h3 className="text-lg font-semibold text-ghost-white mb-2">
+                Update .gitlab-ci.yml
+              </h3>
               <p className="text-sm text-phantom-gray mb-4">
                 Add the BetaForge job to your pipeline configuration.
               </p>
@@ -535,7 +625,11 @@ export default function GitLabIntegrationPage() {
                 onClick={() => copyCode(codeExamples.basic, "quick")}
                 className="text-sm text-neural-bright hover:underline inline-flex items-center gap-1"
               >
-                {copied === "quick" ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
+                {copied === "quick" ? (
+                  <Check className="w-3 h-3" />
+                ) : (
+                  <Copy className="w-3 h-3" />
+                )}
                 Copy Example
               </button>
             </div>
@@ -545,9 +639,14 @@ export default function GitLabIntegrationPage() {
           <div className="p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl flex items-start gap-3">
             <Lock className="w-5 h-5 text-amber-500 mt-0.5" />
             <div>
-              <p className="text-sm text-ghost-white font-medium mb-1">Security Best Practice</p>
+              <p className="text-sm text-ghost-white font-medium mb-1">
+                Security Best Practice
+              </p>
               <p className="text-sm text-phantom-gray">
-                Mark your <code className="text-electric-cyan">BETAFORGE_API_KEY</code> as <strong>Protected</strong> and <strong>Masked</strong> in GitLab CI/CD variables to prevent exposure in logs.
+                Mark your{" "}
+                <code className="text-electric-cyan">BETAFORGE_API_KEY</code> as{" "}
+                <strong>Protected</strong> and <strong>Masked</strong> in GitLab
+                CI/CD variables to prevent exposure in logs.
               </p>
             </div>
           </div>
@@ -592,7 +691,9 @@ export default function GitLabIntegrationPage() {
                 <div className="w-3 h-3 rounded-full bg-red-500/50" />
                 <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
                 <div className="w-3 h-3 rounded-full bg-green-500/50" />
-                <span className="ml-3 text-sm text-phantom-gray font-mono">.gitlab-ci.yml</span>
+                <span className="ml-3 text-sm text-phantom-gray font-mono">
+                  .gitlab-ci.yml
+                </span>
               </div>
               <button
                 onClick={() => copyCode(codeExamples[activeTab], activeTab)}
@@ -622,22 +723,34 @@ export default function GitLabIntegrationPage() {
           <div className="mt-6 p-4 bg-orange-600/5 border border-orange-500/20 rounded-xl">
             {activeTab === "basic" && (
               <p className="text-sm text-phantom-gray">
-                <strong className="text-ghost-white">Basic Setup:</strong> A minimal pipeline that adds BetaForge testing after your build stage. Runs on merge requests and default branch pushes.
+                <strong className="text-ghost-white">Basic Setup:</strong> A
+                minimal pipeline that adds BetaForge testing after your build
+                stage. Runs on merge requests and default branch pushes.
               </p>
             )}
             {activeTab === "advanced" && (
               <p className="text-sm text-phantom-gray">
-                <strong className="text-ghost-white">Parallel Testing:</strong> Run multiple test suites in parallel with different agent groups. Each job focuses on specific testing areas (UX, accessibility, security) and results are combined into a single report.
+                <strong className="text-ghost-white">Parallel Testing:</strong>{" "}
+                Run multiple test suites in parallel with different agent
+                groups. Each job focuses on specific testing areas (UX,
+                accessibility, security) and results are combined into a single
+                report.
               </p>
             )}
             {activeTab === "scheduled" && (
               <p className="text-sm text-phantom-gray">
-                <strong className="text-ghost-white">Scheduled Jobs:</strong> Set up nightly or weekly comprehensive testing with Slack notifications on failures. Perfect for regression testing on staging environments.
+                <strong className="text-ghost-white">Scheduled Jobs:</strong>{" "}
+                Set up nightly or weekly comprehensive testing with Slack
+                notifications on failures. Perfect for regression testing on
+                staging environments.
               </p>
             )}
             {activeTab === "docker" && (
               <p className="text-sm text-phantom-gray">
-                <strong className="text-ghost-white">Docker Builds:</strong> Build your app as a Docker container, run it in the CI environment, and test with BetaForge. Useful for apps that need specific runtime environments.
+                <strong className="text-ghost-white">Docker Builds:</strong>{" "}
+                Build your app as a Docker container, run it in the CI
+                environment, and test with BetaForge. Useful for apps that need
+                specific runtime environments.
               </p>
             )}
           </div>
@@ -654,27 +767,49 @@ export default function GitLabIntegrationPage() {
 
           <div className="space-y-6">
             {cliCommands.map((cmd) => (
-              <div key={cmd.command} className="bg-void-elevated border border-white/5 rounded-xl overflow-hidden">
+              <div
+                key={cmd.command}
+                className="bg-void-elevated border border-white/5 rounded-xl overflow-hidden"
+              >
                 <div className="px-4 py-3 border-b border-white/5 bg-void-black/50 flex items-center justify-between">
-                  <code className="text-lg text-electric-cyan font-mono">{cmd.command}</code>
-                  <span className="text-sm text-phantom-gray">{cmd.description}</span>
+                  <code className="text-lg text-electric-cyan font-mono">
+                    {cmd.command}
+                  </code>
+                  <span className="text-sm text-phantom-gray">
+                    {cmd.description}
+                  </span>
                 </div>
                 <div className="p-4">
                   <table className="w-full">
                     <tbody>
                       {cmd.flags.map((flag, index) => (
-                        <tr key={flag.name} className={index !== cmd.flags.length - 1 ? "border-b border-white/5" : ""}>
+                        <tr
+                          key={flag.name}
+                          className={
+                            index !== cmd.flags.length - 1
+                              ? "border-b border-white/5"
+                              : ""
+                          }
+                        >
                           <td className="py-2 pr-4">
-                            <code className="text-sm text-neural-bright">{flag.name}</code>
+                            <code className="text-sm text-neural-bright">
+                              {flag.name}
+                            </code>
                           </td>
                           <td className="py-2 px-4">
-                            <span className="text-sm text-phantom-gray">{flag.description}</span>
+                            <span className="text-sm text-phantom-gray">
+                              {flag.description}
+                            </span>
                           </td>
                           <td className="py-2 pl-4 text-right">
                             {flag.required ? (
-                              <span className="text-xs px-2 py-0.5 bg-plasma-pink/20 text-plasma-pink rounded">Required</span>
+                              <span className="text-xs px-2 py-0.5 bg-plasma-pink/20 text-plasma-pink rounded">
+                                Required
+                              </span>
                             ) : (
-                              <span className="text-xs px-2 py-0.5 bg-white/10 text-mist-gray rounded">Optional</span>
+                              <span className="text-xs px-2 py-0.5 bg-white/10 text-mist-gray rounded">
+                                Optional
+                              </span>
                             )}
                           </td>
                         </tr>
@@ -700,33 +835,75 @@ export default function GitLabIntegrationPage() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-white/5 bg-void-black/50">
-                  <th className="text-left px-4 py-3 text-sm font-medium text-phantom-gray">Variable</th>
-                  <th className="text-left px-4 py-3 text-sm font-medium text-phantom-gray">Required</th>
-                  <th className="text-left px-4 py-3 text-sm font-medium text-phantom-gray">Description</th>
+                  <th className="text-left px-4 py-3 text-sm font-medium text-phantom-gray">
+                    Variable
+                  </th>
+                  <th className="text-left px-4 py-3 text-sm font-medium text-phantom-gray">
+                    Required
+                  </th>
+                  <th className="text-left px-4 py-3 text-sm font-medium text-phantom-gray">
+                    Description
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {[
-                  { name: "BETAFORGE_API_KEY", required: true, description: "Your BetaForge API key for authentication" },
-                  { name: "BETAFORGE_PROJECT_ID", required: true, description: "The project ID to run tests against" },
-                  { name: "BETAFORGE_BASE_URL", required: false, description: "Custom API URL (for enterprise/self-hosted)" },
-                  { name: "BETAFORGE_TIMEOUT", required: false, description: "Default timeout in minutes (default: 30)" },
-                  { name: "BETAFORGE_VERBOSE", required: false, description: "Enable verbose logging (true/false)" },
-                  { name: "CI_ENVIRONMENT_URL", required: false, description: "GitLab-provided environment URL (auto-detected)" },
+                  {
+                    name: "BETAFORGE_API_KEY",
+                    required: true,
+                    description: "Your BetaForge API key for authentication",
+                  },
+                  {
+                    name: "BETAFORGE_PROJECT_ID",
+                    required: true,
+                    description: "The project ID to run tests against",
+                  },
+                  {
+                    name: "BETAFORGE_BASE_URL",
+                    required: false,
+                    description: "Custom API URL (for enterprise/self-hosted)",
+                  },
+                  {
+                    name: "BETAFORGE_TIMEOUT",
+                    required: false,
+                    description: "Default timeout in minutes (default: 30)",
+                  },
+                  {
+                    name: "BETAFORGE_VERBOSE",
+                    required: false,
+                    description: "Enable verbose logging (true/false)",
+                  },
+                  {
+                    name: "CI_ENVIRONMENT_URL",
+                    required: false,
+                    description:
+                      "GitLab-provided environment URL (auto-detected)",
+                  },
                 ].map((env, index) => (
-                  <tr key={env.name} className={index !== 5 ? "border-b border-white/5" : ""}>
+                  <tr
+                    key={env.name}
+                    className={index !== 5 ? "border-b border-white/5" : ""}
+                  >
                     <td className="px-4 py-3">
-                      <code className="text-sm text-electric-cyan">{env.name}</code>
+                      <code className="text-sm text-electric-cyan">
+                        {env.name}
+                      </code>
                     </td>
                     <td className="px-4 py-3">
                       {env.required ? (
-                        <span className="text-xs px-2 py-0.5 bg-plasma-pink/20 text-plasma-pink rounded">Required</span>
+                        <span className="text-xs px-2 py-0.5 bg-plasma-pink/20 text-plasma-pink rounded">
+                          Required
+                        </span>
                       ) : (
-                        <span className="text-xs px-2 py-0.5 bg-white/10 text-mist-gray rounded">Optional</span>
+                        <span className="text-xs px-2 py-0.5 bg-white/10 text-mist-gray rounded">
+                          Optional
+                        </span>
                       )}
                     </td>
                     <td className="px-4 py-3">
-                      <span className="text-sm text-phantom-gray">{env.description}</span>
+                      <span className="text-sm text-phantom-gray">
+                        {env.description}
+                      </span>
                     </td>
                   </tr>
                 ))}
@@ -748,26 +925,35 @@ export default function GitLabIntegrationPage() {
             {[
               {
                 error: "Error: BETAFORGE_API_KEY environment variable not set",
-                solution: "Add BETAFORGE_API_KEY as a CI/CD variable in Settings → CI/CD → Variables. Make sure it's not limited to protected branches if you're testing on all branches.",
+                solution:
+                  "Add BETAFORGE_API_KEY as a CI/CD variable in Settings → CI/CD → Variables. Make sure it's not limited to protected branches if you're testing on all branches.",
               },
               {
                 error: "Error: Unable to connect to target URL",
-                solution: "Ensure your deployment is complete before the BetaForge job runs. Use 'needs:' to specify dependencies. For review environments, verify the URL is accessible from the internet.",
+                solution:
+                  "Ensure your deployment is complete before the BetaForge job runs. Use 'needs:' to specify dependencies. For review environments, verify the URL is accessible from the internet.",
               },
               {
                 error: "Job timeout after 60 minutes",
-                solution: "Comprehensive tests can take time. Either increase the timeout with --timeout flag, use --depth shallow for faster results, or split tests across multiple parallel jobs.",
+                solution:
+                  "Comprehensive tests can take time. Either increase the timeout with --timeout flag, use --depth shallow for faster results, or split tests across multiple parallel jobs.",
               },
               {
                 error: "Docker image pull failed",
-                solution: "Check your GitLab runner has internet access to pull from Docker Hub. For air-gapped environments, mirror the image to your private registry.",
+                solution:
+                  "Check your GitLab runner has internet access to pull from Docker Hub. For air-gapped environments, mirror the image to your private registry.",
               },
             ].map((item, index) => (
-              <div key={index} className="p-4 bg-void-elevated border border-white/5 rounded-xl">
+              <div
+                key={index}
+                className="p-4 bg-void-elevated border border-white/5 rounded-xl"
+              >
                 <div className="flex items-start gap-3">
                   <XCircle className="w-5 h-5 text-plasma-pink mt-0.5" />
                   <div>
-                    <p className="font-mono text-sm text-plasma-pink mb-2">{item.error}</p>
+                    <p className="font-mono text-sm text-plasma-pink mb-2">
+                      {item.error}
+                    </p>
                     <p className="text-sm text-phantom-gray">{item.solution}</p>
                   </div>
                 </div>

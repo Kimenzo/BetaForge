@@ -287,7 +287,9 @@ export function formatBugForSlack(bug: Record<string, unknown>): SlackMessage {
         type: "header",
         text: {
           type: "plain_text",
-          text: `${severityEmoji[severity]} Bug Found - ${severity.toUpperCase()}`,
+          text: `${
+            severityEmoji[severity]
+          } Bug Found - ${severity.toUpperCase()}`,
           emoji: true,
         },
       },
@@ -308,7 +310,9 @@ export function formatBugForSlack(bug: Record<string, unknown>): SlackMessage {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: `*${bug.title}*\n${(bug.description as string)?.slice(0, 300) || "No description"}...`,
+          text: `*${bug.title}*\n${
+            (bug.description as string)?.slice(0, 300) || "No description"
+          }...`,
         },
       },
       {
@@ -343,7 +347,8 @@ export function formatSessionForSlack(
   session: Record<string, unknown>
 ): SlackMessage {
   const status = session.status as string;
-  const statusEmoji = status === "completed" ? "✅" : status === "failed" ? "❌" : "🔄";
+  const statusEmoji =
+    status === "completed" ? "✅" : status === "failed" ? "❌" : "🔄";
 
   const summary = session.summary as Record<string, number> | undefined;
 
@@ -353,7 +358,9 @@ export function formatSessionForSlack(
         type: "header",
         text: {
           type: "plain_text",
-          text: `${statusEmoji} Test Session ${status === "completed" ? "Complete" : "Failed"}`,
+          text: `${statusEmoji} Test Session ${
+            status === "completed" ? "Complete" : "Failed"
+          }`,
           emoji: true,
         },
       },
@@ -376,7 +383,11 @@ export function formatSessionForSlack(
               type: "section" as const,
               text: {
                 type: "mrkdwn" as const,
-                text: `📊 *Bug Summary:*\n• 🚨 Critical: ${summary.critical || 0}\n• 🔴 High: ${summary.high || 0}\n• 🟡 Medium: ${summary.medium || 0}\n• 🟢 Low: ${summary.low || 0}`,
+                text: `📊 *Bug Summary:*\n• 🚨 Critical: ${
+                  summary.critical || 0
+                }\n• 🔴 High: ${summary.high || 0}\n• 🟡 Medium: ${
+                  summary.medium || 0
+                }\n• 🟢 Low: ${summary.low || 0}`,
               },
             },
           ]
@@ -465,7 +476,10 @@ export function formatBugForJira(
           {
             type: "paragraph",
             content: [
-              { type: "text", text: (bug.description as string) || "No description provided" },
+              {
+                type: "text",
+                text: (bug.description as string) || "No description provided",
+              },
             ],
           },
           ...(steps.length > 0
@@ -473,7 +487,9 @@ export function formatBugForJira(
                 {
                   type: "heading" as const,
                   attrs: { level: 2 },
-                  content: [{ type: "text" as const, text: "Steps to Reproduce" }],
+                  content: [
+                    { type: "text" as const, text: "Steps to Reproduce" },
+                  ],
                 },
                 {
                   type: "orderedList" as const,
@@ -504,7 +520,11 @@ export function formatBugForJira(
                       {
                         type: "paragraph" as const,
                         content: [
-                          { type: "text" as const, text: `${key}: `, marks: [{ type: "strong" }] },
+                          {
+                            type: "text" as const,
+                            text: `${key}: `,
+                            marks: [{ type: "strong" }],
+                          },
                           { type: "text" as const, text: value },
                         ],
                       },
@@ -530,7 +550,9 @@ export function formatBugForJira(
       priority: { name: severityMap[(bug.severity as string) || "medium"] },
       labels: [
         "betaforge",
-        `agent-${((bug.agentName as string) || "unknown").toLowerCase().replace(/\s+/g, "-")}`,
+        `agent-${((bug.agentName as string) || "unknown")
+          .toLowerCase()
+          .replace(/\s+/g, "-")}`,
         (bug.severity as string) || "medium",
       ],
     },

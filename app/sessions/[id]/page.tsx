@@ -29,7 +29,10 @@ interface SessionPageProps {
 export default function SessionDetailPage({ params }: SessionPageProps) {
   const [id, setId] = useState<string>("");
   const [showSimulator, setShowSimulator] = useState(false);
-  const [selectedAgent, setSelectedAgent] = useState<{ id: string; name: string } | null>(null);
+  const [selectedAgent, setSelectedAgent] = useState<{
+    id: string;
+    name: string;
+  } | null>(null);
   const { session, loading, error, refetch } = useSessionDetails(id);
 
   useEffect(() => {
@@ -39,22 +42,29 @@ export default function SessionDetailPage({ params }: SessionPageProps) {
   // Auto-refresh while session is running
   useEffect(() => {
     if (!session || session.status !== "running") return;
-    
+
     const interval = setInterval(() => {
       refetch();
     }, 3000); // Refresh every 3 seconds while running
-    
+
     return () => clearInterval(interval);
   }, [session?.status, refetch]);
 
   // Format activity log entries from API data
-  const activityLogs = session?.activityLog?.map(log => ({
-    time: new Date(log.timestamp).toLocaleTimeString('en-US', { hour12: false }),
-    agent: log.agentName || 'System',
-    action: log.message,
-    type: log.type === 'bug_found' ? 'bug' as const : 
-          log.type === 'agent_completed' ? 'success' as const : undefined,
-  })) || [];
+  const activityLogs =
+    session?.activityLog?.map((log) => ({
+      time: new Date(log.timestamp).toLocaleTimeString("en-US", {
+        hour12: false,
+      }),
+      agent: log.agentName || "System",
+      action: log.message,
+      type:
+        log.type === "bug_found"
+          ? ("bug" as const)
+          : log.type === "agent_completed"
+          ? ("success" as const)
+          : undefined,
+    })) || [];
 
   const statusConfig = {
     running: {
@@ -122,8 +132,12 @@ export default function SessionDetailPage({ params }: SessionPageProps) {
       <div className="min-h-screen bg-void-black flex items-center justify-center">
         <div className="text-center max-w-md">
           <AlertCircle className="w-12 h-12 text-crimson-red mx-auto mb-4" />
-          <h2 className="text-xl font-semibold text-ghost-white mb-2">Session Not Found</h2>
-          <p className="text-phantom-gray mb-6">{error || "Unable to load session details."}</p>
+          <h2 className="text-xl font-semibold text-ghost-white mb-2">
+            Session Not Found
+          </h2>
+          <p className="text-phantom-gray mb-6">
+            {error || "Unable to load session details."}
+          </p>
           <Link href="/dashboard">
             <Button>
               <ArrowLeft className="w-4 h-4 mr-2" />
@@ -136,13 +150,16 @@ export default function SessionDetailPage({ params }: SessionPageProps) {
   }
 
   // Map agents for display
-  const displayAgents = session.agents?.map(agent => ({
-    id: agent.id,
-    name: agent.name,
-    status: agent.status,
-    progress: agent.progress || 0,
-    bugsFound: session.bugReports?.filter(b => b.agentName === agent.name).length || 0,
-  })) || [];
+  const displayAgents =
+    session.agents?.map((agent) => ({
+      id: agent.id,
+      name: agent.name,
+      status: agent.status,
+      progress: agent.progress || 0,
+      bugsFound:
+        session.bugReports?.filter((b) => b.agentName === agent.name).length ||
+        0,
+    })) || [];
 
   return (
     <div className="min-h-screen bg-void-black">
@@ -173,7 +190,9 @@ export default function SessionDetailPage({ params }: SessionPageProps) {
                 <h1 className="text-3xl font-bold text-ghost-white">
                   Test Session
                 </h1>
-                <p className="text-phantom-gray">{session.project?.name || "Test Session"}</p>
+                <p className="text-phantom-gray">
+                  {session.project?.name || "Test Session"}
+                </p>
               </div>
             </div>
 
@@ -194,7 +213,10 @@ export default function SessionDetailPage({ params }: SessionPageProps) {
               </span>
               <span className="text-sm text-phantom-gray flex items-center gap-1.5">
                 <Clock className="w-4 h-4" />
-                Started {new Date(session.startedAt || session.createdAt).toLocaleString()}
+                Started{" "}
+                {new Date(
+                  session.startedAt || session.createdAt
+                ).toLocaleString()}
               </span>
               {session.project?.accessUrl && (
                 <a
@@ -213,10 +235,13 @@ export default function SessionDetailPage({ params }: SessionPageProps) {
           {/* Actions */}
           <div className="flex items-center gap-3">
             {session.project?.accessUrl && (
-              <Button 
+              <Button
                 onClick={() => {
                   // Pick first available agent or Sarah as default
-                  const agent = session.agents?.[0] || { id: "sarah", name: "Sarah" };
+                  const agent = session.agents?.[0] || {
+                    id: "sarah",
+                    name: "Sarah",
+                  };
                   setSelectedAgent({ id: agent.id, name: agent.name });
                   setShowSimulator(true);
                 }}
@@ -355,7 +380,10 @@ export default function SessionDetailPage({ params }: SessionPageProps) {
                           {session.project?.accessUrl && (
                             <button
                               onClick={() => {
-                                setSelectedAgent({ id: agent.id, name: agent.name });
+                                setSelectedAgent({
+                                  id: agent.id,
+                                  name: agent.name,
+                                });
                                 setShowSimulator(true);
                               }}
                               className="p-1 rounded hover:bg-white/10 text-phantom-gray hover:text-electric-cyan transition-colors"

@@ -377,7 +377,9 @@ class BetaForgeWebhookController extends Controller
 
 export default function WebhooksIntegrationPage() {
   const [selectedEvent, setSelectedEvent] = useState(webhookEvents[0]);
-  const [selectedLanguage, setSelectedLanguage] = useState<"node" | "python" | "go" | "php">("node");
+  const [selectedLanguage, setSelectedLanguage] = useState<
+    "node" | "python" | "go" | "php"
+  >("node");
   const [copied, setCopied] = useState<string | null>(null);
 
   const copyCode = (code: string, id: string) => {
@@ -404,7 +406,9 @@ export default function WebhooksIntegrationPage() {
                 <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-neural-bright to-electric-cyan flex items-center justify-center">
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-xl font-bold gradient-text">BetaForge</span>
+                <span className="text-xl font-bold gradient-text">
+                  BetaForge
+                </span>
               </Link>
             </div>
             <div className="flex items-center gap-4">
@@ -430,9 +434,19 @@ export default function WebhooksIntegrationPage() {
         <div className="max-w-5xl mx-auto">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-sm text-phantom-gray mb-8">
-            <Link href="/docs" className="hover:text-ghost-white transition-colors">Docs</Link>
+            <Link
+              href="/docs"
+              className="hover:text-ghost-white transition-colors"
+            >
+              Docs
+            </Link>
             <ChevronRight className="w-4 h-4" />
-            <Link href="/docs/integrations" className="hover:text-ghost-white transition-colors">Integrations</Link>
+            <Link
+              href="/docs/integrations"
+              className="hover:text-ghost-white transition-colors"
+            >
+              Integrations
+            </Link>
             <ChevronRight className="w-4 h-4" />
             <span className="text-ghost-white">Webhooks</span>
           </div>
@@ -444,11 +458,14 @@ export default function WebhooksIntegrationPage() {
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-4xl font-bold text-ghost-white">Webhooks</h1>
+                <h1 className="text-4xl font-bold text-ghost-white">
+                  Webhooks
+                </h1>
               </div>
               <p className="text-lg text-phantom-gray mb-6">
-                Receive real-time notifications when test sessions complete, bugs are found, or errors occur. 
-                Build custom integrations with any system using our webhook API.
+                Receive real-time notifications when test sessions complete,
+                bugs are found, or errors occur. Build custom integrations with
+                any system using our webhook API.
               </p>
               <div className="flex items-center gap-4">
                 <Link
@@ -473,23 +490,39 @@ export default function WebhooksIntegrationPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
             <div className="p-4 bg-void-elevated border border-white/5 rounded-xl">
               <Zap className="w-6 h-6 text-electric-cyan mb-2" />
-              <h3 className="font-semibold text-ghost-white text-sm">Real-time</h3>
-              <p className="text-xs text-phantom-gray">Events delivered instantly</p>
+              <h3 className="font-semibold text-ghost-white text-sm">
+                Real-time
+              </h3>
+              <p className="text-xs text-phantom-gray">
+                Events delivered instantly
+              </p>
             </div>
             <div className="p-4 bg-void-elevated border border-white/5 rounded-xl">
               <Shield className="w-6 h-6 text-quantum-green mb-2" />
-              <h3 className="font-semibold text-ghost-white text-sm">HMAC Signed</h3>
-              <p className="text-xs text-phantom-gray">SHA-256 signature verification</p>
+              <h3 className="font-semibold text-ghost-white text-sm">
+                HMAC Signed
+              </h3>
+              <p className="text-xs text-phantom-gray">
+                SHA-256 signature verification
+              </p>
             </div>
             <div className="p-4 bg-void-elevated border border-white/5 rounded-xl">
               <RefreshCw className="w-6 h-6 text-neural-bright mb-2" />
-              <h3 className="font-semibold text-ghost-white text-sm">Auto Retry</h3>
-              <p className="text-xs text-phantom-gray">Exponential backoff on failure</p>
+              <h3 className="font-semibold text-ghost-white text-sm">
+                Auto Retry
+              </h3>
+              <p className="text-xs text-phantom-gray">
+                Exponential backoff on failure
+              </p>
             </div>
             <div className="p-4 bg-void-elevated border border-white/5 rounded-xl">
               <Filter className="w-6 h-6 text-plasma-pink mb-2" />
-              <h3 className="font-semibold text-ghost-white text-sm">Event Filtering</h3>
-              <p className="text-xs text-phantom-gray">Subscribe to specific events</p>
+              <h3 className="font-semibold text-ghost-white text-sm">
+                Event Filtering
+              </h3>
+              <p className="text-xs text-phantom-gray">
+                Subscribe to specific events
+              </p>
             </div>
           </div>
         </div>
@@ -509,35 +542,49 @@ export default function WebhooksIntegrationPage() {
                 1
               </div>
               <Server className="w-6 h-6 text-neural-bright mb-3" />
-              <h3 className="font-semibold text-ghost-white mb-1">Create Endpoint</h3>
-              <p className="text-xs text-phantom-gray">Set up an HTTPS endpoint on your server to receive webhooks</p>
+              <h3 className="font-semibold text-ghost-white mb-1">
+                Create Endpoint
+              </h3>
+              <p className="text-xs text-phantom-gray">
+                Set up an HTTPS endpoint on your server to receive webhooks
+              </p>
             </div>
-            
+
             <div className="relative p-5 bg-void-elevated border border-white/5 rounded-xl">
               <div className="absolute -top-3 -left-3 w-7 h-7 rounded-full bg-neural flex items-center justify-center text-white font-bold text-xs">
                 2
               </div>
               <Settings className="w-6 h-6 text-neural-bright mb-3" />
-              <h3 className="font-semibold text-ghost-white mb-1">Configure Webhook</h3>
-              <p className="text-xs text-phantom-gray">Add your URL in Settings → API → Webhooks</p>
+              <h3 className="font-semibold text-ghost-white mb-1">
+                Configure Webhook
+              </h3>
+              <p className="text-xs text-phantom-gray">
+                Add your URL in Settings → API → Webhooks
+              </p>
             </div>
-            
+
             <div className="relative p-5 bg-void-elevated border border-white/5 rounded-xl">
               <div className="absolute -top-3 -left-3 w-7 h-7 rounded-full bg-neural flex items-center justify-center text-white font-bold text-xs">
                 3
               </div>
               <Key className="w-6 h-6 text-neural-bright mb-3" />
-              <h3 className="font-semibold text-ghost-white mb-1">Copy Secret</h3>
-              <p className="text-xs text-phantom-gray">Save the signing secret to verify webhook authenticity</p>
+              <h3 className="font-semibold text-ghost-white mb-1">
+                Copy Secret
+              </h3>
+              <p className="text-xs text-phantom-gray">
+                Save the signing secret to verify webhook authenticity
+              </p>
             </div>
-            
+
             <div className="relative p-5 bg-void-elevated border border-white/5 rounded-xl">
               <div className="absolute -top-3 -left-3 w-7 h-7 rounded-full bg-neural flex items-center justify-center text-white font-bold text-xs">
                 4
               </div>
               <CheckCircle2 className="w-6 h-6 text-neural-bright mb-3" />
               <h3 className="font-semibold text-ghost-white mb-1">Test & Go</h3>
-              <p className="text-xs text-phantom-gray">Use the test button to send a sample payload</p>
+              <p className="text-xs text-phantom-gray">
+                Use the test button to send a sample payload
+              </p>
             </div>
           </div>
         </div>
@@ -564,8 +611,12 @@ export default function WebhooksIntegrationPage() {
                       : "bg-void-elevated border-white/5 hover:border-white/10"
                   }`}
                 >
-                  <code className="text-sm text-electric-cyan">{event.name}</code>
-                  <p className="text-xs text-phantom-gray mt-1">{event.description}</p>
+                  <code className="text-sm text-electric-cyan">
+                    {event.name}
+                  </code>
+                  <p className="text-xs text-phantom-gray mt-1">
+                    {event.description}
+                  </p>
                 </button>
               ))}
             </div>
@@ -575,10 +626,14 @@ export default function WebhooksIntegrationPage() {
               <div className="flex items-center justify-between px-4 py-3 border-b border-white/5 bg-void-black/50">
                 <div className="flex items-center gap-2">
                   <FileJson className="w-4 h-4 text-phantom-gray" />
-                  <span className="text-sm text-ghost-white font-mono">{selectedEvent.name}</span>
+                  <span className="text-sm text-ghost-white font-mono">
+                    {selectedEvent.name}
+                  </span>
                 </div>
                 <button
-                  onClick={() => copyCode(selectedEvent.payload, selectedEvent.name)}
+                  onClick={() =>
+                    copyCode(selectedEvent.payload, selectedEvent.name)
+                  }
                   className="flex items-center gap-2 px-3 py-1.5 text-sm text-phantom-gray hover:text-ghost-white transition-colors rounded-lg hover:bg-white/5"
                 >
                   {copied === selectedEvent.name ? (
@@ -614,50 +669,94 @@ export default function WebhooksIntegrationPage() {
 
           <div className="grid lg:grid-cols-2 gap-8 mb-8">
             <div>
-              <h3 className="text-lg font-semibold text-ghost-white mb-4">HMAC Signature Verification</h3>
+              <h3 className="text-lg font-semibold text-ghost-white mb-4">
+                HMAC Signature Verification
+              </h3>
               <p className="text-phantom-gray mb-4">
-                Every webhook request includes an <code className="px-1.5 py-0.5 bg-void-black rounded text-electric-cyan">X-BetaForge-Signature</code> header 
-                containing an HMAC-SHA256 signature of the payload. Always verify this signature before processing webhooks.
+                Every webhook request includes an{" "}
+                <code className="px-1.5 py-0.5 bg-void-black rounded text-electric-cyan">
+                  X-BetaForge-Signature
+                </code>{" "}
+                header containing an HMAC-SHA256 signature of the payload.
+                Always verify this signature before processing webhooks.
               </p>
-              
+
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-quantum-green mt-0.5" />
-                  <p className="text-sm text-phantom-gray">Use timing-safe comparison to prevent timing attacks</p>
+                  <p className="text-sm text-phantom-gray">
+                    Use timing-safe comparison to prevent timing attacks
+                  </p>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-quantum-green mt-0.5" />
-                  <p className="text-sm text-phantom-gray">Reject requests with missing or invalid signatures</p>
+                  <p className="text-sm text-phantom-gray">
+                    Reject requests with missing or invalid signatures
+                  </p>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-quantum-green mt-0.5" />
-                  <p className="text-sm text-phantom-gray">Store your webhook secret securely (env vars, secrets manager)</p>
+                  <p className="text-sm text-phantom-gray">
+                    Store your webhook secret securely (env vars, secrets
+                    manager)
+                  </p>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-quantum-green mt-0.5" />
-                  <p className="text-sm text-phantom-gray">Rotate secrets periodically for enhanced security</p>
+                  <p className="text-sm text-phantom-gray">
+                    Rotate secrets periodically for enhanced security
+                  </p>
                 </div>
               </div>
             </div>
 
             <div>
-              <h3 className="text-lg font-semibold text-ghost-white mb-4">Request Headers</h3>
+              <h3 className="text-lg font-semibold text-ghost-white mb-4">
+                Request Headers
+              </h3>
               <div className="bg-void-elevated border border-white/5 rounded-xl overflow-hidden">
                 <table className="w-full">
                   <tbody>
                     {[
-                      { name: "X-BetaForge-Signature", value: "sha256=abc123...", desc: "HMAC signature" },
-                      { name: "X-BetaForge-Event", value: "session.completed", desc: "Event type" },
-                      { name: "X-BetaForge-Delivery", value: "dlv_xyz789", desc: "Unique delivery ID" },
-                      { name: "X-BetaForge-Timestamp", value: "1704276600", desc: "Unix timestamp" },
-                      { name: "Content-Type", value: "application/json", desc: "Always JSON" },
+                      {
+                        name: "X-BetaForge-Signature",
+                        value: "sha256=abc123...",
+                        desc: "HMAC signature",
+                      },
+                      {
+                        name: "X-BetaForge-Event",
+                        value: "session.completed",
+                        desc: "Event type",
+                      },
+                      {
+                        name: "X-BetaForge-Delivery",
+                        value: "dlv_xyz789",
+                        desc: "Unique delivery ID",
+                      },
+                      {
+                        name: "X-BetaForge-Timestamp",
+                        value: "1704276600",
+                        desc: "Unix timestamp",
+                      },
+                      {
+                        name: "Content-Type",
+                        value: "application/json",
+                        desc: "Always JSON",
+                      },
                     ].map((header, i) => (
-                      <tr key={header.name} className={i < 4 ? "border-b border-white/5" : ""}>
+                      <tr
+                        key={header.name}
+                        className={i < 4 ? "border-b border-white/5" : ""}
+                      >
                         <td className="px-4 py-2">
-                          <code className="text-xs text-electric-cyan">{header.name}</code>
+                          <code className="text-xs text-electric-cyan">
+                            {header.name}
+                          </code>
                         </td>
                         <td className="px-4 py-2">
-                          <code className="text-xs text-mist-gray">{header.value}</code>
+                          <code className="text-xs text-mist-gray">
+                            {header.value}
+                          </code>
                         </td>
                       </tr>
                     ))}
@@ -687,7 +786,9 @@ export default function WebhooksIntegrationPage() {
             ].map((lang) => (
               <button
                 key={lang.id}
-                onClick={() => setSelectedLanguage(lang.id as typeof selectedLanguage)}
+                onClick={() =>
+                  setSelectedLanguage(lang.id as typeof selectedLanguage)
+                }
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                   selectedLanguage === lang.id
                     ? "bg-neural/20 text-ghost-white border border-neural/30"
@@ -703,10 +804,22 @@ export default function WebhooksIntegrationPage() {
           <div className="relative bg-void-elevated border border-white/5 rounded-2xl overflow-hidden">
             <div className="flex items-center justify-between px-4 py-3 border-b border-white/5 bg-void-black/50">
               <span className="text-sm text-phantom-gray font-mono">
-                webhook-handler.{selectedLanguage === "node" ? "js" : selectedLanguage === "python" ? "py" : selectedLanguage === "go" ? "go" : "php"}
+                webhook-handler.
+                {selectedLanguage === "node"
+                  ? "js"
+                  : selectedLanguage === "python"
+                  ? "py"
+                  : selectedLanguage === "go"
+                  ? "go"
+                  : "php"}
               </span>
               <button
-                onClick={() => copyCode(languageExamples[selectedLanguage], `lang-${selectedLanguage}`)}
+                onClick={() =>
+                  copyCode(
+                    languageExamples[selectedLanguage],
+                    `lang-${selectedLanguage}`
+                  )
+                }
                 className="flex items-center gap-2 px-3 py-1.5 text-sm text-phantom-gray hover:text-ghost-white transition-colors rounded-lg hover:bg-white/5"
               >
                 {copied === `lang-${selectedLanguage}` ? (
@@ -741,63 +854,96 @@ export default function WebhooksIntegrationPage() {
 
           <div className="grid lg:grid-cols-2 gap-8">
             <div className="p-6 bg-void-elevated border border-white/5 rounded-xl">
-              <h3 className="font-semibold text-ghost-white mb-4">Automatic Retries</h3>
+              <h3 className="font-semibold text-ghost-white mb-4">
+                Automatic Retries
+              </h3>
               <p className="text-sm text-phantom-gray mb-4">
-                If your endpoint returns a non-2xx status code or times out, we'll automatically retry the webhook with exponential backoff.
+                If your endpoint returns a non-2xx status code or times out,
+                we'll automatically retry the webhook with exponential backoff.
               </p>
               <div className="space-y-2">
                 <div className="flex items-center justify-between py-2 border-b border-white/5">
                   <span className="text-sm text-phantom-gray">Retry 1</span>
-                  <span className="text-sm text-ghost-white">After 1 minute</span>
+                  <span className="text-sm text-ghost-white">
+                    After 1 minute
+                  </span>
                 </div>
                 <div className="flex items-center justify-between py-2 border-b border-white/5">
                   <span className="text-sm text-phantom-gray">Retry 2</span>
-                  <span className="text-sm text-ghost-white">After 5 minutes</span>
+                  <span className="text-sm text-ghost-white">
+                    After 5 minutes
+                  </span>
                 </div>
                 <div className="flex items-center justify-between py-2 border-b border-white/5">
                   <span className="text-sm text-phantom-gray">Retry 3</span>
-                  <span className="text-sm text-ghost-white">After 30 minutes</span>
+                  <span className="text-sm text-ghost-white">
+                    After 30 minutes
+                  </span>
                 </div>
                 <div className="flex items-center justify-between py-2 border-b border-white/5">
                   <span className="text-sm text-phantom-gray">Retry 4</span>
-                  <span className="text-sm text-ghost-white">After 2 hours</span>
+                  <span className="text-sm text-ghost-white">
+                    After 2 hours
+                  </span>
                 </div>
                 <div className="flex items-center justify-between py-2">
-                  <span className="text-sm text-phantom-gray">Retry 5 (final)</span>
-                  <span className="text-sm text-ghost-white">After 24 hours</span>
+                  <span className="text-sm text-phantom-gray">
+                    Retry 5 (final)
+                  </span>
+                  <span className="text-sm text-ghost-white">
+                    After 24 hours
+                  </span>
                 </div>
               </div>
             </div>
 
             <div className="p-6 bg-void-elevated border border-white/5 rounded-xl">
-              <h3 className="font-semibold text-ghost-white mb-4">Best Practices</h3>
+              <h3 className="font-semibold text-ghost-white mb-4">
+                Best Practices
+              </h3>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
                   <Clock className="w-5 h-5 text-electric-cyan mt-0.5" />
                   <div>
-                    <p className="text-sm text-ghost-white font-medium">Respond quickly</p>
-                    <p className="text-xs text-phantom-gray">Return 200 within 30 seconds to avoid timeouts</p>
+                    <p className="text-sm text-ghost-white font-medium">
+                      Respond quickly
+                    </p>
+                    <p className="text-xs text-phantom-gray">
+                      Return 200 within 30 seconds to avoid timeouts
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Terminal className="w-5 h-5 text-electric-cyan mt-0.5" />
                   <div>
-                    <p className="text-sm text-ghost-white font-medium">Process asynchronously</p>
-                    <p className="text-xs text-phantom-gray">Queue webhooks for background processing if needed</p>
+                    <p className="text-sm text-ghost-white font-medium">
+                      Process asynchronously
+                    </p>
+                    <p className="text-xs text-phantom-gray">
+                      Queue webhooks for background processing if needed
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Hash className="w-5 h-5 text-electric-cyan mt-0.5" />
                   <div>
-                    <p className="text-sm text-ghost-white font-medium">Handle duplicates</p>
-                    <p className="text-xs text-phantom-gray">Use delivery ID for idempotency checks</p>
+                    <p className="text-sm text-ghost-white font-medium">
+                      Handle duplicates
+                    </p>
+                    <p className="text-xs text-phantom-gray">
+                      Use delivery ID for idempotency checks
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Eye className="w-5 h-5 text-electric-cyan mt-0.5" />
                   <div>
-                    <p className="text-sm text-ghost-white font-medium">Monitor delivery</p>
-                    <p className="text-xs text-phantom-gray">Check webhook logs in dashboard for failures</p>
+                    <p className="text-sm text-ghost-white font-medium">
+                      Monitor delivery
+                    </p>
+                    <p className="text-xs text-phantom-gray">
+                      Check webhook logs in dashboard for failures
+                    </p>
                   </div>
                 </div>
               </div>
@@ -818,26 +964,35 @@ export default function WebhooksIntegrationPage() {
             {[
               {
                 error: "Webhook not received",
-                solution: "Check that your endpoint is publicly accessible over HTTPS. Local development servers (localhost) won't work - use a tunneling service like ngrok for testing.",
+                solution:
+                  "Check that your endpoint is publicly accessible over HTTPS. Local development servers (localhost) won't work - use a tunneling service like ngrok for testing.",
               },
               {
                 error: "Signature verification failed",
-                solution: "Ensure you're using the raw request body (not parsed JSON) when computing the HMAC. Check that your webhook secret matches exactly (no extra whitespace).",
+                solution:
+                  "Ensure you're using the raw request body (not parsed JSON) when computing the HMAC. Check that your webhook secret matches exactly (no extra whitespace).",
               },
               {
                 error: "Timeouts on delivery",
-                solution: "Your endpoint must respond within 30 seconds. Acknowledge the webhook immediately with 200, then process the payload asynchronously.",
+                solution:
+                  "Your endpoint must respond within 30 seconds. Acknowledge the webhook immediately with 200, then process the payload asynchronously.",
               },
               {
                 error: "Missing events",
-                solution: "Check your event filter settings in the dashboard. By default, all events are sent. Verify the webhook is enabled and not paused.",
+                solution:
+                  "Check your event filter settings in the dashboard. By default, all events are sent. Verify the webhook is enabled and not paused.",
               },
             ].map((item, index) => (
-              <div key={index} className="p-4 bg-void-elevated border border-white/5 rounded-xl">
+              <div
+                key={index}
+                className="p-4 bg-void-elevated border border-white/5 rounded-xl"
+              >
                 <div className="flex items-start gap-3">
                   <XCircle className="w-5 h-5 text-plasma-pink mt-0.5" />
                   <div>
-                    <p className="font-medium text-ghost-white mb-2">{item.error}</p>
+                    <p className="font-medium text-ghost-white mb-2">
+                      {item.error}
+                    </p>
                     <p className="text-sm text-phantom-gray">{item.solution}</p>
                   </div>
                 </div>

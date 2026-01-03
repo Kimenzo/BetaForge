@@ -99,7 +99,9 @@ export function withSuspense<P extends object>(
       <Component {...props} />
     </Suspense>
   );
-  WithSuspense.displayName = `withSuspense(${Component.displayName || Component.name})`;
+  WithSuspense.displayName = `withSuspense(${
+    Component.displayName || Component.name
+  })`;
   return WithSuspense;
 }
 
@@ -113,7 +115,8 @@ export function createViewportLazy<P extends object>(
   const { Component, preload } = createLazyComponent(importFn, options);
 
   const ViewportLazy = (props: P & { fallback?: ReactNode }) => {
-    const { fallback = options.fallback || <SkeletonFallback />, ...rest } = props;
+    const { fallback = options.fallback || <SkeletonFallback />, ...rest } =
+      props;
 
     return (
       <div

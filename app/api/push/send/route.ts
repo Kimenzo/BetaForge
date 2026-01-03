@@ -29,9 +29,10 @@ export async function POST(request: NextRequest) {
   // Check if push is configured
   if (!isPushConfigured()) {
     return NextResponse.json(
-      { 
+      {
         error: "Push notifications not configured",
-        message: "Set NEXT_PUBLIC_VAPID_PUBLIC_KEY and VAPID_PRIVATE_KEY environment variables",
+        message:
+          "Set NEXT_PUBLIC_VAPID_PUBLIC_KEY and VAPID_PRIVATE_KEY environment variables",
       },
       { status: 503 }
     );
@@ -41,7 +42,7 @@ export async function POST(request: NextRequest) {
     // Verify internal API key or admin auth
     const authHeader = request.headers.get("authorization");
     const apiKey = process.env.INTERNAL_API_KEY;
-    
+
     if (apiKey && authHeader !== `Bearer ${apiKey}`) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -69,7 +70,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       sent: 0,
-      message: "Push notifications require full setup (web-push package and database table)",
+      message:
+        "Push notifications require full setup (web-push package and database table)",
     });
   } catch (error) {
     console.error("[Push] Send error:", error);

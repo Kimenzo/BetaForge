@@ -1,26 +1,41 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Bell, BellOff, Smartphone, Monitor, Bug, CheckCircle, Loader2 } from "lucide-react";
-import { usePushNotifications, useInstallPrompt, useStorageManager } from "@/lib/pwa";
+import {
+  Bell,
+  BellOff,
+  Smartphone,
+  Monitor,
+  Bug,
+  CheckCircle,
+  Loader2,
+} from "lucide-react";
+import {
+  usePushNotifications,
+  useInstallPrompt,
+  useStorageManager,
+} from "@/lib/pwa";
 
 interface NotificationSettingsProps {
   vapidPublicKey?: string;
 }
 
-export function NotificationSettings({ vapidPublicKey }: NotificationSettingsProps) {
-  const { 
-    permission, 
-    subscription, 
-    isSupported, 
-    requestPermission, 
-    subscribe, 
-    unsubscribe 
+export function NotificationSettings({
+  vapidPublicKey,
+}: NotificationSettingsProps) {
+  const {
+    permission,
+    subscription,
+    isSupported,
+    requestPermission,
+    subscribe,
+    unsubscribe,
   } = usePushNotifications();
-  
+
   const { isInstalled } = useInstallPrompt();
-  const { isPersisted, requestPersistence, storageEstimate } = useStorageManager();
-  
+  const { isPersisted, requestPersistence, storageEstimate } =
+    useStorageManager();
+
   const [isLoading, setIsLoading] = useState(false);
   const [preferences, setPreferences] = useState({
     testComplete: true,
@@ -54,7 +69,7 @@ export function NotificationSettings({ vapidPublicKey }: NotificationSettingsPro
           await fetch("/api/push/subscribe", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ 
+            body: JSON.stringify({
               subscription: sub.toJSON(),
               userId: "current-user", // Replace with actual user ID
             }),
@@ -102,7 +117,7 @@ export function NotificationSettings({ vapidPublicKey }: NotificationSettingsPro
       {/* PWA Status */}
       <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
         <h3 className="text-lg font-semibold text-white mb-4">App Status</h3>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="flex items-center gap-3 p-4 bg-white/5 rounded-xl">
             {isInstalled ? (
@@ -123,9 +138,11 @@ export function NotificationSettings({ vapidPublicKey }: NotificationSettingsPro
           </div>
 
           <div className="flex items-center gap-3 p-4 bg-white/5 rounded-xl">
-            <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-              permission === "granted" ? "bg-green-500/10" : "bg-gray-500/10"
-            }`}>
+            <div
+              className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                permission === "granted" ? "bg-green-500/10" : "bg-gray-500/10"
+              }`}
+            >
               {permission === "granted" ? (
                 <Bell className="w-5 h-5 text-green-500" />
               ) : (
@@ -139,12 +156,16 @@ export function NotificationSettings({ vapidPublicKey }: NotificationSettingsPro
           </div>
 
           <div className="flex items-center gap-3 p-4 bg-white/5 rounded-xl">
-            <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-              isPersisted ? "bg-green-500/10" : "bg-yellow-500/10"
-            }`}>
-              <CheckCircle className={`w-5 h-5 ${
-                isPersisted ? "text-green-500" : "text-yellow-500"
-              }`} />
+            <div
+              className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                isPersisted ? "bg-green-500/10" : "bg-yellow-500/10"
+              }`}
+            >
+              <CheckCircle
+                className={`w-5 h-5 ${
+                  isPersisted ? "text-green-500" : "text-yellow-500"
+                }`}
+              />
             </div>
             <div>
               <p className="text-sm text-gray-400">Storage</p>
@@ -160,14 +181,18 @@ export function NotificationSettings({ vapidPublicKey }: NotificationSettingsPro
             <div className="flex justify-between text-sm mb-2">
               <span className="text-gray-400">Storage Used</span>
               <span className="text-white">
-                {formatBytes(storageEstimate.usage)} / {formatBytes(storageEstimate.quota)}
+                {formatBytes(storageEstimate.usage)} /{" "}
+                {formatBytes(storageEstimate.quota)}
               </span>
             </div>
             <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-              <div 
+              <div
                 className="h-full bg-orange-500 rounded-full transition-all"
-                style={{ 
-                  width: `${Math.min((storageEstimate.usage / storageEstimate.quota) * 100, 100)}%` 
+                style={{
+                  width: `${Math.min(
+                    (storageEstimate.usage / storageEstimate.quota) * 100,
+                    100
+                  )}%`,
                 }}
               />
             </div>
@@ -186,7 +211,9 @@ export function NotificationSettings({ vapidPublicKey }: NotificationSettingsPro
 
       {/* Notification Settings */}
       <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-        <h3 className="text-lg font-semibold text-white mb-4">Push Notifications</h3>
+        <h3 className="text-lg font-semibold text-white mb-4">
+          Push Notifications
+        </h3>
 
         {!isSupported ? (
           <p className="text-gray-400">
@@ -195,7 +222,8 @@ export function NotificationSettings({ vapidPublicKey }: NotificationSettingsPro
         ) : permission === "denied" ? (
           <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl">
             <p className="text-red-400">
-              Notifications are blocked. Please enable them in your browser settings.
+              Notifications are blocked. Please enable them in your browser
+              settings.
             </p>
           </div>
         ) : permission === "granted" && subscription ? (
@@ -210,7 +238,11 @@ export function NotificationSettings({ vapidPublicKey }: NotificationSettingsPro
                 disabled={isLoading}
                 className="px-4 py-2 text-sm text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
               >
-                {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Disable"}
+                {isLoading ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  "Disable"
+                )}
               </button>
             </div>
 
@@ -224,7 +256,12 @@ export function NotificationSettings({ vapidPublicKey }: NotificationSettingsPro
                 <input
                   type="checkbox"
                   checked={preferences.testComplete}
-                  onChange={(e) => savePreferences({ ...preferences, testComplete: e.target.checked })}
+                  onChange={(e) =>
+                    savePreferences({
+                      ...preferences,
+                      testComplete: e.target.checked,
+                    })
+                  }
                   className="w-5 h-5 rounded accent-orange-500"
                 />
               </label>
@@ -237,20 +274,32 @@ export function NotificationSettings({ vapidPublicKey }: NotificationSettingsPro
                 <input
                   type="checkbox"
                   checked={preferences.bugFound}
-                  onChange={(e) => savePreferences({ ...preferences, bugFound: e.target.checked })}
+                  onChange={(e) =>
+                    savePreferences({
+                      ...preferences,
+                      bugFound: e.target.checked,
+                    })
+                  }
                   className="w-5 h-5 rounded accent-orange-500"
                 />
               </label>
 
               <label className="flex items-center justify-between p-3 bg-white/5 rounded-xl cursor-pointer">
                 <div className="flex items-center gap-3">
-                  <span className="w-5 h-5 flex items-center justify-center text-red-500 font-bold text-xs">!</span>
+                  <span className="w-5 h-5 flex items-center justify-center text-red-500 font-bold text-xs">
+                    !
+                  </span>
                   <span className="text-gray-300">Critical bugs only</span>
                 </div>
                 <input
                   type="checkbox"
                   checked={preferences.criticalOnly}
-                  onChange={(e) => savePreferences({ ...preferences, criticalOnly: e.target.checked })}
+                  onChange={(e) =>
+                    savePreferences({
+                      ...preferences,
+                      criticalOnly: e.target.checked,
+                    })
+                  }
                   className="w-5 h-5 rounded accent-orange-500"
                 />
               </label>

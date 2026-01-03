@@ -136,7 +136,9 @@ export default function ApiSettingsPage() {
   };
 
   const maskKey = (key: string) => {
-    return key.substring(0, 12) + "•".repeat(24) + key.substring(key.length - 4);
+    return (
+      key.substring(0, 12) + "•".repeat(24) + key.substring(key.length - 4)
+    );
   };
 
   return (
@@ -332,66 +334,66 @@ export default function ApiSettingsPage() {
             onClick={() => setShowCreateModal(false)}
           />
           <div className="fixed inset-0 flex items-center justify-center p-4 pointer-events-none">
-          <div className="relative w-full max-w-md p-6 bg-void-elevated rounded-2xl border border-white/10 pointer-events-auto">
-            <h3 className="text-xl font-bold text-white mb-2">
-              Create API Key
-            </h3>
-            <p className="text-phantom-gray text-sm mb-6">
-              Generate a new API key for your integrations
-            </p>
+            <div className="relative w-full max-w-md p-6 bg-void-elevated rounded-2xl border border-white/10 pointer-events-auto">
+              <h3 className="text-xl font-bold text-white mb-2">
+                Create API Key
+              </h3>
+              <p className="text-phantom-gray text-sm mb-6">
+                Generate a new API key for your integrations
+              </p>
 
-            <div className="space-y-4 mb-6">
-              <div>
-                <label className="block text-sm font-medium text-phantom-gray mb-2">
-                  Key Name *
-                </label>
-                <input
-                  type="text"
-                  value={newKeyName}
-                  onChange={(e) => setNewKeyName(e.target.value)}
-                  placeholder="e.g., Production API Key"
-                  className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-neural transition-all"
-                />
-              </div>
+              <div className="space-y-4 mb-6">
+                <div>
+                  <label className="block text-sm font-medium text-phantom-gray mb-2">
+                    Key Name *
+                  </label>
+                  <input
+                    type="text"
+                    value={newKeyName}
+                    onChange={(e) => setNewKeyName(e.target.value)}
+                    placeholder="e.g., Production API Key"
+                    className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-neural transition-all"
+                  />
+                </div>
 
-              <div>
-                <label className="block text-sm font-medium text-phantom-gray mb-2">
-                  Permissions
-                </label>
-                <div className="flex gap-2">
-                  {["read", "write", "test", "admin"].map((perm) => (
-                    <button
-                      key={perm}
-                      onClick={() => togglePermission(perm)}
-                      className={`px-4 py-2 rounded-lg border text-sm font-medium capitalize transition-all ${
-                        newKeyPermissions.includes(perm)
-                          ? "bg-neural/20 border-neural/30 text-white"
-                          : "bg-white/5 border-white/10 text-phantom-gray hover:bg-white/10"
-                      }`}
-                    >
-                      {perm}
-                    </button>
-                  ))}
+                <div>
+                  <label className="block text-sm font-medium text-phantom-gray mb-2">
+                    Permissions
+                  </label>
+                  <div className="flex gap-2">
+                    {["read", "write", "test", "admin"].map((perm) => (
+                      <button
+                        key={perm}
+                        onClick={() => togglePermission(perm)}
+                        className={`px-4 py-2 rounded-lg border text-sm font-medium capitalize transition-all ${
+                          newKeyPermissions.includes(perm)
+                            ? "bg-neural/20 border-neural/30 text-white"
+                            : "bg-white/5 border-white/10 text-phantom-gray hover:bg-white/10"
+                        }`}
+                      >
+                        {perm}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="flex gap-3">
-              <button
-                onClick={() => setShowCreateModal(false)}
-                className="flex-1 py-3 rounded-xl border border-white/10 text-white font-medium hover:bg-white/5 transition-all"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleCreateKey}
-                disabled={!newKeyName || newKeyPermissions.length === 0}
-                className="flex-1 py-3 rounded-xl bg-gradient-to-r from-neural to-electric-cyan text-white font-medium hover:shadow-glow transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Create Key
-              </button>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setShowCreateModal(false)}
+                  className="flex-1 py-3 rounded-xl border border-white/10 text-white font-medium hover:bg-white/5 transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleCreateKey}
+                  disabled={!newKeyName || newKeyPermissions.length === 0}
+                  className="flex-1 py-3 rounded-xl bg-gradient-to-r from-neural to-electric-cyan text-white font-medium hover:shadow-glow transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Create Key
+                </button>
+              </div>
             </div>
-          </div>
           </div>
         </div>
       )}

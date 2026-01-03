@@ -12,10 +12,7 @@ interface RouteContext {
   params: Promise<{ id: string }>;
 }
 
-export async function GET(
-  request: NextRequest,
-  context: RouteContext
-) {
+export async function GET(request: NextRequest, context: RouteContext) {
   // Validate API key
   const auth = await validateApiKey(request);
   if (!auth.valid) {
@@ -44,7 +41,7 @@ export async function GET(
   if (sessionId.startsWith("demo_") || sessionId.startsWith("sess_")) {
     // For demo/test sessions, return mock data
     const isCompleted = Date.now() % 2 === 0; // Random for demo
-    
+
     return NextResponse.json({
       id: sessionId,
       projectId: "demo-project",
@@ -62,9 +59,21 @@ export async function GET(
           }
         : null,
       agents: [
-        { name: "Sarah", status: isCompleted ? "completed" : "running", progress: isCompleted ? 100 : 75 },
-        { name: "Marcus", status: isCompleted ? "completed" : "running", progress: isCompleted ? 100 : 50 },
-        { name: "Diego", status: isCompleted ? "completed" : "queued", progress: isCompleted ? 100 : 0 },
+        {
+          name: "Sarah",
+          status: isCompleted ? "completed" : "running",
+          progress: isCompleted ? 100 : 75,
+        },
+        {
+          name: "Marcus",
+          status: isCompleted ? "completed" : "running",
+          progress: isCompleted ? 100 : 50,
+        },
+        {
+          name: "Diego",
+          status: isCompleted ? "completed" : "queued",
+          progress: isCompleted ? 100 : 0,
+        },
       ],
       startedAt: new Date(Date.now() - 300000).toISOString(),
       completedAt: isCompleted ? new Date().toISOString() : null,
@@ -110,8 +119,11 @@ export async function GET(
   }
 
   // Get execution IDs for this session
-  const executionIds = (session.agent_executions as Array<{ id: string }> | null)?.map(e => e.id) || [];
-  
+  const executionIds =
+    (session.agent_executions as Array<{ id: string }> | null)?.map(
+      (e) => e.id
+    ) || [];
+
   // Fetch bugs for the session's agent executions
   let bugs: Array<{
     id: string;
@@ -120,7 +132,7 @@ export async function GET(
     agent_name: string | null;
     created_at: string | null;
   }> = [];
-  
+
   if (executionIds.length > 0) {
     const { data: bugData } = await supabase
       .from("bug_reports")
@@ -140,20 +152,23 @@ export async function GET(
   return NextResponse.json({
     id: session.id,
     projectId: session.project_id,
-    projectName: (session.projects as Record<string, unknown> | null)?.name || null,
+    projectName:
+      (session.projects as Record<string, unknown> | null)?.name || null,
     status: session.status,
     progress: session.progress,
     bugsFound: bugs.length,
     summary,
     agents:
-      (session.agent_executions as Array<Record<string, unknown>>)?.map((e) => ({
-        id: e.agent_id,
-        name: e.agent_name,
-        status: e.status,
-        progress: e.progress,
-        startedAt: e.started_at,
-        completedAt: e.completed_at,
-      })) || [],
+      (session.agent_executions as Array<Record<string, unknown>>)?.map(
+        (e) => ({
+          id: e.agent_id,
+          name: e.agent_name,
+          status: e.status,
+          progress: e.progress,
+          startedAt: e.started_at,
+          completedAt: e.completed_at,
+        })
+      ) || [],
     bugs: bugs.map((b) => ({
       id: b.id,
       title: b.title,

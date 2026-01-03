@@ -93,10 +93,12 @@ export async function POST(request: NextRequest) {
     // Check if Supabase is configured
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-    
-    if (!supabaseUrl || !supabaseKey || supabaseUrl.includes('your-project')) {
+
+    if (!supabaseUrl || !supabaseKey || supabaseUrl.includes("your-project")) {
       // Return a demo session for development without Supabase
-      const demoSessionId = `demo_${Date.now()}_${Math.random().toString(36).substring(7)}`;
+      const demoSessionId = `demo_${Date.now()}_${Math.random()
+        .toString(36)
+        .substring(7)}`;
       return NextResponse.json(
         {
           success: true,
@@ -123,7 +125,9 @@ export async function POST(request: NextRequest) {
 
     if (projectError || !project) {
       // Fallback to demo session if project not found in DB
-      const demoSessionId = `demo_${Date.now()}_${Math.random().toString(36).substring(7)}`;
+      const demoSessionId = `demo_${Date.now()}_${Math.random()
+        .toString(36)
+        .substring(7)}`;
       return NextResponse.json(
         {
           success: true,
@@ -180,7 +184,9 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Create session error:", error);
     // Fallback to demo session on any error
-    const demoSessionId = `demo_${Date.now()}_${Math.random().toString(36).substring(7)}`;
+    const demoSessionId = `demo_${Date.now()}_${Math.random()
+      .toString(36)
+      .substring(7)}`;
     return NextResponse.json(
       {
         success: true,

@@ -43,7 +43,8 @@ export async function validateApiKey(
   if (!apiKey) {
     return {
       valid: false,
-      error: "Missing API key. Provide via Authorization header or X-API-Key header.",
+      error:
+        "Missing API key. Provide via Authorization header or X-API-Key header.",
     };
   }
 
@@ -123,9 +124,10 @@ export async function validateApiKey(
  * Generate a new API key
  * Returns the raw key (only shown once) and the hash for storage
  */
-export function generateApiKey(
-  type: "live" | "test" = "live"
-): { key: string; hash: string } {
+export function generateApiKey(type: "live" | "test" = "live"): {
+  key: string;
+  hash: string;
+} {
   // Generate 32 random bytes = 64 hex chars
   const randomBytes = crypto.randomBytes(32).toString("hex");
   const key = `bf_${type}_${randomBytes}`;

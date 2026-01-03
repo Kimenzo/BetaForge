@@ -383,7 +383,8 @@ const apiResponse = [
   {
     name: "success",
     type: "boolean",
-    description: "Whether the test completed without critical bugs (when failOnCritical is true).",
+    description:
+      "Whether the test completed without critical bugs (when failOnCritical is true).",
   },
   {
     name: "sessionId",
@@ -438,7 +439,9 @@ const apiResponse = [
 ];
 
 export default function GitHubIntegrationPage() {
-  const [activeTab, setActiveTab] = useState<"basic" | "advanced" | "monorepo" | "previewDeployments">("basic");
+  const [activeTab, setActiveTab] = useState<
+    "basic" | "advanced" | "monorepo" | "previewDeployments"
+  >("basic");
   const [copied, setCopied] = useState<string | null>(null);
   const [showApiKey, setShowApiKey] = useState(false);
 
@@ -466,7 +469,9 @@ export default function GitHubIntegrationPage() {
                 <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-neural-bright to-electric-cyan flex items-center justify-center">
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-xl font-bold gradient-text">BetaForge</span>
+                <span className="text-xl font-bold gradient-text">
+                  BetaForge
+                </span>
               </Link>
             </div>
             <div className="flex items-center gap-4">
@@ -492,11 +497,17 @@ export default function GitHubIntegrationPage() {
         <div className="max-w-5xl mx-auto">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-sm text-phantom-gray mb-8">
-            <Link href="/docs" className="hover:text-ghost-white transition-colors">
+            <Link
+              href="/docs"
+              className="hover:text-ghost-white transition-colors"
+            >
               Docs
             </Link>
             <ChevronRight className="w-4 h-4" />
-            <Link href="/docs/integrations" className="hover:text-ghost-white transition-colors">
+            <Link
+              href="/docs/integrations"
+              className="hover:text-ghost-white transition-colors"
+            >
               Integrations
             </Link>
             <ChevronRight className="w-4 h-4" />
@@ -506,20 +517,27 @@ export default function GitHubIntegrationPage() {
           {/* Hero */}
           <div className="flex items-start gap-6 mb-12">
             <div className="p-4 rounded-2xl bg-gray-800 border border-gray-700">
-              <svg className="w-10 h-10 text-white" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              <svg
+                className="w-10 h-10 text-white"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
               </svg>
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-4xl font-bold text-ghost-white">GitHub Actions</h1>
+                <h1 className="text-4xl font-bold text-ghost-white">
+                  GitHub Actions
+                </h1>
                 <span className="px-2 py-1 text-xs bg-quantum-green/20 text-quantum-green rounded-full">
                   Official
                 </span>
               </div>
               <p className="text-lg text-phantom-gray mb-6">
-                Run AI-powered tests automatically on every pull request, push, or schedule. 
-                Get detailed bug reports directly in your PRs with automatic issue creation.
+                Run AI-powered tests automatically on every pull request, push,
+                or schedule. Get detailed bug reports directly in your PRs with
+                automatic issue creation.
               </p>
               <div className="flex items-center gap-4">
                 <a
@@ -555,7 +573,9 @@ export default function GitHubIntegrationPage() {
               <div className="text-sm text-phantom-gray">Uptime</div>
             </div>
             <div className="p-4 bg-void-elevated border border-white/5 rounded-xl text-center">
-              <div className="text-2xl font-bold text-ghost-white">&lt;5min</div>
+              <div className="text-2xl font-bold text-ghost-white">
+                &lt;5min
+              </div>
               <div className="text-sm text-phantom-gray">Avg Test Time</div>
             </div>
           </div>
@@ -577,7 +597,9 @@ export default function GitHubIntegrationPage() {
                 1
               </div>
               <Key className="w-8 h-8 text-neural-bright mb-4" />
-              <h3 className="text-lg font-semibold text-ghost-white mb-2">Get API Key</h3>
+              <h3 className="text-lg font-semibold text-ghost-white mb-2">
+                Get API Key
+              </h3>
               <p className="text-sm text-phantom-gray mb-4">
                 Generate an API key from your BetaForge dashboard settings.
               </p>
@@ -595,10 +617,19 @@ export default function GitHubIntegrationPage() {
                 2
               </div>
               <Shield className="w-8 h-8 text-neural-bright mb-4" />
-              <h3 className="text-lg font-semibold text-ghost-white mb-2">Add Secrets</h3>
+              <h3 className="text-lg font-semibold text-ghost-white mb-2">
+                Add Secrets
+              </h3>
               <p className="text-sm text-phantom-gray mb-4">
-                Add <code className="px-1.5 py-0.5 bg-void-black rounded text-electric-cyan">BETAFORGE_API_KEY</code> and{" "}
-                <code className="px-1.5 py-0.5 bg-void-black rounded text-electric-cyan">BETAFORGE_PROJECT_ID</code> to your repo secrets.
+                Add{" "}
+                <code className="px-1.5 py-0.5 bg-void-black rounded text-electric-cyan">
+                  BETAFORGE_API_KEY
+                </code>{" "}
+                and{" "}
+                <code className="px-1.5 py-0.5 bg-void-black rounded text-electric-cyan">
+                  BETAFORGE_PROJECT_ID
+                </code>{" "}
+                to your repo secrets.
               </p>
               <a
                 href="https://docs.github.com/en/actions/security-guides/encrypted-secrets"
@@ -616,15 +647,24 @@ export default function GitHubIntegrationPage() {
                 3
               </div>
               <FileCode className="w-8 h-8 text-neural-bright mb-4" />
-              <h3 className="text-lg font-semibold text-ghost-white mb-2">Create Workflow</h3>
+              <h3 className="text-lg font-semibold text-ghost-white mb-2">
+                Create Workflow
+              </h3>
               <p className="text-sm text-phantom-gray mb-4">
-                Add the workflow file below to <code className="px-1.5 py-0.5 bg-void-black rounded text-electric-cyan">.github/workflows/</code>
+                Add the workflow file below to{" "}
+                <code className="px-1.5 py-0.5 bg-void-black rounded text-electric-cyan">
+                  .github/workflows/
+                </code>
               </p>
               <button
                 onClick={() => copyCode(codeExamples.basic, "quick")}
                 className="text-sm text-neural-bright hover:underline inline-flex items-center gap-1"
               >
-                {copied === "quick" ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
+                {copied === "quick" ? (
+                  <Check className="w-3 h-3" />
+                ) : (
+                  <Copy className="w-3 h-3" />
+                )}
                 Copy Example
               </button>
             </div>
@@ -646,7 +686,11 @@ export default function GitHubIntegrationPage() {
               { id: "basic", label: "Basic Setup", icon: Terminal },
               { id: "advanced", label: "Advanced Pipeline", icon: Layers },
               { id: "monorepo", label: "Monorepo", icon: GitBranch },
-              { id: "previewDeployments", label: "Preview Deployments", icon: Eye },
+              {
+                id: "previewDeployments",
+                label: "Preview Deployments",
+                icon: Eye,
+              },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -702,22 +746,35 @@ export default function GitHubIntegrationPage() {
           <div className="mt-6 p-4 bg-neural/5 border border-neural/20 rounded-xl">
             {activeTab === "basic" && (
               <p className="text-sm text-phantom-gray">
-                <strong className="text-ghost-white">Basic Setup:</strong> A minimal workflow that runs BetaForge tests on every push to main/develop and on pull requests. Perfect for getting started quickly.
+                <strong className="text-ghost-white">Basic Setup:</strong> A
+                minimal workflow that runs BetaForge tests on every push to
+                main/develop and on pull requests. Perfect for getting started
+                quickly.
               </p>
             )}
             {activeTab === "advanced" && (
               <p className="text-sm text-phantom-gray">
-                <strong className="text-ghost-white">Advanced Pipeline:</strong> Full-featured workflow with matrix testing (multiple agent groups run in parallel), PR comments, automatic issue creation, Slack notifications, and scheduled daily runs.
+                <strong className="text-ghost-white">Advanced Pipeline:</strong>{" "}
+                Full-featured workflow with matrix testing (multiple agent
+                groups run in parallel), PR comments, automatic issue creation,
+                Slack notifications, and scheduled daily runs.
               </p>
             )}
             {activeTab === "monorepo" && (
               <p className="text-sm text-phantom-gray">
-                <strong className="text-ghost-white">Monorepo Setup:</strong> Detects which apps changed and only runs tests for those apps. Each app can have its own BetaForge project with different configurations.
+                <strong className="text-ghost-white">Monorepo Setup:</strong>{" "}
+                Detects which apps changed and only runs tests for those apps.
+                Each app can have its own BetaForge project with different
+                configurations.
               </p>
             )}
             {activeTab === "previewDeployments" && (
               <p className="text-sm text-phantom-gray">
-                <strong className="text-ghost-white">Preview Deployments:</strong> Automatically tests Vercel/Netlify preview deployments. Triggers when a deployment succeeds and tests the preview URL.
+                <strong className="text-ghost-white">
+                  Preview Deployments:
+                </strong>{" "}
+                Automatically tests Vercel/Netlify preview deployments. Triggers
+                when a deployment succeeds and tests the preview URL.
               </p>
             )}
           </div>
@@ -734,37 +791,69 @@ export default function GitHubIntegrationPage() {
 
           {/* Request Parameters */}
           <div className="mb-12">
-            <h3 className="text-lg font-semibold text-ghost-white mb-4">Request Parameters (POST /api/v1/sessions)</h3>
+            <h3 className="text-lg font-semibold text-ghost-white mb-4">
+              Request Parameters (POST /api/v1/sessions)
+            </h3>
             <div className="bg-void-elevated border border-white/5 rounded-xl overflow-hidden">
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-white/5 bg-void-black/50">
-                    <th className="text-left px-4 py-3 text-sm font-medium text-phantom-gray">Name</th>
-                    <th className="text-left px-4 py-3 text-sm font-medium text-phantom-gray">Type</th>
-                    <th className="text-left px-4 py-3 text-sm font-medium text-phantom-gray">Required</th>
-                    <th className="text-left px-4 py-3 text-sm font-medium text-phantom-gray">Description</th>
+                    <th className="text-left px-4 py-3 text-sm font-medium text-phantom-gray">
+                      Name
+                    </th>
+                    <th className="text-left px-4 py-3 text-sm font-medium text-phantom-gray">
+                      Type
+                    </th>
+                    <th className="text-left px-4 py-3 text-sm font-medium text-phantom-gray">
+                      Required
+                    </th>
+                    <th className="text-left px-4 py-3 text-sm font-medium text-phantom-gray">
+                      Description
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {apiParameters.map((input, index) => (
-                    <tr key={input.name} className={index !== apiParameters.length - 1 ? "border-b border-white/5" : ""}>
+                    <tr
+                      key={input.name}
+                      className={
+                        index !== apiParameters.length - 1
+                          ? "border-b border-white/5"
+                          : ""
+                      }
+                    >
                       <td className="px-4 py-3">
-                        <code className="text-sm text-electric-cyan">{input.name}</code>
+                        <code className="text-sm text-electric-cyan">
+                          {input.name}
+                        </code>
                       </td>
                       <td className="px-4 py-3">
-                        <span className="text-sm text-mist-gray">{input.type}</span>
+                        <span className="text-sm text-mist-gray">
+                          {input.type}
+                        </span>
                       </td>
                       <td className="px-4 py-3">
                         {input.required ? (
-                          <span className="text-xs px-2 py-0.5 bg-plasma-pink/20 text-plasma-pink rounded">Required</span>
+                          <span className="text-xs px-2 py-0.5 bg-plasma-pink/20 text-plasma-pink rounded">
+                            Required
+                          </span>
                         ) : (
-                          <span className="text-xs px-2 py-0.5 bg-white/10 text-mist-gray rounded">Optional</span>
+                          <span className="text-xs px-2 py-0.5 bg-white/10 text-mist-gray rounded">
+                            Optional
+                          </span>
                         )}
                       </td>
                       <td className="px-4 py-3">
-                        <p className="text-sm text-phantom-gray">{input.description}</p>
+                        <p className="text-sm text-phantom-gray">
+                          {input.description}
+                        </p>
                         {input.default && (
-                          <p className="text-xs text-mist-gray mt-1">Default: <code className="text-electric-cyan">{input.default}</code></p>
+                          <p className="text-xs text-mist-gray mt-1">
+                            Default:{" "}
+                            <code className="text-electric-cyan">
+                              {input.default}
+                            </code>
+                          </p>
                         )}
                       </td>
                     </tr>
@@ -776,27 +865,48 @@ export default function GitHubIntegrationPage() {
 
           {/* Response Fields */}
           <div>
-            <h3 className="text-lg font-semibold text-ghost-white mb-4">Response Fields</h3>
+            <h3 className="text-lg font-semibold text-ghost-white mb-4">
+              Response Fields
+            </h3>
             <div className="bg-void-elevated border border-white/5 rounded-xl overflow-hidden">
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-white/5 bg-void-black/50">
-                    <th className="text-left px-4 py-3 text-sm font-medium text-phantom-gray">Name</th>
-                    <th className="text-left px-4 py-3 text-sm font-medium text-phantom-gray">Type</th>
-                    <th className="text-left px-4 py-3 text-sm font-medium text-phantom-gray">Description</th>
+                    <th className="text-left px-4 py-3 text-sm font-medium text-phantom-gray">
+                      Name
+                    </th>
+                    <th className="text-left px-4 py-3 text-sm font-medium text-phantom-gray">
+                      Type
+                    </th>
+                    <th className="text-left px-4 py-3 text-sm font-medium text-phantom-gray">
+                      Description
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {apiResponse.map((output, index) => (
-                    <tr key={output.name} className={index !== apiResponse.length - 1 ? "border-b border-white/5" : ""}>
+                    <tr
+                      key={output.name}
+                      className={
+                        index !== apiResponse.length - 1
+                          ? "border-b border-white/5"
+                          : ""
+                      }
+                    >
                       <td className="px-4 py-3">
-                        <code className="text-sm text-electric-cyan">{output.name}</code>
+                        <code className="text-sm text-electric-cyan">
+                          {output.name}
+                        </code>
                       </td>
                       <td className="px-4 py-3">
-                        <span className="text-sm text-mist-gray">{output.type}</span>
+                        <span className="text-sm text-mist-gray">
+                          {output.type}
+                        </span>
                       </td>
                       <td className="px-4 py-3">
-                        <p className="text-sm text-phantom-gray">{output.description}</p>
+                        <p className="text-sm text-phantom-gray">
+                          {output.description}
+                        </p>
                       </td>
                     </tr>
                   ))}
@@ -817,39 +927,54 @@ export default function GitHubIntegrationPage() {
 
           <div className="grid md:grid-cols-2 gap-8">
             <div>
-              <h3 className="text-lg font-semibold text-ghost-white mb-4">Automatic PR Comments</h3>
+              <h3 className="text-lg font-semibold text-ghost-white mb-4">
+                Automatic PR Comments
+              </h3>
               <p className="text-phantom-gray mb-6">
-                BetaForge automatically comments on pull requests with a summary of test results, 
-                including bugs found, their severity, and direct links to detailed reports.
+                BetaForge automatically comments on pull requests with a summary
+                of test results, including bugs found, their severity, and
+                direct links to detailed reports.
               </p>
-              
+
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-quantum-green mt-0.5" />
                   <div>
                     <p className="text-ghost-white font-medium">Test Summary</p>
-                    <p className="text-sm text-phantom-gray">Bug counts by severity with pass/fail status</p>
+                    <p className="text-sm text-phantom-gray">
+                      Bug counts by severity with pass/fail status
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-quantum-green mt-0.5" />
                   <div>
-                    <p className="text-ghost-white font-medium">Agent Reports</p>
-                    <p className="text-sm text-phantom-gray">Individual findings from each AI agent</p>
+                    <p className="text-ghost-white font-medium">
+                      Agent Reports
+                    </p>
+                    <p className="text-sm text-phantom-gray">
+                      Individual findings from each AI agent
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-quantum-green mt-0.5" />
                   <div>
                     <p className="text-ghost-white font-medium">Screenshots</p>
-                    <p className="text-sm text-phantom-gray">Visual evidence embedded in comments</p>
+                    <p className="text-sm text-phantom-gray">
+                      Visual evidence embedded in comments
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-quantum-green mt-0.5" />
                   <div>
-                    <p className="text-ghost-white font-medium">Commit Status</p>
-                    <p className="text-sm text-phantom-gray">Updates GitHub commit status checks</p>
+                    <p className="text-ghost-white font-medium">
+                      Commit Status
+                    </p>
+                    <p className="text-sm text-phantom-gray">
+                      Updates GitHub commit status checks
+                    </p>
                   </div>
                 </div>
               </div>
@@ -863,12 +988,16 @@ export default function GitHubIntegrationPage() {
                 </div>
                 <span className="font-semibold text-[#c9d1d9]">betaforge</span>
                 <span className="text-[#8b949e]">bot</span>
-                <span className="text-[#8b949e] text-sm">commented just now</span>
+                <span className="text-[#8b949e] text-sm">
+                  commented just now
+                </span>
               </div>
               <div className="p-4 space-y-4">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-5 h-5 text-[#3fb950]" />
-                  <span className="font-semibold text-[#c9d1d9]">BetaForge AI Testing</span>
+                  <span className="font-semibold text-[#c9d1d9]">
+                    BetaForge AI Testing
+                  </span>
                 </div>
                 <div className="grid grid-cols-4 gap-2 text-center text-sm">
                   <div className="p-2 bg-[#161b22] rounded">
@@ -889,7 +1018,9 @@ export default function GitHubIntegrationPage() {
                   </div>
                 </div>
                 <div className="text-sm text-[#8b949e]">
-                  <p className="mb-2"><strong className="text-[#c9d1d9]">🔍 Top Issues:</strong></p>
+                  <p className="mb-2">
+                    <strong className="text-[#c9d1d9]">🔍 Top Issues:</strong>
+                  </p>
                   <ul className="space-y-1 ml-4">
                     <li>• Form validation error on mobile viewport</li>
                     <li>• Missing alt text on hero image</li>
@@ -916,26 +1047,35 @@ export default function GitHubIntegrationPage() {
             {[
               {
                 error: "Error: Invalid API key",
-                solution: "Verify your API key is correct and hasn't expired. Generate a new key from Settings → API Keys if needed.",
+                solution:
+                  "Verify your API key is correct and hasn't expired. Generate a new key from Settings → API Keys if needed.",
               },
               {
                 error: "Error: Project not found",
-                solution: "Check that BETAFORGE_PROJECT_ID matches a project in your account. You can find project IDs in the dashboard URL or project settings.",
+                solution:
+                  "Check that BETAFORGE_PROJECT_ID matches a project in your account. You can find project IDs in the dashboard URL or project settings.",
               },
               {
                 error: "Timeout waiting for results",
-                solution: "Increase timeout-minutes value or check if your test URL is accessible from GitHub Actions runners. Consider using test-depth: shallow for faster results.",
+                solution:
+                  "Increase timeout-minutes value or check if your test URL is accessible from GitHub Actions runners. Consider using test-depth: shallow for faster results.",
               },
               {
                 error: "Cannot connect to test URL",
-                solution: "Ensure your staging/preview URL is publicly accessible. For private URLs, use our CLI with a self-hosted runner or set up a secure tunnel.",
+                solution:
+                  "Ensure your staging/preview URL is publicly accessible. For private URLs, use our CLI with a self-hosted runner or set up a secure tunnel.",
               },
             ].map((item, index) => (
-              <div key={index} className="p-4 bg-void-elevated border border-white/5 rounded-xl">
+              <div
+                key={index}
+                className="p-4 bg-void-elevated border border-white/5 rounded-xl"
+              >
                 <div className="flex items-start gap-3">
                   <XCircle className="w-5 h-5 text-plasma-pink mt-0.5" />
                   <div>
-                    <p className="font-mono text-sm text-plasma-pink mb-2">{item.error}</p>
+                    <p className="font-mono text-sm text-plasma-pink mb-2">
+                      {item.error}
+                    </p>
                     <p className="text-sm text-phantom-gray">{item.solution}</p>
                   </div>
                 </div>
@@ -948,8 +1088,10 @@ export default function GitHubIntegrationPage() {
       {/* Related Integrations */}
       <section className="relative py-12 px-6 border-t border-white/5">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl font-bold text-ghost-white mb-8">Related Integrations</h2>
-          
+          <h2 className="text-2xl font-bold text-ghost-white mb-8">
+            Related Integrations
+          </h2>
+
           <div className="grid md:grid-cols-3 gap-4">
             <Link
               href="/docs/integrations/gitlab"
@@ -961,9 +1103,11 @@ export default function GitHubIntegrationPage() {
               <h3 className="font-semibold text-ghost-white mb-1 group-hover:text-neural-bright transition-colors">
                 GitLab CI
               </h3>
-              <p className="text-sm text-phantom-gray">Integrate with GitLab pipelines</p>
+              <p className="text-sm text-phantom-gray">
+                Integrate with GitLab pipelines
+              </p>
             </Link>
-            
+
             <Link
               href="/docs/integrations/slack"
               className="p-5 bg-void-elevated border border-white/5 rounded-xl hover:border-neural/30 transition-all group"
@@ -974,9 +1118,11 @@ export default function GitHubIntegrationPage() {
               <h3 className="font-semibold text-ghost-white mb-1 group-hover:text-neural-bright transition-colors">
                 Slack
               </h3>
-              <p className="text-sm text-phantom-gray">Get real-time notifications</p>
+              <p className="text-sm text-phantom-gray">
+                Get real-time notifications
+              </p>
             </Link>
-            
+
             <Link
               href="/docs/integrations/jira"
               className="p-5 bg-void-elevated border border-white/5 rounded-xl hover:border-neural/30 transition-all group"
@@ -987,7 +1133,9 @@ export default function GitHubIntegrationPage() {
               <h3 className="font-semibold text-ghost-white mb-1 group-hover:text-neural-bright transition-colors">
                 Jira
               </h3>
-              <p className="text-sm text-phantom-gray">Auto-create issues for bugs</p>
+              <p className="text-sm text-phantom-gray">
+                Auto-create issues for bugs
+              </p>
             </Link>
           </div>
         </div>
@@ -997,4 +1145,3 @@ export default function GitHubIntegrationPage() {
     </div>
   );
 }
-

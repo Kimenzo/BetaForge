@@ -30,7 +30,8 @@ async function handleGet(request: NextRequest, ctx: RequestContext) {
   const queryResult = parseQuery(request, listProjectsQuerySchema, ctx);
   if (queryResult.error) return queryResult.error;
 
-  const { page, limit, status, platform, search, sortBy, sortOrder } = queryResult.data;
+  const { page, limit, status, platform, search, sortBy, sortOrder } =
+    queryResult.data;
 
   // Get projects from service
   const service = getProjectService();
@@ -94,10 +95,7 @@ async function handlePost(request: NextRequest, ctx: RequestContext) {
     throw result.error;
   }
 
-  return created(
-    { project: result.value },
-    { requestId: ctx.requestId }
-  );
+  return created({ project: result.value }, { requestId: ctx.requestId });
 }
 
 // ============================================================================

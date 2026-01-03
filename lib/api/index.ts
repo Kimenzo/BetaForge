@@ -4,7 +4,12 @@
 // Core utilities for the public API
 // ============================================================================
 
-export { validateApiKey, generateApiKey, verifyWebhookSignature, generateWebhookSignature } from "./auth";
+export {
+  validateApiKey,
+  generateApiKey,
+  verifyWebhookSignature,
+  generateWebhookSignature,
+} from "./auth";
 export {
   dispatchWebhookEvent,
   formatBugForSlack,

@@ -139,21 +139,21 @@ export default function TeamSettingsPage() {
                   ? "bg-quantum-green/20 border-quantum-green/30 text-quantum-green"
                   : "bg-white/5 border-white/10 text-white hover:bg-white/10"
               }`}
-          >
-            {copied ? (
-              <>
-                <Check className="w-4 h-4" />
-                Copied!
-              </>
-            ) : (
-              <>
-                <Copy className="w-4 h-4" />
-                Copy
-              </>
-            )}
-          </button>
-        </div>
-      </section>
+            >
+              {copied ? (
+                <>
+                  <Check className="w-4 h-4" />
+                  Copied!
+                </>
+              ) : (
+                <>
+                  <Copy className="w-4 h-4" />
+                  Copy
+                </>
+              )}
+            </button>
+          </div>
+        </section>
       ) : (
         <section className="mb-8 p-6 rounded-2xl bg-gradient-to-br from-neural/10 to-electric-cyan/10 border border-neural/20 animate-fade-in-up stagger-2">
           <div className="flex items-center justify-between mb-4">
@@ -209,12 +209,16 @@ export default function TeamSettingsPage() {
                           </span>
                         )}
                       </div>
-                      <p className="text-sm text-phantom-gray">{member.email}</p>
+                      <p className="text-sm text-phantom-gray">
+                        {member.email}
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
                     <span
-                      className={`px-3 py-1 rounded-lg border text-xs font-medium flex items-center gap-1.5 ${getRoleBadgeColor(member.role)}`}
+                      className={`px-3 py-1 rounded-lg border text-xs font-medium flex items-center gap-1.5 ${getRoleBadgeColor(
+                        member.role
+                      )}`}
                     >
                       <RoleIcon className="w-3 h-3" />
                       <span className="capitalize">{member.role}</span>
@@ -257,8 +261,13 @@ export default function TeamSettingsPage() {
           {[
             {
               role: "Owner",
-              description: "Full access. Can manage billing and delete workspace.",
-              permissions: ["All permissions", "Billing access", "Delete workspace"],
+              description:
+                "Full access. Can manage billing and delete workspace.",
+              permissions: [
+                "All permissions",
+                "Billing access",
+                "Delete workspace",
+              ],
             },
             {
               role: "Admin",
@@ -283,7 +292,9 @@ export default function TeamSettingsPage() {
               <div className="flex items-start justify-between">
                 <div>
                   <h4 className="text-white font-medium mb-1">{item.role}</h4>
-                  <p className="text-sm text-phantom-gray">{item.description}</p>
+                  <p className="text-sm text-phantom-gray">
+                    {item.description}
+                  </p>
                 </div>
                 <div className="flex gap-2 flex-wrap justify-end">
                   {item.permissions.map((perm) => (
@@ -309,72 +320,72 @@ export default function TeamSettingsPage() {
             onClick={() => setShowInviteModal(false)}
           />
           <div className="fixed inset-0 flex items-center justify-center p-4 pointer-events-none">
-          <div className="relative w-full max-w-md p-6 bg-void-elevated rounded-2xl border border-white/10 pointer-events-auto">
-            <button
-              onClick={() => setShowInviteModal(false)}
-              className="absolute top-4 right-4 p-2 rounded-lg hover:bg-white/5 transition-colors"
-            >
-              <X className="w-5 h-5 text-phantom-gray" />
-            </button>
+            <div className="relative w-full max-w-md p-6 bg-void-elevated rounded-2xl border border-white/10 pointer-events-auto">
+              <button
+                onClick={() => setShowInviteModal(false)}
+                className="absolute top-4 right-4 p-2 rounded-lg hover:bg-white/5 transition-colors"
+              >
+                <X className="w-5 h-5 text-phantom-gray" />
+              </button>
 
-            <div className="mb-6">
-              <h3 className="text-xl font-bold text-white mb-2">
-                Invite Team Member
-              </h3>
-              <p className="text-phantom-gray text-sm">
-                Send an invitation to join your workspace
-              </p>
-            </div>
+              <div className="mb-6">
+                <h3 className="text-xl font-bold text-white mb-2">
+                  Invite Team Member
+                </h3>
+                <p className="text-phantom-gray text-sm">
+                  Send an invitation to join your workspace
+                </p>
+              </div>
 
-            <div className="space-y-4 mb-6">
-              <div>
-                <label className="block text-sm font-medium text-phantom-gray mb-2">
-                  Email Address
-                </label>
-                <div className="relative">
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-phantom-gray" />
-                  <input
-                    type="email"
-                    value={inviteEmail}
-                    onChange={(e) => setInviteEmail(e.target.value)}
-                    placeholder="colleague@company.com"
-                    className="w-full h-12 pl-10 pr-4 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-neural transition-all"
-                  />
+              <div className="space-y-4 mb-6">
+                <div>
+                  <label className="block text-sm font-medium text-phantom-gray mb-2">
+                    Email Address
+                  </label>
+                  <div className="relative">
+                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-phantom-gray" />
+                    <input
+                      type="email"
+                      value={inviteEmail}
+                      onChange={(e) => setInviteEmail(e.target.value)}
+                      placeholder="colleague@company.com"
+                      className="w-full h-12 pl-10 pr-4 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-neural transition-all"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-phantom-gray mb-2">
+                    Role
+                  </label>
+                  <select
+                    value={inviteRole}
+                    onChange={(e) => setInviteRole(e.target.value as Role)}
+                    className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-neural transition-all appearance-none cursor-pointer"
+                  >
+                    <option value="admin">Admin</option>
+                    <option value="member">Member</option>
+                    <option value="viewer">Viewer</option>
+                  </select>
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-phantom-gray mb-2">
-                  Role
-                </label>
-                <select
-                  value={inviteRole}
-                  onChange={(e) => setInviteRole(e.target.value as Role)}
-                  className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-neural transition-all appearance-none cursor-pointer"
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setShowInviteModal(false)}
+                  className="flex-1 py-3 rounded-xl border border-white/10 text-white font-medium hover:bg-white/5 transition-all"
                 >
-                  <option value="admin">Admin</option>
-                  <option value="member">Member</option>
-                  <option value="viewer">Viewer</option>
-                </select>
+                  Cancel
+                </button>
+                <button
+                  onClick={handleInvite}
+                  disabled={!inviteEmail}
+                  className="flex-1 py-3 rounded-xl bg-gradient-to-r from-neural to-electric-cyan text-white font-medium hover:shadow-glow transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Send Invite
+                </button>
               </div>
             </div>
-
-            <div className="flex gap-3">
-              <button
-                onClick={() => setShowInviteModal(false)}
-                className="flex-1 py-3 rounded-xl border border-white/10 text-white font-medium hover:bg-white/5 transition-all"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleInvite}
-                disabled={!inviteEmail}
-                className="flex-1 py-3 rounded-xl bg-gradient-to-r from-neural to-electric-cyan text-white font-medium hover:shadow-glow transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Send Invite
-              </button>
-            </div>
-          </div>
           </div>
         </div>
       )}
