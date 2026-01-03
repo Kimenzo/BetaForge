@@ -1,18 +1,40 @@
 "use client";
 
 import Link from "next/link";
-import { Sparkles, Cookie, FileText, Settings, Shield, BarChart3, Target, Info } from "lucide-react";
+import {
+  Sparkles,
+  Cookie,
+  FileText,
+  Settings,
+  Shield,
+  BarChart3,
+  Target,
+  Info,
+} from "lucide-react";
 import { Footer } from "@/components/layout";
 
 const cookieTypes = [
   {
     type: "Essential Cookies",
-    description: "Required for the website to function properly. Cannot be disabled.",
+    description:
+      "Required for the website to function properly. Cannot be disabled.",
     icon: Shield,
     examples: [
-      { name: "session_id", purpose: "Maintains your login session", duration: "Session" },
-      { name: "csrf_token", purpose: "Protects against cross-site request forgery", duration: "Session" },
-      { name: "cookie_consent", purpose: "Remembers your cookie preferences", duration: "1 year" },
+      {
+        name: "session_id",
+        purpose: "Maintains your login session",
+        duration: "Session",
+      },
+      {
+        name: "csrf_token",
+        purpose: "Protects against cross-site request forgery",
+        duration: "Session",
+      },
+      {
+        name: "cookie_consent",
+        purpose: "Remembers your cookie preferences",
+        duration: "1 year",
+      },
     ],
     required: true,
   },
@@ -21,9 +43,21 @@ const cookieTypes = [
     description: "Enable enhanced functionality and personalization features.",
     icon: Settings,
     examples: [
-      { name: "user_preferences", purpose: "Stores your dashboard preferences", duration: "1 year" },
-      { name: "theme", purpose: "Remembers your dark/light mode preference", duration: "1 year" },
-      { name: "language", purpose: "Stores your language preference", duration: "1 year" },
+      {
+        name: "user_preferences",
+        purpose: "Stores your dashboard preferences",
+        duration: "1 year",
+      },
+      {
+        name: "theme",
+        purpose: "Remembers your dark/light mode preference",
+        duration: "1 year",
+      },
+      {
+        name: "language",
+        purpose: "Stores your language preference",
+        duration: "1 year",
+      },
     ],
     required: false,
   },
@@ -32,20 +66,45 @@ const cookieTypes = [
     description: "Help us understand how visitors interact with our website.",
     icon: BarChart3,
     examples: [
-      { name: "_ga", purpose: "Google Analytics - distinguishes users", duration: "2 years" },
-      { name: "_gid", purpose: "Google Analytics - distinguishes users", duration: "24 hours" },
-      { name: "mp_*", purpose: "Mixpanel - tracks usage patterns", duration: "1 year" },
+      {
+        name: "_ga",
+        purpose: "Google Analytics - distinguishes users",
+        duration: "2 years",
+      },
+      {
+        name: "_gid",
+        purpose: "Google Analytics - distinguishes users",
+        duration: "24 hours",
+      },
+      {
+        name: "mp_*",
+        purpose: "Mixpanel - tracks usage patterns",
+        duration: "1 year",
+      },
     ],
     required: false,
   },
   {
     type: "Marketing Cookies",
-    description: "Used to track visitors across websites for advertising purposes.",
+    description:
+      "Used to track visitors across websites for advertising purposes.",
     icon: Target,
     examples: [
-      { name: "_fbp", purpose: "Facebook - tracks visits across websites", duration: "3 months" },
-      { name: "_gcl_au", purpose: "Google Ads - conversion tracking", duration: "3 months" },
-      { name: "li_sugr", purpose: "LinkedIn - advertising tracking", duration: "3 months" },
+      {
+        name: "_fbp",
+        purpose: "Facebook - tracks visits across websites",
+        duration: "3 months",
+      },
+      {
+        name: "_gcl_au",
+        purpose: "Google Ads - conversion tracking",
+        duration: "3 months",
+      },
+      {
+        name: "li_sugr",
+        purpose: "LinkedIn - advertising tracking",
+        duration: "3 months",
+      },
     ],
     required: false,
   },
@@ -211,10 +270,16 @@ export default function CookiesPage() {
               <span className="text-xl font-bold gradient-text">BetaForge</span>
             </Link>
             <div className="flex items-center gap-4">
-              <Link href="/privacy" className="text-phantom-gray hover:text-ghost-white text-sm transition-colors">
+              <Link
+                href="/privacy"
+                className="text-phantom-gray hover:text-ghost-white text-sm transition-colors"
+              >
                 Privacy
               </Link>
-              <Link href="/terms" className="text-phantom-gray hover:text-ghost-white text-sm transition-colors">
+              <Link
+                href="/terms"
+                className="text-phantom-gray hover:text-ghost-white text-sm transition-colors"
+              >
                 Terms
               </Link>
             </div>
@@ -250,8 +315,12 @@ export default function CookiesPage() {
             <div className="flex items-center gap-4">
               <Settings className="w-10 h-10 text-neural-bright" />
               <div>
-                <h2 className="text-lg font-semibold text-ghost-white">Manage Your Preferences</h2>
-                <p className="text-sm text-phantom-gray">Control which cookies are stored on your device</p>
+                <h2 className="text-lg font-semibold text-ghost-white">
+                  Manage Your Preferences
+                </h2>
+                <p className="text-sm text-phantom-gray">
+                  Control which cookies are stored on your device
+                </p>
               </div>
             </div>
             <button className="px-6 py-3 rounded-xl bg-neural/20 text-ghost-white font-medium hover:bg-neural/30 transition-colors">
@@ -282,7 +351,9 @@ export default function CookiesPage() {
                       <h3 className="text-xl font-semibold text-ghost-white">
                         {category.type}
                       </h3>
-                      <p className="text-sm text-phantom-gray">{category.description}</p>
+                      <p className="text-sm text-phantom-gray">
+                        {category.description}
+                      </p>
                     </div>
                   </div>
                   {category.required ? (
@@ -292,7 +363,11 @@ export default function CookiesPage() {
                   ) : (
                     <label className="inline-flex items-center cursor-pointer">
                       <div className="relative">
-                        <input type="checkbox" className="sr-only peer" defaultChecked />
+                        <input
+                          type="checkbox"
+                          className="sr-only peer"
+                          defaultChecked
+                        />
                         <div className="w-11 h-6 bg-void-black rounded-full peer peer-checked:bg-neural/50 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"></div>
                       </div>
                     </label>
@@ -302,17 +377,29 @@ export default function CookiesPage() {
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b border-white/10">
-                        <th className="text-left py-2 text-phantom-gray font-medium">Cookie Name</th>
-                        <th className="text-left py-2 text-phantom-gray font-medium">Purpose</th>
-                        <th className="text-left py-2 text-phantom-gray font-medium">Duration</th>
+                        <th className="text-left py-2 text-phantom-gray font-medium">
+                          Cookie Name
+                        </th>
+                        <th className="text-left py-2 text-phantom-gray font-medium">
+                          Purpose
+                        </th>
+                        <th className="text-left py-2 text-phantom-gray font-medium">
+                          Duration
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
                       {category.examples.map((cookie, i) => (
                         <tr key={i} className="border-b border-white/5">
-                          <td className="py-2 font-mono text-neural-bright">{cookie.name}</td>
-                          <td className="py-2 text-ghost-white">{cookie.purpose}</td>
-                          <td className="py-2 text-phantom-gray">{cookie.duration}</td>
+                          <td className="py-2 font-mono text-neural-bright">
+                            {cookie.name}
+                          </td>
+                          <td className="py-2 text-ghost-white">
+                            {cookie.purpose}
+                          </td>
+                          <td className="py-2 text-phantom-gray">
+                            {cookie.duration}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -331,7 +418,8 @@ export default function CookiesPage() {
             Third-Party Services
           </h2>
           <p className="text-phantom-gray mb-6">
-            We use the following third-party services that may set cookies on your device:
+            We use the following third-party services that may set cookies on
+            your device:
           </p>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {thirdPartyServices.map((service, index) => (
@@ -339,8 +427,12 @@ export default function CookiesPage() {
                 key={index}
                 className="p-4 bg-void-black border border-white/10 rounded-xl"
               >
-                <h3 className="font-semibold text-ghost-white mb-1">{service.name}</h3>
-                <p className="text-sm text-phantom-gray mb-2">{service.purpose}</p>
+                <h3 className="font-semibold text-ghost-white mb-1">
+                  {service.name}
+                </h3>
+                <p className="text-sm text-phantom-gray mb-2">
+                  {service.purpose}
+                </p>
                 <a
                   href={service.link}
                   target="_blank"
@@ -371,8 +463,14 @@ export default function CookiesPage() {
                       className="text-phantom-gray leading-relaxed mb-4"
                       dangerouslySetInnerHTML={{
                         __html: paragraph
-                          .replace(/\*\*(.*?)\*\*/g, '<strong class="text-ghost-white">$1</strong>')
-                          .replace(/• /g, '<span class="text-neural-bright">•</span> '),
+                          .replace(
+                            /\*\*(.*?)\*\*/g,
+                            '<strong class="text-ghost-white">$1</strong>'
+                          )
+                          .replace(
+                            /• /g,
+                            '<span class="text-neural-bright">•</span> '
+                          ),
                       }}
                     />
                   ))}
@@ -389,16 +487,24 @@ export default function CookiesPage() {
           <div className="p-6 bg-void-elevated border border-white/10 rounded-2xl flex items-start gap-4">
             <Info className="w-6 h-6 text-neural-bright flex-shrink-0 mt-1" />
             <div>
-              <h3 className="font-semibold text-ghost-white mb-2">Need More Information?</h3>
+              <h3 className="font-semibold text-ghost-white mb-2">
+                Need More Information?
+              </h3>
               <p className="text-phantom-gray text-sm">
-                For more detailed information about how we process your personal data,
-                please refer to our{" "}
-                <Link href="/privacy" className="text-neural-bright hover:underline">
+                For more detailed information about how we process your personal
+                data, please refer to our{" "}
+                <Link
+                  href="/privacy"
+                  className="text-neural-bright hover:underline"
+                >
                   Privacy Policy
                 </Link>
-                . For questions about your rights or to make a data subject request,
-                contact us at{" "}
-                <a href="mailto:privacy@betaforge.ai" className="text-neural-bright hover:underline">
+                . For questions about your rights or to make a data subject
+                request, contact us at{" "}
+                <a
+                  href="mailto:privacy@betaforge.ai"
+                  className="text-neural-bright hover:underline"
+                >
                   privacy@betaforge.ai
                 </a>
                 .
@@ -411,7 +517,9 @@ export default function CookiesPage() {
       {/* Related Documents */}
       <section className="relative py-12 px-6 bg-void-elevated/50">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-xl font-semibold text-ghost-white mb-6">Related Documents</h2>
+          <h2 className="text-xl font-semibold text-ghost-white mb-6">
+            Related Documents
+          </h2>
           <div className="grid md:grid-cols-3 gap-4">
             <Link
               href="/terms"
@@ -431,7 +539,9 @@ export default function CookiesPage() {
               <h3 className="font-semibold text-ghost-white group-hover:text-neural-bright transition-colors">
                 Privacy Policy
               </h3>
-              <p className="text-sm text-phantom-gray">How we handle your data</p>
+              <p className="text-sm text-phantom-gray">
+                How we handle your data
+              </p>
             </Link>
             <Link
               href="/ai-policy"

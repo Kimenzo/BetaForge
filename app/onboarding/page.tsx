@@ -184,8 +184,12 @@ export default function OnboardingPage() {
                     >
                       {role.icon}
                     </div>
-                    <h3 className="text-lg font-semibold text-white mb-2">{role.title}</h3>
-                    <p className="text-sm text-phantom-gray">{role.description}</p>
+                    <h3 className="text-lg font-semibold text-white mb-2">
+                      {role.title}
+                    </h3>
+                    <p className="text-sm text-phantom-gray">
+                      {role.description}
+                    </p>
 
                     {/* Selected Indicator */}
                     {selectedRole === role.id && (
@@ -307,10 +311,12 @@ export default function OnboardingPage() {
                   <Sparkles className="w-4 h-4" />
                   Step 3 of 3
                 </div>
-                <h1 className="text-3xl font-bold text-white mb-3">Meet your AI testing team</h1>
+                <h1 className="text-3xl font-bold text-white mb-3">
+                  Meet your AI testing team
+                </h1>
                 <p className="text-phantom-gray">
-                  These 6 agents will test &quot;{projectName || "your app"}&quot; from different
-                  perspectives
+                  These 6 agents will test &quot;{projectName || "your app"}
+                  &quot; from different perspectives
                 </p>
               </div>
 
@@ -328,7 +334,9 @@ export default function OnboardingPage() {
                     >
                       {getAgentEmoji(agent.name)}
                     </div>
-                    <h3 className="font-semibold text-white mb-1">{agent.name}</h3>
+                    <h3 className="font-semibold text-white mb-1">
+                      {agent.name}
+                    </h3>
                     <p className="text-xs text-phantom-gray line-clamp-2">
                       {agent.specialization || agent.description}
                     </p>

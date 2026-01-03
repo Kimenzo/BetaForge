@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { Bot, ArrowRight, SkipForward, Check } from "lucide-react";
-import { RegisterLink, LoginLink } from "@kinde-oss/kinde-auth-nextjs/components";
+import {
+  RegisterLink,
+  LoginLink,
+} from "@kinde-oss/kinde-auth-nextjs/components";
 
 export default function SignUpPage() {
   return (
@@ -9,7 +12,10 @@ export default function SignUpPage() {
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-neural/10 via-void-black to-electric-cyan/5" />
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-neural/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-electric-cyan/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
+        <div
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-electric-cyan/10 rounded-full blur-3xl animate-pulse"
+          style={{ animationDelay: "1s" }}
+        />
       </div>
 
       <div className="relative z-10 w-full max-w-md text-center">
@@ -23,8 +29,12 @@ export default function SignUpPage() {
 
         {/* Card */}
         <div className="p-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
-          <h1 className="text-2xl font-bold text-white mb-2">Create your account</h1>
-          <p className="text-phantom-gray mb-6">Start testing with AI agents in under 60 seconds.</p>
+          <h1 className="text-2xl font-bold text-white mb-2">
+            Create your account
+          </h1>
+          <p className="text-phantom-gray mb-6">
+            Start testing with AI agents in under 60 seconds.
+          </p>
 
           {/* Benefits */}
           <div className="flex flex-col gap-2 mb-8 text-left">
@@ -33,7 +43,10 @@ export default function SignUpPage() {
               "Unlimited test sessions on free tier",
               "Real-time bug reports with reproduction steps",
             ].map((benefit, i) => (
-              <div key={i} className="flex items-center gap-2 text-sm text-phantom-gray">
+              <div
+                key={i}
+                className="flex items-center gap-2 text-sm text-phantom-gray"
+              >
                 <Check className="w-4 h-4 text-quantum-green flex-shrink-0" />
                 <span>{benefit}</span>
               </div>

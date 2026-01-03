@@ -34,8 +34,10 @@ export default async function ReportDetailPage({ params }: ReportPageProps) {
       "Click the 'Sign Up' button",
       "Observe: No error message appears",
     ],
-    expectedBehavior: "An error message should appear indicating the email format is invalid.",
-    actualBehavior: "The form does nothing. No error message, no loading state, no feedback.",
+    expectedBehavior:
+      "An error message should appear indicating the email format is invalid.",
+    actualBehavior:
+      "The form does nothing. No error message, no loading state, no feedback.",
     agent: "Sarah",
     agentColor: "#8B5CF6",
     project: "E-commerce App",
@@ -45,7 +47,11 @@ export default async function ReportDetailPage({ params }: ReportPageProps) {
       viewport: "1920x1080",
     },
     consoleErrors: [
-      { type: "error", message: "Uncaught TypeError: Cannot read property 'value' of null at validateForm (form.js:42)" },
+      {
+        type: "error",
+        message:
+          "Uncaught TypeError: Cannot read property 'value' of null at validateForm (form.js:42)",
+      },
     ],
     createdAt: "2 hours ago",
   };
@@ -121,8 +127,10 @@ export default async function ReportDetailPage({ params }: ReportPageProps) {
                 {report.status.toUpperCase()}
               </span>
             </div>
-            <h1 className="text-3xl font-bold text-ghost-white mb-4">{report.title}</h1>
-            
+            <h1 className="text-3xl font-bold text-ghost-white mb-4">
+              {report.title}
+            </h1>
+
             {/* Meta */}
             <div className="flex flex-wrap items-center gap-4 text-sm text-phantom-gray">
               <div className="flex items-center gap-2">
@@ -132,7 +140,10 @@ export default async function ReportDetailPage({ params }: ReportPageProps) {
                 >
                   🔍
                 </div>
-                <span>Reported by <span className="text-ghost-white">{report.agent}</span></span>
+                <span>
+                  Reported by{" "}
+                  <span className="text-ghost-white">{report.agent}</span>
+                </span>
               </div>
               <span className="w-1 h-1 rounded-full bg-mist-gray" />
               <div className="flex items-center gap-1.5">
@@ -166,7 +177,9 @@ export default async function ReportDetailPage({ params }: ReportPageProps) {
                 <div className="w-2 h-2 rounded-full bg-neural-bright" />
                 Description
               </h2>
-              <p className="text-phantom-gray leading-relaxed">{report.description}</p>
+              <p className="text-phantom-gray leading-relaxed">
+                {report.description}
+              </p>
             </section>
 
             {/* Reproduction Steps */}
@@ -194,14 +207,18 @@ export default async function ReportDetailPage({ params }: ReportPageProps) {
                   <CheckCircle2 className="w-4 h-4" />
                   Expected Behavior
                 </h3>
-                <p className="text-sm text-phantom-gray">{report.expectedBehavior}</p>
+                <p className="text-sm text-phantom-gray">
+                  {report.expectedBehavior}
+                </p>
               </div>
               <div className="glass rounded-2xl p-5 border border-crimson-red/20">
                 <h3 className="font-semibold text-crimson-red mb-3 flex items-center gap-2">
                   <AlertTriangle className="w-4 h-4" />
                   Actual Behavior
                 </h3>
-                <p className="text-sm text-phantom-gray">{report.actualBehavior}</p>
+                <p className="text-sm text-phantom-gray">
+                  {report.actualBehavior}
+                </p>
               </div>
             </div>
 
@@ -215,7 +232,9 @@ export default async function ReportDetailPage({ params }: ReportPageProps) {
                 <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-void-surface flex items-center justify-center">
                   <ImageIcon className="w-6 h-6 text-mist-gray" />
                 </div>
-                <p className="text-sm text-phantom-gray">Screenshots will appear here when available.</p>
+                <p className="text-sm text-phantom-gray">
+                  Screenshots will appear here when available.
+                </p>
               </div>
             </section>
 
@@ -227,8 +246,13 @@ export default async function ReportDetailPage({ params }: ReportPageProps) {
               </h2>
               <div className="rounded-xl bg-void-black border border-white/5 p-4 font-mono text-sm overflow-x-auto">
                 {report.consoleErrors.map((err, i) => (
-                  <div key={i} className="text-crimson-red flex items-start gap-2">
-                    <span className="text-mist-gray select-none">[{err.type}]</span>
+                  <div
+                    key={i}
+                    className="text-crimson-red flex items-start gap-2"
+                  >
+                    <span className="text-mist-gray select-none">
+                      [{err.type}]
+                    </span>
                     <span>{err.message}</span>
                   </div>
                 ))}
@@ -246,16 +270,26 @@ export default async function ReportDetailPage({ params }: ReportPageProps) {
               </h2>
               <div className="space-y-4">
                 <div>
-                  <p className="text-xs text-mist-gray uppercase tracking-wider mb-1">Browser</p>
-                  <p className="text-ghost-white">{report.environment.browser}</p>
+                  <p className="text-xs text-mist-gray uppercase tracking-wider mb-1">
+                    Browser
+                  </p>
+                  <p className="text-ghost-white">
+                    {report.environment.browser}
+                  </p>
                 </div>
                 <div>
-                  <p className="text-xs text-mist-gray uppercase tracking-wider mb-1">Operating System</p>
+                  <p className="text-xs text-mist-gray uppercase tracking-wider mb-1">
+                    Operating System
+                  </p>
                   <p className="text-ghost-white">{report.environment.os}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-mist-gray uppercase tracking-wider mb-1">Viewport</p>
-                  <p className="text-ghost-white font-mono">{report.environment.viewport}</p>
+                  <p className="text-xs text-mist-gray uppercase tracking-wider mb-1">
+                    Viewport
+                  </p>
+                  <p className="text-ghost-white font-mono">
+                    {report.environment.viewport}
+                  </p>
                 </div>
               </div>
             </section>
@@ -275,14 +309,18 @@ export default async function ReportDetailPage({ params }: ReportPageProps) {
                 </div>
                 <div>
                   <p className="font-medium text-ghost-white">{report.agent}</p>
-                  <p className="text-sm text-phantom-gray">The Cautious Explorer</p>
+                  <p className="text-sm text-phantom-gray">
+                    The Cautious Explorer
+                  </p>
                 </div>
               </div>
             </section>
 
             {/* Quick Actions */}
             <section className="glass rounded-2xl p-6 border border-white/5 animate-fade-in-up stagger-4">
-              <h2 className="text-lg font-semibold text-ghost-white mb-4">Quick Actions</h2>
+              <h2 className="text-lg font-semibold text-ghost-white mb-4">
+                Quick Actions
+              </h2>
               <div className="space-y-2">
                 <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-void-elevated hover:bg-void-elevated/80 transition-colors text-left">
                   <ExternalLink className="w-4 h-4 text-phantom-gray" />

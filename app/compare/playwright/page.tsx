@@ -111,22 +111,26 @@ const metrics = [
 const playwrightStrengths = [
   {
     title: "Code Generation",
-    description: "Playwright's codegen records your actions and generates test code. Great for developers who want to script.",
+    description:
+      "Playwright's codegen records your actions and generates test code. Great for developers who want to script.",
     icon: Terminal,
   },
   {
     title: "Trace Viewer",
-    description: "Time-travel debugging with snapshots, network logs, and console output at every step.",
+    description:
+      "Time-travel debugging with snapshots, network logs, and console output at every step.",
     icon: Video,
   },
   {
     title: "Multi-Language",
-    description: "Write tests in TypeScript, JavaScript, Python, .NET, or Java—whatever your team prefers.",
+    description:
+      "Write tests in TypeScript, JavaScript, Python, .NET, or Java—whatever your team prefers.",
     icon: FileCode,
   },
   {
     title: "Open Source",
-    description: "Backed by Microsoft, Playwright is free and open source with an active community.",
+    description:
+      "Backed by Microsoft, Playwright is free and open source with an active community.",
     icon: GitBranch,
   },
 ];
@@ -134,22 +138,26 @@ const playwrightStrengths = [
 const betaforgeAdvantages = [
   {
     title: "Zero Code Required",
-    description: "Define testing goals in natural language. No programming expertise needed.",
+    description:
+      "Define testing goals in natural language. No programming expertise needed.",
     icon: Brain,
   },
   {
     title: "Autonomous Discovery",
-    description: "AI agents explore your app and find bugs you never thought to test for.",
+    description:
+      "AI agents explore your app and find bugs you never thought to test for.",
     icon: Target,
   },
   {
     title: "Native Mobile Apps",
-    description: "Test actual iOS and Android applications, not just mobile viewports.",
+    description:
+      "Test actual iOS and Android applications, not just mobile viewports.",
     icon: Smartphone,
   },
   {
     title: "Human-Like Reports",
-    description: "Bug reports read like they came from a human tester, not a test framework.",
+    description:
+      "Bug reports read like they came from a human tester, not a test framework.",
     icon: FileCode,
   },
 ];
@@ -202,13 +210,15 @@ test('user can complete checkout', async ({ page }) => {
 
 const testimonials = [
   {
-    quote: "Playwright is our go-to for E2E testing, but BetaForge finds issues our scripted tests miss. We use both—Playwright for critical paths, BetaForge for exploration.",
+    quote:
+      "Playwright is our go-to for E2E testing, but BetaForge finds issues our scripted tests miss. We use both—Playwright for critical paths, BetaForge for exploration.",
     author: "James Liu",
     role: "Principal Engineer, TechCorp",
     result: "45% more coverage",
   },
   {
-    quote: "Our team doesn't have time to write Playwright tests for every feature. BetaForge gives us broad coverage while we focus critical test automation.",
+    quote:
+      "Our team doesn't have time to write Playwright tests for every feature. BetaForge gives us broad coverage while we focus critical test automation.",
     author: "Nina Patel",
     role: "Engineering Director, HealthTech",
     result: "2x faster releases",
@@ -223,8 +233,12 @@ const integrationFlow = [
 ];
 
 export default function ComparePlaywrightPage() {
-  const betaforgeWins = comparisonTable.filter((row) => row.winner === "betaforge").length;
-  const playwrightWins = comparisonTable.filter((row) => row.winner === "playwright").length;
+  const betaforgeWins = comparisonTable.filter(
+    (row) => row.winner === "betaforge"
+  ).length;
+  const playwrightWins = comparisonTable.filter(
+    (row) => row.winner === "playwright"
+  ).length;
   const ties = comparisonTable.filter((row) => row.winner === "tie").length;
 
   return (
@@ -268,8 +282,9 @@ export default function ComparePlaywrightPage() {
             <span className="gradient-text">Playwright</span>
           </h1>
           <p className="text-lg text-phantom-gray max-w-3xl mx-auto mb-8">
-            Playwright is the modern standard for E2E testing. BetaForge complements it with
-            AI-powered exploration that finds bugs before you even know to test for them.
+            Playwright is the modern standard for E2E testing. BetaForge
+            complements it with AI-powered exploration that finds bugs before
+            you even know to test for them.
           </p>
           <div className="flex flex-wrap justify-center gap-8">
             <div className="flex items-center gap-3">
@@ -277,7 +292,9 @@ export default function ComparePlaywrightPage() {
                 <Bot className="w-8 h-8 text-neural-bright" />
               </div>
               <div className="text-left">
-                <div className="text-2xl font-bold text-ghost-white">{betaforgeWins}</div>
+                <div className="text-2xl font-bold text-ghost-white">
+                  {betaforgeWins}
+                </div>
                 <div className="text-sm text-phantom-gray">BetaForge Wins</div>
               </div>
             </div>
@@ -286,7 +303,9 @@ export default function ComparePlaywrightPage() {
                 <Monitor className="w-8 h-8 text-[#2EAD33]" />
               </div>
               <div className="text-left">
-                <div className="text-2xl font-bold text-ghost-white">{playwrightWins}</div>
+                <div className="text-2xl font-bold text-ghost-white">
+                  {playwrightWins}
+                </div>
                 <div className="text-sm text-phantom-gray">Playwright Wins</div>
               </div>
             </div>
@@ -295,7 +314,9 @@ export default function ComparePlaywrightPage() {
                 <TrendingUp className="w-8 h-8 text-quantum-green" />
               </div>
               <div className="text-left">
-                <div className="text-2xl font-bold text-ghost-white">{ties}</div>
+                <div className="text-2xl font-bold text-ghost-white">
+                  {ties}
+                </div>
                 <div className="text-sm text-phantom-gray">Ties</div>
               </div>
             </div>
@@ -313,7 +334,9 @@ export default function ComparePlaywrightPage() {
                 className="p-6 bg-void-elevated border border-white/5 rounded-2xl text-center"
               >
                 <metric.icon className="w-8 h-8 text-neural-bright mx-auto mb-3" />
-                <div className="text-3xl font-bold gradient-text mb-1">{metric.value}</div>
+                <div className="text-3xl font-bold gradient-text mb-1">
+                  {metric.value}
+                </div>
                 <div className="text-sm text-phantom-gray">{metric.label}</div>
               </div>
             ))}
@@ -328,14 +351,19 @@ export default function ComparePlaywrightPage() {
             Different Approaches, Same Goal
           </h2>
           <p className="text-phantom-gray text-center mb-12 max-w-2xl mx-auto">
-            Playwright gives you precise control. BetaForge gives you autonomous exploration.
+            Playwright gives you precise control. BetaForge gives you autonomous
+            exploration.
           </p>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <Monitor className="w-5 h-5 text-[#2EAD33]" />
-                <span className="font-semibold text-ghost-white">Playwright</span>
-                <span className="text-xs px-2 py-1 rounded bg-[#2EAD33]/20 text-[#2EAD33]">Code-based</span>
+                <span className="font-semibold text-ghost-white">
+                  Playwright
+                </span>
+                <span className="text-xs px-2 py-1 rounded bg-[#2EAD33]/20 text-[#2EAD33]">
+                  Code-based
+                </span>
               </div>
               <div className="p-4 bg-void-elevated border border-white/10 rounded-2xl overflow-auto max-h-[400px]">
                 <pre className="text-xs text-phantom-gray font-mono leading-relaxed">
@@ -346,8 +374,12 @@ export default function ComparePlaywrightPage() {
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <Bot className="w-5 h-5 text-neural-bright" />
-                <span className="font-semibold text-ghost-white">BetaForge</span>
-                <span className="text-xs px-2 py-1 rounded bg-neural/20 text-neural-bright">AI-powered</span>
+                <span className="font-semibold text-ghost-white">
+                  BetaForge
+                </span>
+                <span className="text-xs px-2 py-1 rounded bg-neural/20 text-neural-bright">
+                  AI-powered
+                </span>
               </div>
               <div className="p-4 bg-void-elevated border border-neural/30 rounded-2xl overflow-auto max-h-[400px]">
                 <pre className="text-xs text-neural-bright font-mono leading-relaxed">
@@ -372,7 +404,9 @@ export default function ComparePlaywrightPage() {
                 <div className="w-10 h-10 rounded-lg bg-[#2EAD33]/20 flex items-center justify-center">
                   <Monitor className="w-5 h-5 text-[#2EAD33]" />
                 </div>
-                <h3 className="text-xl font-semibold text-ghost-white">Playwright Strengths</h3>
+                <h3 className="text-xl font-semibold text-ghost-white">
+                  Playwright Strengths
+                </h3>
               </div>
               <div className="space-y-4">
                 {playwrightStrengths.map((item, index) => (
@@ -382,9 +416,13 @@ export default function ComparePlaywrightPage() {
                   >
                     <div className="flex items-center gap-3 mb-2">
                       <item.icon className="w-5 h-5 text-[#2EAD33]" />
-                      <h4 className="font-semibold text-ghost-white">{item.title}</h4>
+                      <h4 className="font-semibold text-ghost-white">
+                        {item.title}
+                      </h4>
                     </div>
-                    <p className="text-sm text-phantom-gray">{item.description}</p>
+                    <p className="text-sm text-phantom-gray">
+                      {item.description}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -395,7 +433,9 @@ export default function ComparePlaywrightPage() {
                 <div className="w-10 h-10 rounded-lg bg-neural/20 flex items-center justify-center">
                   <Bot className="w-5 h-5 text-neural-bright" />
                 </div>
-                <h3 className="text-xl font-semibold text-ghost-white">BetaForge Advantages</h3>
+                <h3 className="text-xl font-semibold text-ghost-white">
+                  BetaForge Advantages
+                </h3>
               </div>
               <div className="space-y-4">
                 {betaforgeAdvantages.map((item, index) => (
@@ -405,9 +445,13 @@ export default function ComparePlaywrightPage() {
                   >
                     <div className="flex items-center gap-3 mb-2">
                       <item.icon className="w-5 h-5 text-neural-bright" />
-                      <h4 className="font-semibold text-ghost-white">{item.title}</h4>
+                      <h4 className="font-semibold text-ghost-white">
+                        {item.title}
+                      </h4>
                     </div>
-                    <p className="text-sm text-phantom-gray">{item.description}</p>
+                    <p className="text-sm text-phantom-gray">
+                      {item.description}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -429,13 +473,17 @@ export default function ComparePlaywrightPage() {
               <div className="text-center">
                 <div className="inline-flex items-center gap-2">
                   <Bot className="w-5 h-5 text-neural-bright" />
-                  <span className="font-semibold text-ghost-white">BetaForge</span>
+                  <span className="font-semibold text-ghost-white">
+                    BetaForge
+                  </span>
                 </div>
               </div>
               <div className="text-center">
                 <div className="inline-flex items-center gap-2">
                   <Monitor className="w-5 h-5 text-[#2EAD33]" />
-                  <span className="font-semibold text-ghost-white">Playwright</span>
+                  <span className="font-semibold text-ghost-white">
+                    Playwright
+                  </span>
                 </div>
               </div>
             </div>
@@ -444,23 +492,39 @@ export default function ComparePlaywrightPage() {
               <div
                 key={index}
                 className={`grid grid-cols-3 gap-4 p-6 ${
-                  index !== comparisonTable.length - 1 ? "border-b border-white/5" : ""
+                  index !== comparisonTable.length - 1
+                    ? "border-b border-white/5"
+                    : ""
                 }`}
               >
-                <div className="text-ghost-white font-medium">{row.feature}</div>
+                <div className="text-ghost-white font-medium">
+                  {row.feature}
+                </div>
                 <div className="text-center">
-                  <div className={`inline-flex items-center gap-2 ${
-                    row.winner === "betaforge" ? "text-quantum-green" : "text-phantom-gray"
-                  }`}>
-                    {row.winner === "betaforge" && <Check className="w-5 h-5" />}
+                  <div
+                    className={`inline-flex items-center gap-2 ${
+                      row.winner === "betaforge"
+                        ? "text-quantum-green"
+                        : "text-phantom-gray"
+                    }`}
+                  >
+                    {row.winner === "betaforge" && (
+                      <Check className="w-5 h-5" />
+                    )}
                     <span className="text-sm">{row.betaforge}</span>
                   </div>
                 </div>
                 <div className="text-center">
-                  <div className={`inline-flex items-center gap-2 ${
-                    row.winner === "playwright" ? "text-quantum-green" : "text-phantom-gray"
-                  }`}>
-                    {row.winner === "playwright" && <Check className="w-5 h-5" />}
+                  <div
+                    className={`inline-flex items-center gap-2 ${
+                      row.winner === "playwright"
+                        ? "text-quantum-green"
+                        : "text-phantom-gray"
+                    }`}
+                  >
+                    {row.winner === "playwright" && (
+                      <Check className="w-5 h-5" />
+                    )}
                     <span className="text-sm">{row.playwright}</span>
                   </div>
                 </div>
@@ -484,10 +548,16 @@ export default function ComparePlaywrightPage() {
               <div key={index} className="flex items-center gap-4">
                 <div className="text-center">
                   <div className="w-20 h-20 rounded-2xl bg-void-black border border-white/10 flex items-center justify-center mb-2">
-                    <span className="text-2xl font-bold gradient-text">{item.step}</span>
+                    <span className="text-2xl font-bold gradient-text">
+                      {item.step}
+                    </span>
                   </div>
-                  <div className="text-sm font-semibold text-ghost-white">{item.title}</div>
-                  <div className="text-xs text-phantom-gray">{item.description}</div>
+                  <div className="text-sm font-semibold text-ghost-white">
+                    {item.title}
+                  </div>
+                  <div className="text-xs text-phantom-gray">
+                    {item.description}
+                  </div>
                 </div>
                 {index < integrationFlow.length - 1 && (
                   <ArrowRight className="w-6 h-6 text-mist-gray" />
@@ -513,10 +583,16 @@ export default function ComparePlaywrightPage() {
                 <div className="inline-block px-3 py-1 rounded-full bg-quantum-green/20 text-quantum-green text-sm mb-4">
                   {testimonial.result}
                 </div>
-                <p className="text-ghost-white text-lg mb-4">"{testimonial.quote}"</p>
+                <p className="text-ghost-white text-lg mb-4">
+                  "{testimonial.quote}"
+                </p>
                 <div>
-                  <div className="font-semibold text-ghost-white">{testimonial.author}</div>
-                  <div className="text-sm text-phantom-gray">{testimonial.role}</div>
+                  <div className="font-semibold text-ghost-white">
+                    {testimonial.author}
+                  </div>
+                  <div className="text-sm text-phantom-gray">
+                    {testimonial.role}
+                  </div>
                 </div>
               </div>
             ))}

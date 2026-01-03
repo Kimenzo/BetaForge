@@ -17,7 +17,9 @@ interface UseProjectsReturn {
   isLoading: boolean;
   error: Error | null;
   refresh: () => Promise<void>;
-  createProject: (data: Omit<Project, "id" | "createdAt" | "updatedAt">) => Promise<Project>;
+  createProject: (
+    data: Omit<Project, "id" | "createdAt" | "updatedAt">
+  ) => Promise<Project>;
   deleteProject: (id: string) => Promise<void>;
 }
 

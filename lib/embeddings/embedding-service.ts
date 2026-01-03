@@ -4,12 +4,21 @@
 // Automatically selects the best available provider with fallback
 // Priority: Ollama (free) -> Jina (free tier) -> OpenAI (paid)
 
-import type { EmbeddingProviderType } from './types';
-import { createOllamaProvider, OllamaEmbeddingProvider } from './providers/ollama';
-import { createJinaProvider, JinaEmbeddingProvider } from './providers/jina';
-import { createOpenAIProvider, OpenAIEmbeddingProvider } from './providers/openai';
+import type { EmbeddingProviderType } from "./types";
+import {
+  createOllamaProvider,
+  OllamaEmbeddingProvider,
+} from "./providers/ollama";
+import { createJinaProvider, JinaEmbeddingProvider } from "./providers/jina";
+import {
+  createOpenAIProvider,
+  OpenAIEmbeddingProvider,
+} from "./providers/openai";
 
-type ProviderInstance = OllamaEmbeddingProvider | JinaEmbeddingProvider | OpenAIEmbeddingProvider;
+type ProviderInstance =
+  | OllamaEmbeddingProvider
+  | JinaEmbeddingProvider
+  | OpenAIEmbeddingProvider;
 
 export interface EmbeddingServiceConfig {
   preferredProvider?: EmbeddingProviderType;
@@ -32,9 +41,9 @@ export class EmbeddingService {
     };
 
     // Initialize all providers
-    this.providers.set('ollama', createOllamaProvider());
-    this.providers.set('jina', createJinaProvider());
-    this.providers.set('openai', createOpenAIProvider());
+    this.providers.set("ollama", createOllamaProvider());
+    this.providers.set("jina", createJinaProvider());
+    this.providers.set("openai", createOpenAIProvider());
   }
 
   /**
@@ -45,12 +54,12 @@ export class EmbeddingService {
 
     // Priority order (cheapest first)
     const priorityOrder: EmbeddingProviderType[] = this.config.preferredProvider
-      ? [this.config.preferredProvider, 'ollama', 'jina', 'openai']
-      : ['ollama', 'jina', 'openai'];
+      ? [this.config.preferredProvider, "ollama", "jina", "openai"]
+      : ["ollama", "jina", "openai"];
 
     for (const providerName of priorityOrder) {
       const provider = this.providers.get(providerName);
-      if (provider && await provider.isAvailable()) {
+      if (provider && (await provider.isAvailable())) {
         this.activeProvider = provider;
         console.log(`[EmbeddingService] Using provider: ${provider.name}`);
         this.initialized = true;
@@ -59,10 +68,10 @@ export class EmbeddingService {
     }
 
     throw new Error(
-      'No embedding provider available. Configure one of:\n' +
-      '- OLLAMA_BASE_URL (free, local)\n' +
-      '- JINA_API_KEY (free tier: 1M tokens)\n' +
-      '- OPENAI_API_KEY (paid: $0.02/1M tokens)'
+      "No embedding provider available. Configure one of:\n" +
+        "- OLLAMA_BASE_URL (free, local)\n" +
+        "- JINA_API_KEY (free tier: 1M tokens)\n" +
+        "- OPENAI_API_KEY (paid: $0.02/1M tokens)"
     );
   }
 
@@ -70,7 +79,7 @@ export class EmbeddingService {
    * Get the active provider name
    */
   getActiveProvider(): string {
-    return this.activeProvider?.name || 'none';
+    return this.activeProvider?.name || "none";
   }
 
   /**
@@ -94,7 +103,7 @@ export class EmbeddingService {
 
     try {
       const result = await this.activeProvider!.generateEmbedding(text);
-      
+
       // Cache the result
       if (this.config.cacheEnabled) {
         this.cache.set(cacheKey, result.embedding);
@@ -117,7 +126,7 @@ export class EmbeddingService {
     await this.initialize();
 
     // Check cache for each text
-    const results: (number[] | null)[] = texts.map(text => {
+    const results: (number[] | null)[] = texts.map((text) => {
       const cacheKey = this.getCacheKey(text);
       return this.config.cacheEnabled && this.cache.has(cacheKey)
         ? this.cache.get(cacheKey)!
@@ -135,15 +144,20 @@ export class EmbeddingService {
     });
 
     if (uncachedTexts.length > 0) {
-      const newEmbeddings = await this.activeProvider!.generateBatchEmbeddings(uncachedTexts);
-      
+      const newEmbeddings = await this.activeProvider!.generateBatchEmbeddings(
+        uncachedTexts
+      );
+
       // Merge results and cache
       newEmbeddings.forEach((result, i) => {
         const originalIndex = uncachedIndices[i];
         results[originalIndex] = result.embedding;
-        
+
         if (this.config.cacheEnabled) {
-          this.cache.set(this.getCacheKey(texts[originalIndex]), result.embedding);
+          this.cache.set(
+            this.getCacheKey(texts[originalIndex]),
+            result.embedding
+          );
         }
       });
     }
@@ -156,7 +170,7 @@ export class EmbeddingService {
    */
   cosineSimilarity(a: number[], b: number[]): number {
     if (a.length !== b.length) {
-      throw new Error('Embeddings must have same dimensions');
+      throw new Error("Embeddings must have same dimensions");
     }
 
     let dotProduct = 0;
@@ -181,13 +195,13 @@ export class EmbeddingService {
     topK: number = 5,
     threshold: number = 0.7
   ): { id: string; similarity: number }[] {
-    const scored = candidates.map(candidate => ({
+    const scored = candidates.map((candidate) => ({
       id: candidate.id,
       similarity: this.cosineSimilarity(queryEmbedding, candidate.embedding),
     }));
 
     return scored
-      .filter(item => item.similarity >= threshold)
+      .filter((item) => item.similarity >= threshold)
       .sort((a, b) => b.similarity - a.similarity)
       .slice(0, topK);
   }
@@ -196,13 +210,13 @@ export class EmbeddingService {
    * Try fallback providers
    */
   private async embedWithFallback(text: string): Promise<number[]> {
-    const fallbackOrder: EmbeddingProviderType[] = ['jina', 'openai', 'ollama'];
-    
+    const fallbackOrder: EmbeddingProviderType[] = ["jina", "openai", "ollama"];
+
     for (const providerName of fallbackOrder) {
       if (providerName === this.activeProvider?.name) continue;
-      
+
       const provider = this.providers.get(providerName);
-      if (provider && await provider.isAvailable()) {
+      if (provider && (await provider.isAvailable())) {
         try {
           console.log(`[EmbeddingService] Falling back to ${providerName}`);
           const result = await provider.generateEmbedding(text);
@@ -213,7 +227,7 @@ export class EmbeddingService {
       }
     }
 
-    throw new Error('All embedding providers failed');
+    throw new Error("All embedding providers failed");
   }
 
   private getCacheKey(text: string): string {
@@ -221,7 +235,7 @@ export class EmbeddingService {
     let hash = 0;
     for (let i = 0; i < text.length; i++) {
       const char = text.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
+      hash = (hash << 5) - hash + char;
       hash = hash & hash;
     }
     return `${this.activeProvider?.name}:${hash}`;
@@ -240,7 +254,7 @@ export class EmbeddingService {
   getCacheStats(): { size: number; provider: string } {
     return {
       size: this.cache.size,
-      provider: this.activeProvider?.name || 'none',
+      provider: this.activeProvider?.name || "none",
     };
   }
 }

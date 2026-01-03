@@ -41,7 +41,7 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
   };
 
   // Get avatar emoji or first letter for each agent
-  const getAgentAvatar = (agent: typeof AGENTS[0]) => {
+  const getAgentAvatar = (agent: (typeof AGENTS)[0]) => {
     const avatars: Record<string, string> = {
       sarah: "🔍",
       marcus: "⚡",
@@ -101,7 +101,9 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`group flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300 stagger-${index + 1} animate-fade-in ${
+                className={`group flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300 stagger-${
+                  index + 1
+                } animate-fade-in ${
                   active
                     ? "bg-neural/15 text-ghost-white neural-glow-static"
                     : "text-phantom-gray hover:text-ghost-white hover:bg-white/5"

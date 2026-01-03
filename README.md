@@ -6,14 +6,14 @@
 
 BetaForge uses autonomous AI agents powered by Claude to thoroughly test your applications. Each agent has a unique persona and testing style, simulating the diversity of your real user base:
 
-| Agent | Persona | Focus Area |
-| ------- | --------- | ------------ |
-| **Sarah** | The Cautious Explorer | Accessibility, unclear UX |
-| **Marcus** | The Power User | Keyboard shortcuts, performance |
-| **Ahmed** | The Accessibility Advocate | Screen readers, ARIA, keyboard nav |
-| **Lin** | The Mobile-First User | Small viewports, touch, offline |
-| **Diego** | The Chaos Tester | Error boundaries, security |
-| **Emma** | The Average User | Happy paths, general UX |
+| Agent      | Persona                    | Focus Area                         |
+| ---------- | -------------------------- | ---------------------------------- |
+| **Sarah**  | The Cautious Explorer      | Accessibility, unclear UX          |
+| **Marcus** | The Power User             | Keyboard shortcuts, performance    |
+| **Ahmed**  | The Accessibility Advocate | Screen readers, ARIA, keyboard nav |
+| **Lin**    | The Mobile-First User      | Small viewports, touch, offline    |
+| **Diego**  | The Chaos Tester           | Error boundaries, security         |
+| **Emma**   | The Average User           | Happy paths, general UX            |
 
 ## Quick Start
 
@@ -122,13 +122,13 @@ POST /api/webhooks
 
 ## Environment Variables
 
-| Variable | Required | Description |
-| ---------- | ---------- | ------------- |
-| `ANTHROPIC_API_KEY` | Yes | Claude API key |
-| `NEXT_PUBLIC_SUPABASE_URL` | No | Supabase project URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | No | Supabase anon key |
-| `SUPABASE_SERVICE_ROLE_KEY` | No | Supabase service role key |
-| `NEXT_PUBLIC_APP_URL` | No | Application URL |
+| Variable                        | Required | Description               |
+| ------------------------------- | -------- | ------------------------- |
+| `ANTHROPIC_API_KEY`             | Yes      | Claude API key            |
+| `NEXT_PUBLIC_SUPABASE_URL`      | No       | Supabase project URL      |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | No       | Supabase anon key         |
+| `SUPABASE_SERVICE_ROLE_KEY`     | No       | Supabase service role key |
+| `NEXT_PUBLIC_APP_URL`           | No       | Application URL           |
 
 ## Development
 

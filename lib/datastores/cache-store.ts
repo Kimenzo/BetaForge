@@ -3,7 +3,7 @@
 // ========================
 // Purpose: Fast access to frequently used data, session state
 // Use for: API response caching, session tokens, rate limiting
-// 
+//
 // "For beginners, prioritize vector, relational, and key-value
 // as they cover most early use cases." - Ethan Ruhe
 //
@@ -13,16 +13,16 @@
 // - Rate limiting
 // - Temporary data storage
 
-import type { 
-  DataStore, 
-  HealthStatus, 
-  CacheEntry, 
-  CacheOptions 
+import type {
+  DataStore,
+  HealthStatus,
+  CacheEntry,
+  CacheOptions,
 } from "./types";
 
 /**
  * In-Memory Cache Store
- * 
+ *
  * In production, this would be backed by:
  * - Redis (most common)
  * - Memcached
@@ -75,8 +75,8 @@ export class CacheStore implements DataStore {
   }
 
   async set<T = unknown>(
-    key: string, 
-    value: T, 
+    key: string,
+    value: T,
     options: CacheOptions = {}
   ): Promise<void> {
     const fullKey = this.buildKey(key, options.namespace);
@@ -87,7 +87,7 @@ export class CacheStore implements DataStore {
       value,
       ttlSeconds: options.ttlSeconds,
       createdAt: now,
-      expiresAt: options.ttlSeconds 
+      expiresAt: options.ttlSeconds
         ? new Date(now.getTime() + options.ttlSeconds * 1000)
         : undefined,
     };
@@ -131,11 +131,11 @@ export class CacheStore implements DataStore {
    * Increment a numeric value (useful for rate limiting)
    */
   async increment(
-    key: string, 
+    key: string,
     amount: number = 1,
     options: CacheOptions = {}
   ): Promise<number> {
-    const current = await this.get<number>(key, options.namespace) || 0;
+    const current = (await this.get<number>(key, options.namespace)) || 0;
     const newValue = current + amount;
     await this.set(key, newValue, options);
     return newValue;
@@ -144,7 +144,10 @@ export class CacheStore implements DataStore {
   /**
    * Set multiple keys at once
    */
-  async mset(entries: Array<{ key: string; value: unknown }>, options: CacheOptions = {}): Promise<void> {
+  async mset(
+    entries: Array<{ key: string; value: unknown }>,
+    options: CacheOptions = {}
+  ): Promise<void> {
     for (const entry of entries) {
       await this.set(entry.key, entry.value, options);
     }
@@ -153,7 +156,10 @@ export class CacheStore implements DataStore {
   /**
    * Get multiple keys at once
    */
-  async mget<T = unknown>(keys: string[], namespace?: string): Promise<Map<string, T>> {
+  async mget<T = unknown>(
+    keys: string[],
+    namespace?: string
+  ): Promise<Map<string, T>> {
     const results = new Map<string, T>();
     for (const key of keys) {
       const value = await this.get<T>(key, namespace);
@@ -199,17 +205,20 @@ export class CacheStore implements DataStore {
   ): Promise<{ allowed: boolean; remaining: number; resetAt: Date }> {
     const key = `ratelimit:${identifier}`;
     const now = Date.now();
-    const windowStart = now - (windowSeconds * 1000);
+    const windowStart = now - windowSeconds * 1000;
 
     // Get current requests in window
-    const requests = await this.get<number[]>(key) || [];
-    
+    const requests = (await this.get<number[]>(key)) || [];
+
     // Filter to only include requests in current window
-    const validRequests = requests.filter(ts => ts > windowStart);
-    
+    const validRequests = requests.filter((ts) => ts > windowStart);
+
     const allowed = validRequests.length < limit;
-    const remaining = Math.max(0, limit - validRequests.length - (allowed ? 1 : 0));
-    const resetAt = new Date(windowStart + (windowSeconds * 1000));
+    const remaining = Math.max(
+      0,
+      limit - validRequests.length - (allowed ? 1 : 0)
+    );
+    const resetAt = new Date(windowStart + windowSeconds * 1000);
 
     if (allowed) {
       validRequests.push(now);
@@ -231,9 +240,9 @@ export class CacheStore implements DataStore {
     data: T,
     ttlSeconds: number = 3600
   ): Promise<void> {
-    await this.set(sessionId, data, { 
+    await this.set(sessionId, data, {
       namespace: "session",
-      ttlSeconds 
+      ttlSeconds,
     });
   }
 

@@ -35,7 +35,11 @@ export default function SessionDetailPage({ params }: SessionPageProps) {
       type: "bug",
     },
     { time: "12:34:15", agent: "Marcus", action: "Started testing session" },
-    { time: "12:34:18", agent: "Marcus", action: "Testing keyboard shortcuts..." },
+    {
+      time: "12:34:18",
+      agent: "Marcus",
+      action: "Testing keyboard shortcuts...",
+    },
   ]);
 
   useEffect(() => {
@@ -52,11 +56,35 @@ export default function SessionDetailPage({ params }: SessionPageProps) {
     totalBugs: 2,
     progress: 35,
     agents: [
-      { id: "sarah", name: "Sarah", status: "completed", bugsFound: 2, progress: 100 },
-      { id: "marcus", name: "Marcus", status: "running", bugsFound: 0, progress: 45 },
-      { id: "ahmed", name: "Ahmed", status: "queued", bugsFound: 0, progress: 0 },
+      {
+        id: "sarah",
+        name: "Sarah",
+        status: "completed",
+        bugsFound: 2,
+        progress: 100,
+      },
+      {
+        id: "marcus",
+        name: "Marcus",
+        status: "running",
+        bugsFound: 0,
+        progress: 45,
+      },
+      {
+        id: "ahmed",
+        name: "Ahmed",
+        status: "queued",
+        bugsFound: 0,
+        progress: 0,
+      },
       { id: "lin", name: "Lin", status: "queued", bugsFound: 0, progress: 0 },
-      { id: "diego", name: "Diego", status: "queued", bugsFound: 0, progress: 0 },
+      {
+        id: "diego",
+        name: "Diego",
+        status: "queued",
+        bugsFound: 0,
+        progress: 0,
+      },
       { id: "emma", name: "Emma", status: "queued", bugsFound: 0, progress: 0 },
     ],
   };
@@ -135,19 +163,25 @@ export default function SessionDetailPage({ params }: SessionPageProps) {
                 <Activity className="w-6 h-6 text-neural-bright" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold text-ghost-white">Test Session</h1>
+                <h1 className="text-3xl font-bold text-ghost-white">
+                  Test Session
+                </h1>
                 <p className="text-phantom-gray">{session.projectName}</p>
               </div>
             </div>
 
             <div className="flex flex-wrap items-center gap-3 mt-4">
               <span
-                className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium ${statusConfig[session.status].bg} ${statusConfig[session.status].color} ${statusConfig[session.status].border} border`}
+                className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium ${
+                  statusConfig[session.status].bg
+                } ${statusConfig[session.status].color} ${
+                  statusConfig[session.status].border
+                } border`}
               >
                 <span
-                  className={`w-2 h-2 rounded-full ${statusConfig[session.status].dot} ${
-                    session.status === "running" ? "animate-pulse" : ""
-                  }`}
+                  className={`w-2 h-2 rounded-full ${
+                    statusConfig[session.status].dot
+                  } ${session.status === "running" ? "animate-pulse" : ""}`}
                 />
                 {statusConfig[session.status].label}
               </span>
@@ -180,7 +214,9 @@ export default function SessionDetailPage({ params }: SessionPageProps) {
         <div className="glass rounded-2xl p-6 border border-white/5 mb-8 animate-fade-in-up stagger-1">
           <div className="flex items-center justify-between mb-3">
             <span className="text-sm text-phantom-gray">Overall Progress</span>
-            <span className="text-sm font-medium text-ghost-white">{session.progress}%</span>
+            <span className="text-sm font-medium text-ghost-white">
+              {session.progress}%
+            </span>
           </div>
           <div className="h-2 bg-void-elevated rounded-full overflow-hidden">
             <div
@@ -210,7 +246,8 @@ export default function SessionDetailPage({ params }: SessionPageProps) {
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {session.agents.map((agent) => {
-                  const config = statusConfig[agent.status as keyof typeof statusConfig];
+                  const config =
+                    statusConfig[agent.status as keyof typeof statusConfig];
                   return (
                     <div
                       key={agent.id}
@@ -226,11 +263,15 @@ export default function SessionDetailPage({ params }: SessionPageProps) {
                         <div className="flex items-center gap-3">
                           <div
                             className="w-10 h-10 rounded-xl flex items-center justify-center text-lg"
-                            style={{ backgroundColor: `${getAgentColor(agent.name)}20` }}
+                            style={{
+                              backgroundColor: `${getAgentColor(agent.name)}20`,
+                            }}
                           >
                             {getAgentEmoji(agent.name)}
                           </div>
-                          <span className="font-medium text-ghost-white">{agent.name}</span>
+                          <span className="font-medium text-ghost-white">
+                            {agent.name}
+                          </span>
                         </div>
                         {agent.status === "completed" && (
                           <CheckCircle2 className="w-5 h-5 text-quantum-green" />

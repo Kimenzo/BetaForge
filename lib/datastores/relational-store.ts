@@ -3,39 +3,51 @@
 // ========================
 // Purpose: Structured data with ACID transactions
 // Use for: Projects, Users, Sessions, Bug Reports (metadata)
-// 
+//
 // "Relational databases are the backbone for structured,
 // transactional data that needs consistency guarantees."
 
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import type { Database, Json } from "../database.types";
-import type { 
-  DataStore, 
-  HealthStatus, 
-  QueryOptions, 
-  TransactionContext 
+import type {
+  DataStore,
+  HealthStatus,
+  QueryOptions,
+  TransactionContext,
 } from "./types";
-import type { 
-  Project, 
-  TestSession, 
-  BugReport, 
-  AgentExecution 
-} from "../types";
+import type { Project, TestSession, BugReport, AgentExecution } from "../types";
 
 export class RelationalStore implements DataStore {
   name = "supabase-postgres";
   type = "relational" as const;
-  private client: SupabaseClient<Database>;
+  private client: SupabaseClient<Database> | null = null;
+  private isConfigured: boolean;
 
   constructor() {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-    this.client = createClient<Database>(supabaseUrl, supabaseKey);
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+    this.isConfigured = Boolean(supabaseUrl && supabaseKey);
+    if (this.isConfigured) {
+      this.client = createClient<Database>(supabaseUrl, supabaseKey);
+    }
+  }
+
+  private getClient(): SupabaseClient<Database> {
+    if (!this.client) {
+      throw new Error(
+        "Supabase is not configured. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY"
+      );
+    }
+    return this.client;
   }
 
   async isConnected(): Promise<boolean> {
+    if (!this.isConfigured) return false;
     try {
-      const { error } = await this.client.from("projects").select("id").limit(1);
+      const { error } = await this.getClient()
+        .from("projects")
+        .select("id")
+        .limit(1);
       return !error;
     } catch {
       return false;
@@ -65,7 +77,7 @@ export class RelationalStore implements DataStore {
   // ========================
 
   async getProject(id: string): Promise<Project | null> {
-    const { data, error } = await this.client
+    const { data, error } = await this.getClient()
       .from("projects")
       .select("*")
       .eq("id", id)
@@ -75,16 +87,22 @@ export class RelationalStore implements DataStore {
     return this.mapProject(data);
   }
 
-  async getProjects(userId: string, options?: QueryOptions): Promise<Project[]> {
-    let query = this.client
-      .from("projects")
-      .select("*")
-      .eq("user_id", userId);
+  async getProjects(
+    userId: string,
+    options?: QueryOptions
+  ): Promise<Project[]> {
+    let query = this.getClient().from("projects").select("*").eq("user_id", userId);
 
     if (options?.limit) query = query.limit(options.limit);
-    if (options?.offset) query = query.range(options.offset, options.offset + (options.limit || 10) - 1);
+    if (options?.offset)
+      query = query.range(
+        options.offset,
+        options.offset + (options.limit || 10) - 1
+      );
     if (options?.orderBy) {
-      query = query.order(options.orderBy, { ascending: options.order === "asc" });
+      query = query.order(options.orderBy, {
+        ascending: options.order === "asc",
+      });
     }
 
     const { data, error } = await query;
@@ -92,8 +110,10 @@ export class RelationalStore implements DataStore {
     return data.map(this.mapProject);
   }
 
-  async createProject(project: Omit<Project, "id" | "createdAt" | "updatedAt">): Promise<Project> {
-    const { data, error } = await this.client
+  async createProject(
+    project: Omit<Project, "id" | "createdAt" | "updatedAt">
+  ): Promise<Project> {
+    const { data, error } = await this.getClient()
       .from("projects")
       .insert({
         user_id: project.userId,
@@ -112,7 +132,7 @@ export class RelationalStore implements DataStore {
   }
 
   async updateProject(id: string, updates: Partial<Project>): Promise<Project> {
-    const { data, error } = await this.client
+    const { data, error } = await this.getClient()
       .from("projects")
       .update({
         name: updates.name,
@@ -136,7 +156,7 @@ export class RelationalStore implements DataStore {
   // ========================
 
   async getSession(id: string): Promise<TestSession | null> {
-    const { data, error } = await this.client
+    const { data, error } = await this.getClient()
       .from("test_sessions")
       .select("*")
       .eq("id", id)
@@ -146,15 +166,20 @@ export class RelationalStore implements DataStore {
     return this.mapSession(data);
   }
 
-  async getSessionsByProject(projectId: string, options?: QueryOptions): Promise<TestSession[]> {
-    let query = this.client
+  async getSessionsByProject(
+    projectId: string,
+    options?: QueryOptions
+  ): Promise<TestSession[]> {
+    let query = this.getClient()
       .from("test_sessions")
       .select("*")
       .eq("project_id", projectId);
 
     if (options?.limit) query = query.limit(options.limit);
     if (options?.orderBy) {
-      query = query.order(options.orderBy, { ascending: options.order === "asc" });
+      query = query.order(options.orderBy, {
+        ascending: options.order === "asc",
+      });
     }
 
     const { data, error } = await query;
@@ -163,7 +188,7 @@ export class RelationalStore implements DataStore {
   }
 
   async createSession(session: Omit<TestSession, "id">): Promise<TestSession> {
-    const { data, error } = await this.client
+    const { data, error } = await this.getClient()
       .from("test_sessions")
       .insert({
         project_id: session.projectId,
@@ -186,7 +211,7 @@ export class RelationalStore implements DataStore {
   // ========================
 
   async getBugReport(id: string): Promise<BugReport | null> {
-    const { data, error } = await this.client
+    const { data, error } = await this.getClient()
       .from("bug_reports")
       .select("*")
       .eq("id", id)
@@ -197,7 +222,7 @@ export class RelationalStore implements DataStore {
   }
 
   async getBugReportsBySession(sessionId: string): Promise<BugReport[]> {
-    const { data, error } = await this.client
+    const { data, error } = await this.getClient()
       .from("bug_reports")
       .select("*, agent_executions!inner(session_id)")
       .eq("agent_executions.session_id", sessionId);
@@ -206,8 +231,10 @@ export class RelationalStore implements DataStore {
     return data.map(this.mapBugReport);
   }
 
-  async createBugReport(report: Omit<BugReport, "id" | "createdAt">): Promise<BugReport> {
-    const { data, error } = await this.client
+  async createBugReport(
+    report: Omit<BugReport, "id" | "createdAt">
+  ): Promise<BugReport> {
+    const { data, error } = await this.getClient()
       .from("bug_reports")
       .insert({
         project_id: report.projectId,

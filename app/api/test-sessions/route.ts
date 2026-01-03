@@ -5,14 +5,15 @@ import { createServerClient } from "@/lib/supabase";
 export async function GET(request: NextRequest) {
   const supabase = createServerClient();
   const { searchParams } = new URL(request.url);
-  
+
   const limit = parseInt(searchParams.get("limit") || "20");
   const status = searchParams.get("status");
   const projectId = searchParams.get("projectId");
 
   let query = supabase
     .from("test_sessions")
-    .select(`
+    .select(
+      `
       *,
       projects (
         id,
@@ -26,7 +27,8 @@ export async function GET(request: NextRequest) {
         status,
         progress
       )
-    `)
+    `
+    )
     .order("created_at", { ascending: false })
     .limit(limit);
 
@@ -49,25 +51,27 @@ export async function GET(request: NextRequest) {
   }
 
   return NextResponse.json({
-    sessions: sessions?.map((s) => ({
-      id: s.id,
-      projectId: s.project_id,
-      projectName: s.projects?.name,
-      status: s.status,
-      triggerType: s.trigger_type,
-      progress: s.progress,
-      bugsFound: s.bugs_found,
-      startedAt: s.started_at,
-      completedAt: s.completed_at,
-      createdAt: s.created_at,
-      agents: s.agent_executions?.map((e) => ({
-        id: e.id,
-        agentId: e.agent_id,
-        name: e.agent_name,
-        status: e.status,
-        progress: e.progress,
+    sessions:
+      sessions?.map((s) => ({
+        id: s.id,
+        projectId: s.project_id,
+        projectName: s.projects?.name,
+        status: s.status,
+        triggerType: s.trigger_type,
+        progress: s.progress,
+        bugsFound: s.bugs_found,
+        startedAt: s.started_at,
+        completedAt: s.completed_at,
+        createdAt: s.created_at,
+        agents:
+          s.agent_executions?.map((e) => ({
+            id: e.id,
+            agentId: e.agent_id,
+            name: e.agent_name,
+            status: e.status,
+            progress: e.progress,
+          })) || [],
       })) || [],
-    })) || [],
   });
 }
 
@@ -94,10 +98,7 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (projectError || !project) {
-      return NextResponse.json(
-        { error: "Project not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Project not found" }, { status: 404 });
     }
 
     // Create session
@@ -122,17 +123,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    return NextResponse.json({
-      success: true,
-      session: {
-        id: session.id,
-        projectId: session.project_id,
-        projectName: project.name,
-        status: session.status,
-        triggerType: session.trigger_type,
-        createdAt: session.created_at,
+    return NextResponse.json(
+      {
+        success: true,
+        session: {
+          id: session.id,
+          projectId: session.project_id,
+          projectName: project.name,
+          status: session.status,
+          triggerType: session.trigger_type,
+          createdAt: session.created_at,
+        },
       },
-    }, { status: 201 });
+      { status: 201 }
+    );
   } catch (error) {
     console.error("Create session error:", error);
     return NextResponse.json(

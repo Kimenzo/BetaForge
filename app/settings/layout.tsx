@@ -89,7 +89,11 @@ const settingsNav = [
   },
 ];
 
-export default function SettingsLayout({ children }: { children: React.ReactNode }) {
+export default function SettingsLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const pathname = usePathname();
 
   return (
@@ -116,14 +120,21 @@ export default function SettingsLayout({ children }: { children: React.ReactNode
             {/* Header */}
             <div className="mb-6">
               <h2 className="text-xl font-bold text-white mb-1">Settings</h2>
-              <p className="text-sm text-phantom-gray">Manage your account and preferences</p>
+              <p className="text-sm text-phantom-gray">
+                Manage your account and preferences
+              </p>
             </div>
 
             {/* Navigation */}
             <nav className="space-y-1">
               {settingsNav.map((item) => {
                 if (item.id.startsWith("divider")) {
-                  return <div key={item.id} className="my-4 border-t border-white/10" />;
+                  return (
+                    <div
+                      key={item.id}
+                      className="my-4 border-t border-white/10"
+                    />
+                  );
                 }
 
                 const isActive =
@@ -145,7 +156,9 @@ export default function SettingsLayout({ children }: { children: React.ReactNode
                     <div className="flex items-center gap-3">
                       <Icon
                         className={`w-5 h-5 transition-colors ${
-                          isActive ? "text-neural-bright" : "text-phantom-gray group-hover:text-white"
+                          isActive
+                            ? "text-neural-bright"
+                            : "text-phantom-gray group-hover:text-white"
                         }`}
                       />
                       <span className="font-medium">{item.label}</span>

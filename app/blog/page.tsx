@@ -17,7 +17,8 @@ import {
 import { Footer } from "@/components/layout";
 
 const featuredPost = {
-  title: "The Future of Software Testing: How AI Agents Are Changing Everything",
+  title:
+    "The Future of Software Testing: How AI Agents Are Changing Everything",
   excerpt:
     "Explore how autonomous AI agents are revolutionizing the way we approach software testing, finding bugs that humans miss, and accelerating release cycles.",
   author: "Sarah Mitchell",
@@ -144,7 +145,8 @@ export default function BlogPage() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredPosts = posts.filter((post) => {
-    const matchesCategory = activeCategory === "All" || post.category === activeCategory;
+    const matchesCategory =
+      activeCategory === "All" || post.category === activeCategory;
     const matchesSearch =
       post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
@@ -171,7 +173,10 @@ export default function BlogPage() {
               <span className="text-xl font-bold gradient-text">BetaForge</span>
             </Link>
             <div className="flex items-center gap-4">
-              <Link href="/about" className="text-phantom-gray hover:text-ghost-white text-sm transition-colors">
+              <Link
+                href="/about"
+                className="text-phantom-gray hover:text-ghost-white text-sm transition-colors"
+              >
                 About
               </Link>
               <Link
@@ -198,8 +203,9 @@ export default function BlogPage() {
               <span className="gradient-text">AI & Testing</span>
             </h1>
             <p className="text-lg text-phantom-gray max-w-2xl mx-auto">
-              Stories, tutorials, and insights from the BetaForge team on AI-powered
-              testing, software quality, and engineering best practices.
+              Stories, tutorials, and insights from the BetaForge team on
+              AI-powered testing, software quality, and engineering best
+              practices.
             </p>
           </div>
 
@@ -222,10 +228,7 @@ export default function BlogPage() {
       {/* Featured Post */}
       <section className="relative pb-16 px-6">
         <div className="max-w-7xl mx-auto">
-          <Link
-            href={`/blog/${featuredPost.slug}`}
-            className="block group"
-          >
+          <Link href={`/blog/${featuredPost.slug}`} className="block group">
             <div className="relative p-8 md:p-12 bg-void-elevated border border-white/5 rounded-3xl overflow-hidden hover:border-neural/30 transition-all">
               <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-neural/20 to-transparent opacity-50" />
               <div className="relative grid md:grid-cols-2 gap-8 items-center">
@@ -236,7 +239,9 @@ export default function BlogPage() {
                   <h2 className="text-2xl md:text-3xl font-bold text-ghost-white mb-4 group-hover:text-neural-bright transition-colors">
                     {featuredPost.title}
                   </h2>
-                  <p className="text-phantom-gray mb-6">{featuredPost.excerpt}</p>
+                  <p className="text-phantom-gray mb-6">
+                    {featuredPost.excerpt}
+                  </p>
                   <div className="flex items-center gap-4 text-sm text-mist-gray">
                     <span className="flex items-center gap-1">
                       <User className="w-4 h-4" />
@@ -324,7 +329,9 @@ export default function BlogPage() {
 
               {filteredPosts.length === 0 && (
                 <div className="text-center py-12">
-                  <p className="text-phantom-gray">No articles found matching your criteria.</p>
+                  <p className="text-phantom-gray">
+                    No articles found matching your criteria.
+                  </p>
                 </div>
               )}
 
@@ -351,7 +358,9 @@ export default function BlogPage() {
                       href="#"
                       className="block text-sm text-phantom-gray hover:text-ghost-white transition-colors"
                     >
-                      <span className="text-neural-bright mr-2">{index + 1}.</span>
+                      <span className="text-neural-bright mr-2">
+                        {index + 1}.
+                      </span>
                       {title}
                     </Link>
                   ))}

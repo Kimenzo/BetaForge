@@ -108,22 +108,26 @@ const metrics = [
 const painPoints = [
   {
     title: "Flaky Tests",
-    description: "Selenium tests break constantly due to timing issues, dynamic content, and brittle selectors. BetaForge's AI handles these automatically.",
+    description:
+      "Selenium tests break constantly due to timing issues, dynamic content, and brittle selectors. BetaForge's AI handles these automatically.",
     icon: AlertCircle,
   },
   {
     title: "High Maintenance",
-    description: "Every UI change requires updating test scripts. BetaForge adapts to changes without any maintenance required.",
+    description:
+      "Every UI change requires updating test scripts. BetaForge adapts to changes without any maintenance required.",
     icon: Wrench,
   },
   {
     title: "Limited Coverage",
-    description: "You can only test what you explicitly script. BetaForge explores your app and finds issues you didn't anticipate.",
+    description:
+      "You can only test what you explicitly script. BetaForge explores your app and finds issues you didn't anticipate.",
     icon: Target,
   },
   {
     title: "Slow Development",
-    description: "Writing Selenium tests takes weeks. BetaForge is ready to test in minutes with just a URL.",
+    description:
+      "Writing Selenium tests takes weeks. BetaForge is ready to test in minutes with just a URL.",
     icon: Clock,
   },
 ];
@@ -178,13 +182,15 @@ public void testLogin() {
 
 const testimonials = [
   {
-    quote: "We spent 6 months building a Selenium suite that broke constantly. BetaForge replaced it in a week and hasn't needed maintenance since.",
+    quote:
+      "We spent 6 months building a Selenium suite that broke constantly. BetaForge replaced it in a week and hasn't needed maintenance since.",
     author: "David Kim",
     role: "QA Lead, CloudStack",
     result: "95% less test maintenance",
   },
   {
-    quote: "Our team didn't have Selenium expertise. BetaForge let us achieve professional-grade testing without hiring specialists.",
+    quote:
+      "Our team didn't have Selenium expertise. BetaForge let us achieve professional-grade testing without hiring specialists.",
     author: "Rachel Green",
     role: "Engineering Manager, StartupXYZ",
     result: "Zero code testing",
@@ -192,8 +198,12 @@ const testimonials = [
 ];
 
 export default function CompareSeleniumPage() {
-  const betaforgeWins = comparisonTable.filter((row) => row.winner === "betaforge").length;
-  const seleniumWins = comparisonTable.filter((row) => row.winner === "selenium").length;
+  const betaforgeWins = comparisonTable.filter(
+    (row) => row.winner === "betaforge"
+  ).length;
+  const seleniumWins = comparisonTable.filter(
+    (row) => row.winner === "selenium"
+  ).length;
   const ties = comparisonTable.filter((row) => row.winner === "tie").length;
 
   return (
@@ -237,9 +247,9 @@ export default function CompareSeleniumPage() {
             <span className="gradient-text">Selenium</span>
           </h1>
           <p className="text-lg text-phantom-gray max-w-3xl mx-auto mb-8">
-            Tired of maintaining brittle Selenium scripts? See how AI-powered testing
-            eliminates flaky tests, reduces maintenance to zero, and finds bugs your
-            scripts would never catch.
+            Tired of maintaining brittle Selenium scripts? See how AI-powered
+            testing eliminates flaky tests, reduces maintenance to zero, and
+            finds bugs your scripts would never catch.
           </p>
           <div className="flex flex-wrap justify-center gap-8">
             <div className="flex items-center gap-3">
@@ -247,7 +257,9 @@ export default function CompareSeleniumPage() {
                 <Bot className="w-8 h-8 text-neural-bright" />
               </div>
               <div className="text-left">
-                <div className="text-2xl font-bold text-ghost-white">{betaforgeWins}</div>
+                <div className="text-2xl font-bold text-ghost-white">
+                  {betaforgeWins}
+                </div>
                 <div className="text-sm text-phantom-gray">BetaForge Wins</div>
               </div>
             </div>
@@ -256,7 +268,9 @@ export default function CompareSeleniumPage() {
                 <FileCode className="w-8 h-8 text-[#43B02A]" />
               </div>
               <div className="text-left">
-                <div className="text-2xl font-bold text-ghost-white">{seleniumWins}</div>
+                <div className="text-2xl font-bold text-ghost-white">
+                  {seleniumWins}
+                </div>
                 <div className="text-sm text-phantom-gray">Selenium Wins</div>
               </div>
             </div>
@@ -265,7 +279,9 @@ export default function CompareSeleniumPage() {
                 <TrendingUp className="w-8 h-8 text-quantum-green" />
               </div>
               <div className="text-left">
-                <div className="text-2xl font-bold text-ghost-white">{ties}</div>
+                <div className="text-2xl font-bold text-ghost-white">
+                  {ties}
+                </div>
                 <div className="text-sm text-phantom-gray">Ties</div>
               </div>
             </div>
@@ -283,7 +299,9 @@ export default function CompareSeleniumPage() {
                 className="p-6 bg-void-elevated border border-white/5 rounded-2xl text-center"
               >
                 <metric.icon className="w-8 h-8 text-neural-bright mx-auto mb-3" />
-                <div className="text-3xl font-bold gradient-text mb-1">{metric.value}</div>
+                <div className="text-3xl font-bold gradient-text mb-1">
+                  {metric.value}
+                </div>
                 <div className="text-sm text-phantom-gray">{metric.label}</div>
               </div>
             ))}
@@ -298,14 +316,17 @@ export default function CompareSeleniumPage() {
             See the Difference
           </h2>
           <p className="text-phantom-gray text-center mb-12 max-w-2xl mx-auto">
-            50+ lines of fragile Selenium code vs 10 lines of simple BetaForge configuration.
+            50+ lines of fragile Selenium code vs 10 lines of simple BetaForge
+            configuration.
           </p>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <FileCode className="w-5 h-5 text-[#43B02A]" />
                 <span className="font-semibold text-ghost-white">Selenium</span>
-                <span className="text-xs px-2 py-1 rounded bg-red-500/20 text-red-400">Complex</span>
+                <span className="text-xs px-2 py-1 rounded bg-red-500/20 text-red-400">
+                  Complex
+                </span>
               </div>
               <div className="p-4 bg-void-elevated border border-white/10 rounded-2xl overflow-auto">
                 <pre className="text-xs text-phantom-gray font-mono leading-relaxed">
@@ -316,8 +337,12 @@ export default function CompareSeleniumPage() {
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <Bot className="w-5 h-5 text-neural-bright" />
-                <span className="font-semibold text-ghost-white">BetaForge</span>
-                <span className="text-xs px-2 py-1 rounded bg-quantum-green/20 text-quantum-green">Simple</span>
+                <span className="font-semibold text-ghost-white">
+                  BetaForge
+                </span>
+                <span className="text-xs px-2 py-1 rounded bg-quantum-green/20 text-quantum-green">
+                  Simple
+                </span>
               </div>
               <div className="p-4 bg-void-elevated border border-neural/30 rounded-2xl overflow-auto">
                 <pre className="text-xs text-neural-bright font-mono leading-relaxed">
@@ -336,7 +361,8 @@ export default function CompareSeleniumPage() {
             Selenium Pain Points We Solve
           </h2>
           <p className="text-phantom-gray text-center mb-12 max-w-2xl mx-auto">
-            Every Selenium user knows these frustrations. BetaForge eliminates them.
+            Every Selenium user knows these frustrations. BetaForge eliminates
+            them.
           </p>
           <div className="grid md:grid-cols-2 gap-6">
             {painPoints.map((point, index) => (
@@ -372,13 +398,17 @@ export default function CompareSeleniumPage() {
               <div className="text-center">
                 <div className="inline-flex items-center gap-2">
                   <Bot className="w-5 h-5 text-neural-bright" />
-                  <span className="font-semibold text-ghost-white">BetaForge</span>
+                  <span className="font-semibold text-ghost-white">
+                    BetaForge
+                  </span>
                 </div>
               </div>
               <div className="text-center">
                 <div className="inline-flex items-center gap-2">
                   <FileCode className="w-5 h-5 text-[#43B02A]" />
-                  <span className="font-semibold text-ghost-white">Selenium</span>
+                  <span className="font-semibold text-ghost-white">
+                    Selenium
+                  </span>
                 </div>
               </div>
             </div>
@@ -387,22 +417,36 @@ export default function CompareSeleniumPage() {
               <div
                 key={index}
                 className={`grid grid-cols-3 gap-4 p-6 ${
-                  index !== comparisonTable.length - 1 ? "border-b border-white/5" : ""
+                  index !== comparisonTable.length - 1
+                    ? "border-b border-white/5"
+                    : ""
                 }`}
               >
-                <div className="text-ghost-white font-medium">{row.feature}</div>
+                <div className="text-ghost-white font-medium">
+                  {row.feature}
+                </div>
                 <div className="text-center">
-                  <div className={`inline-flex items-center gap-2 ${
-                    row.winner === "betaforge" ? "text-quantum-green" : "text-phantom-gray"
-                  }`}>
-                    {row.winner === "betaforge" && <Check className="w-5 h-5" />}
+                  <div
+                    className={`inline-flex items-center gap-2 ${
+                      row.winner === "betaforge"
+                        ? "text-quantum-green"
+                        : "text-phantom-gray"
+                    }`}
+                  >
+                    {row.winner === "betaforge" && (
+                      <Check className="w-5 h-5" />
+                    )}
                     <span className="text-sm">{row.betaforge}</span>
                   </div>
                 </div>
                 <div className="text-center">
-                  <div className={`inline-flex items-center gap-2 ${
-                    row.winner === "selenium" ? "text-quantum-green" : "text-phantom-gray"
-                  }`}>
+                  <div
+                    className={`inline-flex items-center gap-2 ${
+                      row.winner === "selenium"
+                        ? "text-quantum-green"
+                        : "text-phantom-gray"
+                    }`}
+                  >
                     {row.winner === "selenium" && <Check className="w-5 h-5" />}
                     <span className="text-sm">{row.selenium}</span>
                   </div>
@@ -421,15 +465,18 @@ export default function CompareSeleniumPage() {
               <div className="flex-1">
                 <div className="inline-flex items-center gap-2 mb-4">
                   <RefreshCw className="w-6 h-6 text-neural-bright" />
-                  <span className="text-neural-bright font-medium">Easy Migration</span>
+                  <span className="text-neural-bright font-medium">
+                    Easy Migration
+                  </span>
                 </div>
                 <h2 className="text-3xl font-bold text-ghost-white mb-4">
                   Keep Selenium, Add BetaForge
                 </h2>
                 <p className="text-phantom-gray mb-6">
-                  You don't have to choose. Run BetaForge alongside your existing Selenium
-                  tests. Use Selenium for critical path validation while BetaForge handles
-                  exploratory testing and regression coverage.
+                  You don't have to choose. Run BetaForge alongside your
+                  existing Selenium tests. Use Selenium for critical path
+                  validation while BetaForge handles exploratory testing and
+                  regression coverage.
                 </p>
                 <ul className="space-y-2">
                   <li className="flex items-center gap-2 text-ghost-white">
@@ -481,10 +528,16 @@ export default function CompareSeleniumPage() {
                 <div className="inline-block px-3 py-1 rounded-full bg-quantum-green/20 text-quantum-green text-sm mb-4">
                   {testimonial.result}
                 </div>
-                <p className="text-ghost-white text-lg mb-4">"{testimonial.quote}"</p>
+                <p className="text-ghost-white text-lg mb-4">
+                  "{testimonial.quote}"
+                </p>
                 <div>
-                  <div className="font-semibold text-ghost-white">{testimonial.author}</div>
-                  <div className="text-sm text-phantom-gray">{testimonial.role}</div>
+                  <div className="font-semibold text-ghost-white">
+                    {testimonial.author}
+                  </div>
+                  <div className="text-sm text-phantom-gray">
+                    {testimonial.role}
+                  </div>
                 </div>
               </div>
             ))}
@@ -499,7 +552,8 @@ export default function CompareSeleniumPage() {
             Ready to Escape Selenium Maintenance?
           </h2>
           <p className="text-lg text-phantom-gray mb-8 max-w-2xl mx-auto">
-            Start with a free trial and see how AI testing can transform your workflow.
+            Start with a free trial and see how AI testing can transform your
+            workflow.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link

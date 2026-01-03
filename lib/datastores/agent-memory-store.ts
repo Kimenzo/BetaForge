@@ -3,7 +3,7 @@
 // ========================
 // Purpose: Persistent memory for AI agents across sessions
 // Use for: Context retention, learning from past interactions, personalization
-// 
+//
 // "Agent memory stores and knowledge bases work together to create
 // that 'it just gets me' feeling in AI products." - Prasanth Kumar
 //
@@ -26,7 +26,7 @@ import { getKnowledgeBase } from "./knowledge-base";
 
 /**
  * Agent Memory Store
- * 
+ *
  * Implements a tiered memory system:
  * 1. Short-term: Session-specific memories (recent actions, observations)
  * 2. Long-term: Cross-session patterns (learned behaviors, bug patterns)
@@ -56,7 +56,9 @@ export class AgentMemoryStore implements DataStore {
   // Memory CRUD Operations
   // ========================
 
-  async storeMemory(memory: Omit<AgentMemory, "id" | "accessedAt" | "accessCount">): Promise<AgentMemory> {
+  async storeMemory(
+    memory: Omit<AgentMemory, "id" | "accessedAt" | "accessCount">
+  ): Promise<AgentMemory> {
     const vectorStore = getVectorStore();
     const embedding = await vectorStore.generateEmbedding(memory.content);
 
@@ -69,8 +71,10 @@ export class AgentMemoryStore implements DataStore {
     };
 
     this.memories.set(fullMemory.id, fullMemory);
-    console.log(`[AgentMemory] Stored ${memory.memoryType} memory for agent ${memory.agentId}`);
-    
+    console.log(
+      `[AgentMemory] Stored ${memory.memoryType} memory for agent ${memory.agentId}`
+    );
+
     return fullMemory;
   }
 
@@ -99,54 +103,58 @@ export class AgentMemoryStore implements DataStore {
     let results = Array.from(this.memories.values());
 
     // Filter by agent
-    results = results.filter(m => m.agentId === query.agentId);
+    results = results.filter((m) => m.agentId === query.agentId);
 
     // Filter by project
     if (query.projectId) {
-      results = results.filter(m => m.projectId === query.projectId);
+      results = results.filter((m) => m.projectId === query.projectId);
     }
 
     // Filter by session
     if (query.sessionId) {
-      results = results.filter(m => m.sessionId === query.sessionId);
+      results = results.filter((m) => m.sessionId === query.sessionId);
     }
 
     // Filter by memory types
     if (query.memoryTypes?.length) {
-      results = results.filter(m => query.memoryTypes!.includes(m.memoryType));
+      results = results.filter((m) =>
+        query.memoryTypes!.includes(m.memoryType)
+      );
     }
 
     // Filter by importance
     if (query.minImportance !== undefined) {
-      results = results.filter(m => m.importance >= query.minImportance!);
+      results = results.filter((m) => m.importance >= query.minImportance!);
     }
 
     // Semantic search if query provided
     if (query.query) {
       const vectorStore = getVectorStore();
       const queryEmbedding = await vectorStore.generateEmbedding(query.query);
-      
+
       // Score by semantic similarity
       results = results
-        .map(memory => ({
+        .map((memory) => ({
           memory,
-          similarity: memory.embedding 
+          similarity: memory.embedding
             ? vectorStore.cosineSimilarity(queryEmbedding, memory.embedding)
             : 0,
         }))
-        .filter(r => r.similarity > 0.5)
+        .filter((r) => r.similarity > 0.5)
         .sort((a, b) => b.similarity - a.similarity)
-        .map(r => r.memory);
+        .map((r) => r.memory);
     }
 
     // Apply recency weighting if specified
     if (query.recencyWeight && query.recencyWeight > 0) {
       const now = Date.now();
       results.sort((a, b) => {
-        const recencyA = 1 / (1 + (now - a.createdAt.getTime()) / (1000 * 60 * 60)); // Decay over hours
-        const recencyB = 1 / (1 + (now - b.createdAt.getTime()) / (1000 * 60 * 60));
-        const scoreA = a.importance + (recencyA * query.recencyWeight!);
-        const scoreB = b.importance + (recencyB * query.recencyWeight!);
+        const recencyA =
+          1 / (1 + (now - a.createdAt.getTime()) / (1000 * 60 * 60)); // Decay over hours
+        const recencyB =
+          1 / (1 + (now - b.createdAt.getTime()) / (1000 * 60 * 60));
+        const scoreA = a.importance + recencyA * query.recencyWeight!;
+        const scoreB = b.importance + recencyB * query.recencyWeight!;
         return scoreB - scoreA;
       });
     }
@@ -178,7 +186,7 @@ export class AgentMemoryStore implements DataStore {
       agentId,
       projectId,
       sessionId,
-      memoryTypes: ['observation', 'action'],
+      memoryTypes: ["observation", "action"],
       limit: 20,
       recencyWeight: 1.0,
     });
@@ -187,14 +195,14 @@ export class AgentMemoryStore implements DataStore {
     const longTermMemories = await this.queryMemories({
       agentId,
       projectId,
-      memoryTypes: ['reflection', 'bug-pattern', 'user-preference'],
+      memoryTypes: ["reflection", "bug-pattern", "user-preference"],
       minImportance: 0.7,
       limit: 10,
     });
 
     // Get relevant knowledge from knowledge base
     const knowledgeBase = getKnowledgeBase();
-    const relevantKnowledge = contextQuery 
+    const relevantKnowledge = contextQuery
       ? await knowledgeBase.search({ query: contextQuery, limit: 5 })
       : [];
 
@@ -223,10 +231,10 @@ export class AgentMemoryStore implements DataStore {
       agentId,
       projectId,
       sessionId,
-      memoryType: 'observation',
+      memoryType: "observation",
       content: observation,
       importance,
-      metadata: { source: 'testing' },
+      metadata: { source: "testing" },
       createdAt: new Date(),
     });
   }
@@ -246,7 +254,7 @@ export class AgentMemoryStore implements DataStore {
       agentId,
       projectId,
       sessionId,
-      memoryType: 'action',
+      memoryType: "action",
       content: `Action: ${action}\nResult: ${result}`,
       importance,
       metadata: { action, result },
@@ -266,10 +274,10 @@ export class AgentMemoryStore implements DataStore {
     return this.storeMemory({
       agentId,
       projectId,
-      memoryType: 'reflection',
+      memoryType: "reflection",
       content: reflection,
       importance,
-      metadata: { source: 'self-reflection' },
+      metadata: { source: "self-reflection" },
       createdAt: new Date(),
     });
   }
@@ -290,8 +298,10 @@ export class AgentMemoryStore implements DataStore {
     return this.storeMemory({
       agentId,
       projectId,
-      memoryType: 'bug-pattern',
-      content: `Bug Pattern: ${pattern.title}\n${pattern.description}\nSymptoms: ${pattern.symptoms.join(', ')}`,
+      memoryType: "bug-pattern",
+      content: `Bug Pattern: ${pattern.title}\n${
+        pattern.description
+      }\nSymptoms: ${pattern.symptoms.join(", ")}`,
       importance: 0.9,
       metadata: pattern,
       createdAt: new Date(),
@@ -304,18 +314,16 @@ export class AgentMemoryStore implements DataStore {
    */
   async consolidateMemories(agentId: string, projectId: string): Promise<void> {
     const memories = await this.queryMemories({ agentId, projectId });
-    
+
     // Remove old, low-importance memories
     const now = Date.now();
     const maxAge = 7 * 24 * 60 * 60 * 1000; // 7 days
-    
+
     for (const memory of memories) {
       const age = now - memory.createdAt.getTime();
-      const shouldDelete = 
-        age > maxAge && 
-        memory.importance < 0.5 && 
-        memory.accessCount < 3;
-      
+      const shouldDelete =
+        age > maxAge && memory.importance < 0.5 && memory.accessCount < 3;
+
       if (shouldDelete) {
         await this.deleteMemory(memory.id);
       }

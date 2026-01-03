@@ -23,29 +23,34 @@ import { Footer } from "@/components/layout";
 const principles = [
   {
     title: "Transparency",
-    description: "We are open about when and how AI is used in our services. Users always know when they're interacting with AI-generated content.",
+    description:
+      "We are open about when and how AI is used in our services. Users always know when they're interacting with AI-generated content.",
     icon: Eye,
   },
   {
     title: "Privacy First",
-    description: "Your data is never used to train AI models without explicit consent. We implement strict data isolation and protection measures.",
+    description:
+      "Your data is never used to train AI models without explicit consent. We implement strict data isolation and protection measures.",
     icon: Lock,
   },
   {
     title: "Human Oversight",
-    description: "AI augments human capabilities but doesn't replace human judgment. Critical decisions always involve human review.",
+    description:
+      "AI augments human capabilities but doesn't replace human judgment. Critical decisions always involve human review.",
     icon: Users,
   },
   {
     title: "Fairness & Safety",
-    description: "We actively work to prevent bias and ensure our AI systems are safe, reliable, and beneficial for all users.",
+    description:
+      "We actively work to prevent bias and ensure our AI systems are safe, reliable, and beneficial for all users.",
     icon: Shield,
   },
 ];
 
 const dataCommitments = [
   {
-    commitment: "Your application data is processed only to provide testing services",
+    commitment:
+      "Your application data is processed only to provide testing services",
     fulfilled: true,
   },
   {
@@ -73,7 +78,8 @@ const dataCommitments = [
 const useCases = [
   {
     title: "Autonomous Testing Agents",
-    description: "Our AI agents navigate and test your applications autonomously, simulating real user behavior.",
+    description:
+      "Our AI agents navigate and test your applications autonomously, simulating real user behavior.",
     details: [
       "Agents use Claude AI to understand UI elements and user flows",
       "Each agent has a unique testing persona with different behaviors",
@@ -83,7 +89,8 @@ const useCases = [
   },
   {
     title: "Bug Report Generation",
-    description: "AI generates detailed, actionable bug reports based on testing observations.",
+    description:
+      "AI generates detailed, actionable bug reports based on testing observations.",
     details: [
       "Reports include reproduction steps and severity ratings",
       "Screenshots and session recordings are attached",
@@ -93,7 +100,8 @@ const useCases = [
   },
   {
     title: "Test Recommendations",
-    description: "AI analyzes your application to suggest testing strategies and coverage areas.",
+    description:
+      "AI analyzes your application to suggest testing strategies and coverage areas.",
     details: [
       "Identifies high-risk areas based on complexity",
       "Recommends agent personas for your use case",
@@ -306,10 +314,16 @@ export default function AIPolicyPage() {
               <span className="text-xl font-bold gradient-text">BetaForge</span>
             </Link>
             <div className="flex items-center gap-4">
-              <Link href="/privacy" className="text-phantom-gray hover:text-ghost-white text-sm transition-colors">
+              <Link
+                href="/privacy"
+                className="text-phantom-gray hover:text-ghost-white text-sm transition-colors"
+              >
                 Privacy
               </Link>
-              <Link href="/security" className="text-phantom-gray hover:text-ghost-white text-sm transition-colors">
+              <Link
+                href="/security"
+                className="text-phantom-gray hover:text-ghost-white text-sm transition-colors"
+              >
                 Security
               </Link>
             </div>
@@ -332,8 +346,8 @@ export default function AIPolicyPage() {
             Last updated: January 15, 2026
           </p>
           <p className="text-phantom-gray max-w-2xl mx-auto">
-            Our commitment to responsible, transparent, and ethical use of artificial
-            intelligence in software testing.
+            Our commitment to responsible, transparent, and ethical use of
+            artificial intelligence in software testing.
           </p>
         </div>
       </section>
@@ -356,7 +370,9 @@ export default function AIPolicyPage() {
                 <h3 className="text-lg font-semibold text-ghost-white mb-2">
                   {principle.title}
                 </h3>
-                <p className="text-sm text-phantom-gray">{principle.description}</p>
+                <p className="text-sm text-phantom-gray">
+                  {principle.description}
+                </p>
               </div>
             ))}
           </div>
@@ -401,7 +417,10 @@ export default function AIPolicyPage() {
                 <p className="text-phantom-gray mb-4">{useCase.description}</p>
                 <ul className="grid md:grid-cols-2 gap-2">
                   {useCase.details.map((detail, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-ghost-white">
+                    <li
+                      key={i}
+                      className="flex items-start gap-2 text-sm text-ghost-white"
+                    >
                       <Zap className="w-4 h-4 text-neural-bright flex-shrink-0 mt-0.5" />
                       {detail}
                     </li>
@@ -427,7 +446,10 @@ export default function AIPolicyPage() {
               </div>
               <ul className="space-y-3">
                 {doAndDont.do.map((item, index) => (
-                  <li key={index} className="flex items-start gap-2 text-phantom-gray">
+                  <li
+                    key={index}
+                    className="flex items-start gap-2 text-phantom-gray"
+                  >
                     <CheckCircle className="w-4 h-4 text-quantum-green flex-shrink-0 mt-0.5" />
                     {item}
                   </li>
@@ -437,11 +459,16 @@ export default function AIPolicyPage() {
             <div className="p-6 bg-void-black border border-red-500/30 rounded-2xl">
               <div className="flex items-center gap-2 mb-4">
                 <XCircle className="w-6 h-6 text-red-400" />
-                <h3 className="text-xl font-semibold text-ghost-white">Don't</h3>
+                <h3 className="text-xl font-semibold text-ghost-white">
+                  Don't
+                </h3>
               </div>
               <ul className="space-y-3">
                 {doAndDont.dont.map((item, index) => (
-                  <li key={index} className="flex items-start gap-2 text-phantom-gray">
+                  <li
+                    key={index}
+                    className="flex items-start gap-2 text-phantom-gray"
+                  >
                     <XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
                     {item}
                   </li>
@@ -468,8 +495,14 @@ export default function AIPolicyPage() {
                       className="text-phantom-gray leading-relaxed mb-4"
                       dangerouslySetInnerHTML={{
                         __html: paragraph
-                          .replace(/\*\*(.*?)\*\*/g, '<strong class="text-ghost-white">$1</strong>')
-                          .replace(/• /g, '<span class="text-neural-bright">•</span> '),
+                          .replace(
+                            /\*\*(.*?)\*\*/g,
+                            '<strong class="text-ghost-white">$1</strong>'
+                          )
+                          .replace(
+                            /• /g,
+                            '<span class="text-neural-bright">•</span> '
+                          ),
                       }}
                     />
                   ))}
@@ -489,8 +522,8 @@ export default function AIPolicyPage() {
               Questions About Our AI Practices?
             </h2>
             <p className="text-phantom-gray mb-6 max-w-xl mx-auto">
-              We're committed to transparency. If you have questions about how AI is
-              used in BetaForge, please reach out.
+              We're committed to transparency. If you have questions about how
+              AI is used in BetaForge, please reach out.
             </p>
             <a
               href="mailto:ai-feedback@betaforge.ai"
@@ -505,7 +538,9 @@ export default function AIPolicyPage() {
       {/* Related Documents */}
       <section className="relative py-12 px-6 bg-void-elevated/50">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-xl font-semibold text-ghost-white mb-6">Related Documents</h2>
+          <h2 className="text-xl font-semibold text-ghost-white mb-6">
+            Related Documents
+          </h2>
           <div className="grid md:grid-cols-3 gap-4">
             <Link
               href="/terms"
@@ -525,7 +560,9 @@ export default function AIPolicyPage() {
               <h3 className="font-semibold text-ghost-white group-hover:text-neural-bright transition-colors">
                 Privacy Policy
               </h3>
-              <p className="text-sm text-phantom-gray">How we handle your data</p>
+              <p className="text-sm text-phantom-gray">
+                How we handle your data
+              </p>
             </Link>
             <Link
               href="/security"
@@ -535,7 +572,9 @@ export default function AIPolicyPage() {
               <h3 className="font-semibold text-ghost-white group-hover:text-neural-bright transition-colors">
                 Security
               </h3>
-              <p className="text-sm text-phantom-gray">Our security practices</p>
+              <p className="text-sm text-phantom-gray">
+                Our security practices
+              </p>
             </Link>
           </div>
         </div>

@@ -63,9 +63,7 @@ export function Navbar() {
       {/* Navbar */}
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? "glass py-3"
-            : "bg-transparent py-5"
+          scrolled ? "glass py-3" : "bg-transparent py-5"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
@@ -96,7 +94,9 @@ export function Navbar() {
                       : "text-phantom-gray hover:text-ghost-white hover:bg-white/5"
                   }`}
                 >
-                  <Icon className={`w-4 h-4 ${active ? "text-neural-bright" : ""}`} />
+                  <Icon
+                    className={`w-4 h-4 ${active ? "text-neural-bright" : ""}`}
+                  />
                   <span>{item.label}</span>
                   {active && (
                     <div className="w-1.5 h-1.5 rounded-full bg-neural-bright animate-pulse" />
@@ -202,7 +202,9 @@ export function Navbar() {
 
             {/* Quick Actions */}
             <div className="p-4">
-              <p className="text-xs text-mist-gray uppercase tracking-wider mb-3">Quick Actions</p>
+              <p className="text-xs text-mist-gray uppercase tracking-wider mb-3">
+                Quick Actions
+              </p>
               <div className="space-y-1">
                 {[
                   { label: "Create New Project", icon: FolderOpen, kbd: "N" },
@@ -231,7 +233,9 @@ export function Navbar() {
 
             {/* Recent */}
             <div className="p-4 border-t border-white/5">
-              <p className="text-xs text-mist-gray uppercase tracking-wider mb-3">Recent</p>
+              <p className="text-xs text-mist-gray uppercase tracking-wider mb-3">
+                Recent
+              </p>
               <div className="space-y-1">
                 {[
                   { label: "E-commerce Platform", type: "Project" },

@@ -10,8 +10,10 @@ const badgeVariants = cva(
         default: "border-neural/30 bg-neural/10 text-neural-bright",
         secondary: "border-white/10 bg-void-elevated text-phantom-gray",
         destructive: "border-crimson-red/30 bg-crimson-red/10 text-crimson-red",
-        success: "border-quantum-green/30 bg-quantum-green/10 text-quantum-green",
-        warning: "border-photon-yellow/30 bg-photon-yellow/10 text-photon-yellow",
+        success:
+          "border-quantum-green/30 bg-quantum-green/10 text-quantum-green",
+        warning:
+          "border-photon-yellow/30 bg-photon-yellow/10 text-photon-yellow",
         info: "border-electric-cyan/30 bg-electric-cyan/10 text-electric-cyan",
         outline: "border-white/20 bg-transparent text-ghost-white",
         ghost: "border-transparent bg-transparent text-phantom-gray",

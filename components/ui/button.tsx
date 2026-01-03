@@ -14,16 +14,13 @@ const buttonVariants = cva(
           "bg-void-elevated text-ghost-white border border-white/10 hover:border-neural/30 hover:bg-void-surface hover:-translate-y-0.5",
         outline:
           "border border-neural/50 bg-transparent text-neural-bright hover:bg-neural/10 hover:border-neural hover:-translate-y-0.5",
-        ghost:
-          "text-phantom-gray hover:text-ghost-white hover:bg-white/5",
+        ghost: "text-phantom-gray hover:text-ghost-white hover:bg-white/5",
         destructive:
           "bg-gradient-to-r from-crimson-red to-red-600 text-white hover:shadow-[0_0_20px_rgba(239,68,68,0.3)] hover:-translate-y-0.5",
         success:
           "bg-gradient-to-r from-quantum-green to-emerald-600 text-white hover:shadow-glow-green hover:-translate-y-0.5",
-        link:
-          "text-neural-bright underline-offset-4 hover:underline p-0 h-auto",
-        glow:
-          "bg-void-surface text-ghost-white border border-neural/30 hover:border-neural hover:shadow-glow-intense hover:-translate-y-1 animate-glow-breathe",
+        link: "text-neural-bright underline-offset-4 hover:underline p-0 h-auto",
+        glow: "bg-void-surface text-ghost-white border border-neural/30 hover:border-neural hover:shadow-glow-intense hover:-translate-y-1 animate-glow-breathe",
       },
       size: {
         default: "h-11 px-5 py-2.5",
@@ -51,7 +48,20 @@ export interface ButtonProps
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, loading, leftIcon, rightIcon, children, disabled, ...props }, ref) => {
+  (
+    {
+      className,
+      variant,
+      size,
+      loading,
+      leftIcon,
+      rightIcon,
+      children,
+      disabled,
+      ...props
+    },
+    ref
+  ) => {
     return (
       <button
         className={cn(buttonVariants({ variant, size, className }))}
@@ -63,7 +73,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         <span className="absolute inset-0 overflow-hidden rounded-inherit">
           <span className="absolute inset-0 rounded-inherit bg-white/0 hover:bg-white/5 transition-colors duration-300" />
         </span>
-        
+
         {/* Content */}
         <span className="relative flex items-center justify-center gap-2">
           {loading ? (
@@ -73,9 +83,9 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
               {leftIcon}
             </span>
           ) : null}
-          
+
           {children}
-          
+
           {rightIcon && !loading && (
             <span className="transition-transform duration-300 group-hover:translate-x-0.5">
               {rightIcon}

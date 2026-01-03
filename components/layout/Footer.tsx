@@ -71,7 +71,7 @@ export function Footer() {
               </div>
               <span className="text-xl font-bold gradient-text">BetaForge</span>
             </Link>
-            
+
             <div className="space-y-3 text-phantom-gray text-sm mb-6">
               <p>BetaForge Inc.</p>
               <p>548 Market Street #83833</p>
@@ -79,8 +79,8 @@ export function Footer() {
             </div>
 
             <div className="flex items-center gap-3">
-              <a 
-                href="https://github.com/betaforge" 
+              <a
+                href="https://github.com/betaforge"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2.5 rounded-xl text-phantom-gray hover:text-ghost-white hover:bg-void-elevated border border-transparent hover:border-neural/20 transition-all duration-300"
@@ -88,8 +88,8 @@ export function Footer() {
               >
                 <Github className="w-5 h-5" />
               </a>
-              <a 
-                href="https://twitter.com/betaforge" 
+              <a
+                href="https://twitter.com/betaforge"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2.5 rounded-xl text-phantom-gray hover:text-ghost-white hover:bg-void-elevated border border-transparent hover:border-neural/20 transition-all duration-300"
@@ -97,8 +97,8 @@ export function Footer() {
               >
                 <Twitter className="w-5 h-5" />
               </a>
-              <a 
-                href="https://linkedin.com/company/betaforge" 
+              <a
+                href="https://linkedin.com/company/betaforge"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2.5 rounded-xl text-phantom-gray hover:text-ghost-white hover:bg-void-elevated border border-transparent hover:border-neural/20 transition-all duration-300"
@@ -112,7 +112,9 @@ export function Footer() {
           {/* Link Columns */}
           {Object.values(footerLinks).map((section) => (
             <div key={section.title}>
-              <h3 className="text-ghost-white font-semibold mb-4">{section.title}</h3>
+              <h3 className="text-ghost-white font-semibold mb-4">
+                {section.title}
+              </h3>
               <ul className="space-y-3">
                 {section.links.map((link) => (
                   <li key={link.label}>
@@ -160,10 +162,11 @@ export function Footer() {
           {/* Disclaimer */}
           <div className="mt-6 pt-6 border-t border-white/5">
             <p className="text-mist-gray text-xs text-center lg:text-left leading-relaxed">
-              DISCLAIMER: BetaForge uses AI agents powered by Claude to simulate user testing. 
-              AI-generated bug reports should be verified by human testers. BetaForge makes no 
-              guarantees regarding the completeness of bug detection. Use of this service is 
-              subject to our Terms of Service and AI Policy.
+              DISCLAIMER: BetaForge uses AI agents powered by Claude to simulate
+              user testing. AI-generated bug reports should be verified by human
+              testers. BetaForge makes no guarantees regarding the completeness
+              of bug detection. Use of this service is subject to our Terms of
+              Service and AI Policy.
             </p>
           </div>
         </div>

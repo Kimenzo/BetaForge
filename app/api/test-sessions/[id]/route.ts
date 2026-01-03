@@ -12,7 +12,8 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 
   const { data: session, error } = await supabase
     .from("test_sessions")
-    .select(`
+    .select(
+      `
       *,
       projects (
         id,
@@ -41,7 +42,8 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
         data,
         created_at
       )
-    `)
+    `
+    )
     .eq("id", id)
     .single();
 
@@ -71,7 +73,9 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
   if (executionIds.length > 0) {
     const { data: bugs } = await supabase
       .from("bug_reports")
-      .select("id, severity, status, title, description, agent_name, created_at")
+      .select(
+        "id, severity, status, title, description, agent_name, created_at"
+      )
       .in("execution_id", executionIds)
       .order("created_at", { ascending: false });
 
@@ -90,33 +94,37 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       startedAt: session.started_at,
       completedAt: session.completed_at,
       createdAt: session.created_at,
-      project: session.projects ? {
-        id: session.projects.id,
-        name: session.projects.name,
-        description: session.projects.description,
-        platform: session.projects.platform,
-        accessUrl: session.projects.access_url,
-      } : null,
-      agents: session.agent_executions?.map((e) => ({
-        id: e.id,
-        agentId: e.agent_id,
-        name: e.agent_name,
-        status: e.status,
-        progress: e.progress,
-        environmentConfig: e.environment_config,
-        interactionLog: e.interaction_log,
-        screenshots: e.screenshots,
-        startedAt: e.started_at,
-        completedAt: e.completed_at,
-      })) || [],
-      activityLog: session.activity_logs?.map((log) => ({
-        id: log.id,
-        type: log.event_type,
-        agentName: log.agent_name,
-        message: log.message,
-        data: log.data,
-        timestamp: log.created_at,
-      })) || [],
+      project: session.projects
+        ? {
+            id: session.projects.id,
+            name: session.projects.name,
+            description: session.projects.description,
+            platform: session.projects.platform,
+            accessUrl: session.projects.access_url,
+          }
+        : null,
+      agents:
+        session.agent_executions?.map((e) => ({
+          id: e.id,
+          agentId: e.agent_id,
+          name: e.agent_name,
+          status: e.status,
+          progress: e.progress,
+          environmentConfig: e.environment_config,
+          interactionLog: e.interaction_log,
+          screenshots: e.screenshots,
+          startedAt: e.started_at,
+          completedAt: e.completed_at,
+        })) || [],
+      activityLog:
+        session.activity_logs?.map((log) => ({
+          id: log.id,
+          type: log.event_type,
+          agentName: log.agent_name,
+          message: log.message,
+          data: log.data,
+          timestamp: log.created_at,
+        })) || [],
       bugReports: bugReports.map((b) => ({
         id: b.id,
         severity: b.severity,
@@ -162,7 +170,10 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
 
     if (error) {
       if (error.code === "PGRST116") {
-        return NextResponse.json({ error: "Session not found" }, { status: 404 });
+        return NextResponse.json(
+          { error: "Session not found" },
+          { status: 404 }
+        );
       }
       console.error("Update session error:", error);
       return NextResponse.json(
@@ -195,10 +206,7 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
   const { id } = await params;
   const supabase = createServerClient();
 
-  const { error } = await supabase
-    .from("test_sessions")
-    .delete()
-    .eq("id", id);
+  const { error } = await supabase.from("test_sessions").delete().eq("id", id);
 
   if (error) {
     console.error("Delete session error:", error);

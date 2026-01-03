@@ -32,7 +32,9 @@ export async function GET(request: NextRequest, { params }: StreamParams) {
       const sendEvent = (data: Record<string, unknown>) => {
         if (isStreamClosed) return;
         try {
-          controller.enqueue(encoder.encode(`data: ${JSON.stringify(data)}\n\n`));
+          controller.enqueue(
+            encoder.encode(`data: ${JSON.stringify(data)}\n\n`)
+          );
         } catch {
           isStreamClosed = true;
         }
@@ -121,7 +123,10 @@ export async function GET(request: NextRequest, { params }: StreamParams) {
             });
 
             // Close stream if session is completed or failed
-            if (currentSession.status === "completed" || currentSession.status === "failed") {
+            if (
+              currentSession.status === "completed" ||
+              currentSession.status === "failed"
+            ) {
               sendEvent({
                 type: "session_ended",
                 sessionId: id,

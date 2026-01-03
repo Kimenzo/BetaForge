@@ -14,7 +14,11 @@ const sizeClasses = {
   xl: "h-12 w-12",
 };
 
-export function Spinner({ size = "md", className, variant = "default" }: SpinnerProps) {
+export function Spinner({
+  size = "md",
+  className,
+  variant = "default",
+}: SpinnerProps) {
   if (variant === "neural") {
     return (
       <div className={cn("relative", sizeClasses[size], className)}>
@@ -41,7 +45,11 @@ export function Spinner({ size = "md", className, variant = "default" }: Spinner
 
   return (
     <Loader2
-      className={cn("animate-spin text-neural-bright", sizeClasses[size], className)}
+      className={cn(
+        "animate-spin text-neural-bright",
+        sizeClasses[size],
+        className
+      )}
     />
   );
 }
@@ -51,7 +59,10 @@ interface LoadingProps {
   variant?: "default" | "neural" | "fullscreen";
 }
 
-export function Loading({ message = "Loading...", variant = "default" }: LoadingProps) {
+export function Loading({
+  message = "Loading...",
+  variant = "default",
+}: LoadingProps) {
   if (variant === "fullscreen") {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-void-black/90 backdrop-blur-sm">
@@ -97,7 +108,10 @@ interface SkeletonProps {
   variant?: "text" | "circular" | "rectangular";
 }
 
-export function Skeleton({ className, variant = "rectangular" }: SkeletonProps) {
+export function Skeleton({
+  className,
+  variant = "rectangular",
+}: SkeletonProps) {
   return (
     <div
       className={cn(

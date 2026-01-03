@@ -81,7 +81,9 @@ export default function NewProjectPage() {
           <div className="p-2 rounded-xl bg-gradient-to-br from-neural/20 to-electric-cyan/20 border border-white/10">
             <Sparkles className="w-6 h-6 text-neural-bright" />
           </div>
-          <h1 className="text-3xl font-bold text-ghost-white">Create New Project</h1>
+          <h1 className="text-3xl font-bold text-ghost-white">
+            Create New Project
+          </h1>
         </div>
         <p className="text-phantom-gray">
           Add your application details to unleash AI-powered testing.

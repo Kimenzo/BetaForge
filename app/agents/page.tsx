@@ -29,7 +29,10 @@ export default function AgentsPage() {
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute inset-0 mesh-bg opacity-40" />
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-neural/20 rounded-full blur-[100px] animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-electric-cyan/15 rounded-full blur-[100px] animate-float" style={{ animationDelay: "-3s" }} />
+        <div
+          className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-electric-cyan/15 rounded-full blur-[100px] animate-float"
+          style={{ animationDelay: "-3s" }}
+        />
       </div>
 
       {/* Header */}
@@ -46,7 +49,10 @@ export default function AgentsPage() {
               <span className="text-xl font-bold gradient-text">BetaForge</span>
             </Link>
             <div className="flex items-center gap-3">
-              <Link href="/dashboard" className="px-4 py-2 text-sm text-phantom-gray hover:text-ghost-white transition-colors">
+              <Link
+                href="/dashboard"
+                className="px-4 py-2 text-sm text-phantom-gray hover:text-ghost-white transition-colors"
+              >
                 Dashboard
               </Link>
               <Link href="/dashboard/projects/new">
@@ -64,18 +70,21 @@ export default function AgentsPage() {
           <div className="text-center mb-20">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-neural/20 mb-8 animate-fade-in-up">
               <Users className="w-4 h-4 text-neural-bright" />
-              <span className="text-sm text-phantom-gray">6 Unique AI Personas</span>
+              <span className="text-sm text-phantom-gray">
+                6 Unique AI Personas
+              </span>
             </div>
-            
+
             <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in-up stagger-1">
               <span className="text-ghost-white">Meet Your</span>
               <br />
               <span className="gradient-text">AI Testing Team</span>
             </h1>
-            
+
             <p className="text-xl text-phantom-gray max-w-3xl mx-auto leading-relaxed animate-fade-in-up stagger-2">
-              Six unique personas, each bringing a different perspective to find bugs others miss.
-              Together, they simulate the diversity of your real user base.
+              Six unique personas, each bringing a different perspective to find
+              bugs others miss. Together, they simulate the diversity of your
+              real user base.
             </p>
           </div>
 
@@ -110,8 +119,13 @@ export default function AgentsPage() {
                         {agentMeta[agent.id]?.emoji}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="text-xl font-bold text-ghost-white">{agent.name}</h3>
-                        <p className="text-sm font-medium" style={{ color: agent.color }}>
+                        <h3 className="text-xl font-bold text-ghost-white">
+                          {agent.name}
+                        </h3>
+                        <p
+                          className="text-sm font-medium"
+                          style={{ color: agent.color }}
+                        >
                           {agent.specialization}
                         </p>
                         <div className="flex items-center gap-1.5 mt-1 text-xs text-phantom-gray">
@@ -159,13 +173,17 @@ export default function AgentsPage() {
                         <p className="text-lg font-bold text-ghost-white">
                           {Math.floor(Math.random() * 100) + 50}
                         </p>
-                        <p className="text-[10px] text-mist-gray uppercase tracking-wider">Tests Run</p>
+                        <p className="text-[10px] text-mist-gray uppercase tracking-wider">
+                          Tests Run
+                        </p>
                       </div>
                       <div className="p-3 rounded-xl bg-void-elevated/50 text-center">
                         <p className="text-lg font-bold text-ghost-white">
                           {Math.floor(Math.random() * 30) + 10}
                         </p>
-                        <p className="text-[10px] text-mist-gray uppercase tracking-wider">Bugs Found</p>
+                        <p className="text-[10px] text-mist-gray uppercase tracking-wider">
+                          Bugs Found
+                        </p>
                       </div>
                     </div>
                   </div>

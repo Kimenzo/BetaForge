@@ -94,35 +94,41 @@ const metrics = [
 const useCases = [
   {
     title: "Regression Testing",
-    description: "BetaForge runs comprehensive regression suites on every commit while your team focuses on new features.",
+    description:
+      "BetaForge runs comprehensive regression suites on every commit while your team focuses on new features.",
     icon: Repeat,
   },
   {
     title: "Exploratory Testing",
-    description: "AI agents explore your app like real users, finding edge cases human testers might miss.",
+    description:
+      "AI agents explore your app like real users, finding edge cases human testers might miss.",
     icon: Eye,
   },
   {
     title: "Load & Scale Testing",
-    description: "Simulate thousands of concurrent users without managing a large QA team.",
+    description:
+      "Simulate thousands of concurrent users without managing a large QA team.",
     icon: Users,
   },
   {
     title: "Continuous Monitoring",
-    description: "24/7 testing catches issues during off-hours when manual testers aren't available.",
+    description:
+      "24/7 testing catches issues during off-hours when manual testers aren't available.",
     icon: Clock,
   },
 ];
 
 const testimonials = [
   {
-    quote: "We replaced 80% of our manual regression testing with BetaForge. Our QA team now focuses on strategic testing while AI handles the repetitive work.",
+    quote:
+      "We replaced 80% of our manual regression testing with BetaForge. Our QA team now focuses on strategic testing while AI handles the repetitive work.",
     author: "Jennifer Walsh",
     role: "Director of QA, FinanceApp",
     result: "50% faster releases",
   },
   {
-    quote: "BetaForge finds bugs our manual testers miss. The AI agents think differently and explore paths humans don't consider.",
+    quote:
+      "BetaForge finds bugs our manual testers miss. The AI agents think differently and explore paths humans don't consider.",
     author: "Michael Torres",
     role: "VP Engineering, RetailCloud",
     result: "70% fewer production bugs",
@@ -130,8 +136,12 @@ const testimonials = [
 ];
 
 export default function CompareManualTestingPage() {
-  const betaforgeWins = comparisonTable.filter((row) => row.winner === "betaforge").length;
-  const manualWins = comparisonTable.filter((row) => row.winner === "manual").length;
+  const betaforgeWins = comparisonTable.filter(
+    (row) => row.winner === "betaforge"
+  ).length;
+  const manualWins = comparisonTable.filter(
+    (row) => row.winner === "manual"
+  ).length;
   const ties = comparisonTable.filter((row) => row.winner === "tie").length;
 
   return (
@@ -175,9 +185,9 @@ export default function CompareManualTestingPage() {
             <span className="gradient-text">Manual Testing</span>
           </h1>
           <p className="text-lg text-phantom-gray max-w-3xl mx-auto mb-8">
-            See how AI-powered testing compares to traditional manual QA. BetaForge doesn't
-            replace your QA team—it supercharges them by handling repetitive work so they
-            can focus on what humans do best.
+            See how AI-powered testing compares to traditional manual QA.
+            BetaForge doesn't replace your QA team—it supercharges them by
+            handling repetitive work so they can focus on what humans do best.
           </p>
           <div className="flex flex-wrap justify-center gap-8">
             <div className="flex items-center gap-3">
@@ -185,7 +195,9 @@ export default function CompareManualTestingPage() {
                 <Bot className="w-8 h-8 text-neural-bright" />
               </div>
               <div className="text-left">
-                <div className="text-2xl font-bold text-ghost-white">{betaforgeWins}</div>
+                <div className="text-2xl font-bold text-ghost-white">
+                  {betaforgeWins}
+                </div>
                 <div className="text-sm text-phantom-gray">BetaForge Wins</div>
               </div>
             </div>
@@ -194,7 +206,9 @@ export default function CompareManualTestingPage() {
                 <MousePointer className="w-8 h-8 text-plasma-pink" />
               </div>
               <div className="text-left">
-                <div className="text-2xl font-bold text-ghost-white">{manualWins}</div>
+                <div className="text-2xl font-bold text-ghost-white">
+                  {manualWins}
+                </div>
                 <div className="text-sm text-phantom-gray">Manual Wins</div>
               </div>
             </div>
@@ -203,7 +217,9 @@ export default function CompareManualTestingPage() {
                 <TrendingUp className="w-8 h-8 text-quantum-green" />
               </div>
               <div className="text-left">
-                <div className="text-2xl font-bold text-ghost-white">{ties}</div>
+                <div className="text-2xl font-bold text-ghost-white">
+                  {ties}
+                </div>
                 <div className="text-sm text-phantom-gray">Ties</div>
               </div>
             </div>
@@ -221,7 +237,9 @@ export default function CompareManualTestingPage() {
                 className="p-6 bg-void-elevated border border-white/5 rounded-2xl text-center"
               >
                 <metric.icon className="w-8 h-8 text-neural-bright mx-auto mb-3" />
-                <div className="text-3xl font-bold gradient-text mb-1">{metric.value}</div>
+                <div className="text-3xl font-bold gradient-text mb-1">
+                  {metric.value}
+                </div>
                 <div className="text-sm text-phantom-gray">{metric.label}</div>
               </div>
             ))}
@@ -242,13 +260,17 @@ export default function CompareManualTestingPage() {
               <div className="text-center">
                 <div className="inline-flex items-center gap-2">
                   <Bot className="w-5 h-5 text-neural-bright" />
-                  <span className="font-semibold text-ghost-white">BetaForge</span>
+                  <span className="font-semibold text-ghost-white">
+                    BetaForge
+                  </span>
                 </div>
               </div>
               <div className="text-center">
                 <div className="inline-flex items-center gap-2">
                   <MousePointer className="w-5 h-5 text-plasma-pink" />
-                  <span className="font-semibold text-ghost-white">Manual Testing</span>
+                  <span className="font-semibold text-ghost-white">
+                    Manual Testing
+                  </span>
                 </div>
               </div>
             </div>
@@ -257,22 +279,36 @@ export default function CompareManualTestingPage() {
               <div
                 key={index}
                 className={`grid grid-cols-3 gap-4 p-6 ${
-                  index !== comparisonTable.length - 1 ? "border-b border-white/5" : ""
+                  index !== comparisonTable.length - 1
+                    ? "border-b border-white/5"
+                    : ""
                 }`}
               >
-                <div className="text-ghost-white font-medium">{row.feature}</div>
+                <div className="text-ghost-white font-medium">
+                  {row.feature}
+                </div>
                 <div className="text-center">
-                  <div className={`inline-flex items-center gap-2 ${
-                    row.winner === "betaforge" ? "text-quantum-green" : "text-phantom-gray"
-                  }`}>
-                    {row.winner === "betaforge" && <Check className="w-5 h-5" />}
+                  <div
+                    className={`inline-flex items-center gap-2 ${
+                      row.winner === "betaforge"
+                        ? "text-quantum-green"
+                        : "text-phantom-gray"
+                    }`}
+                  >
+                    {row.winner === "betaforge" && (
+                      <Check className="w-5 h-5" />
+                    )}
                     <span className="text-sm">{row.betaforge}</span>
                   </div>
                 </div>
                 <div className="text-center">
-                  <div className={`inline-flex items-center gap-2 ${
-                    row.winner === "manual" ? "text-quantum-green" : "text-phantom-gray"
-                  }`}>
+                  <div
+                    className={`inline-flex items-center gap-2 ${
+                      row.winner === "manual"
+                        ? "text-quantum-green"
+                        : "text-phantom-gray"
+                    }`}
+                  >
                     {row.winner === "manual" && <Check className="w-5 h-5" />}
                     <span className="text-sm">{row.manual}</span>
                   </div>
@@ -290,7 +326,8 @@ export default function CompareManualTestingPage() {
             When BetaForge Shines
           </h2>
           <p className="text-phantom-gray text-center mb-12 max-w-2xl mx-auto">
-            AI testing excels in these scenarios, freeing your QA team for higher-value work.
+            AI testing excels in these scenarios, freeing your QA team for
+            higher-value work.
           </p>
           <div className="grid md:grid-cols-2 gap-6">
             {useCases.map((useCase, index) => (
@@ -317,16 +354,19 @@ export default function CompareManualTestingPage() {
               <div className="flex-1">
                 <div className="inline-flex items-center gap-2 mb-4">
                   <Brain className="w-6 h-6 text-neural-bright" />
-                  <span className="text-neural-bright font-medium">Better Together</span>
+                  <span className="text-neural-bright font-medium">
+                    Better Together
+                  </span>
                 </div>
                 <h2 className="text-3xl font-bold text-ghost-white mb-4">
                   AI + Human = Unstoppable QA
                 </h2>
                 <p className="text-phantom-gray mb-6">
-                  The best testing strategy combines AI efficiency with human creativity.
-                  Let BetaForge handle regression testing, exploratory coverage, and 24/7
-                  monitoring while your QA team focuses on usability, strategic testing,
-                  and customer experience.
+                  The best testing strategy combines AI efficiency with human
+                  creativity. Let BetaForge handle regression testing,
+                  exploratory coverage, and 24/7 monitoring while your QA team
+                  focuses on usability, strategic testing, and customer
+                  experience.
                 </p>
                 <ul className="space-y-2">
                   <li className="flex items-center gap-2 text-ghost-white">
@@ -347,7 +387,9 @@ export default function CompareManualTestingPage() {
                 <div className="w-24 h-24 rounded-2xl bg-neural/20 flex items-center justify-center">
                   <Bot className="w-12 h-12 text-neural-bright" />
                 </div>
-                <div className="flex items-center text-3xl text-mist-gray">+</div>
+                <div className="flex items-center text-3xl text-mist-gray">
+                  +
+                </div>
                 <div className="w-24 h-24 rounded-2xl bg-plasma-pink/20 flex items-center justify-center">
                   <Users className="w-12 h-12 text-plasma-pink" />
                 </div>
@@ -372,10 +414,16 @@ export default function CompareManualTestingPage() {
                 <div className="inline-block px-3 py-1 rounded-full bg-quantum-green/20 text-quantum-green text-sm mb-4">
                   {testimonial.result}
                 </div>
-                <p className="text-ghost-white text-lg mb-4">"{testimonial.quote}"</p>
+                <p className="text-ghost-white text-lg mb-4">
+                  "{testimonial.quote}"
+                </p>
                 <div>
-                  <div className="font-semibold text-ghost-white">{testimonial.author}</div>
-                  <div className="text-sm text-phantom-gray">{testimonial.role}</div>
+                  <div className="font-semibold text-ghost-white">
+                    {testimonial.author}
+                  </div>
+                  <div className="text-sm text-phantom-gray">
+                    {testimonial.role}
+                  </div>
                 </div>
               </div>
             ))}
@@ -390,7 +438,8 @@ export default function CompareManualTestingPage() {
             Ready to Supercharge Your QA?
           </h2>
           <p className="text-lg text-phantom-gray mb-8 max-w-2xl mx-auto">
-            Start with a free trial and see how AI testing can transform your quality process.
+            Start with a free trial and see how AI testing can transform your
+            quality process.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link

@@ -12,7 +12,8 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 
   const { data: report, error } = await supabase
     .from("bug_reports")
-    .select(`
+    .select(
+      `
       *,
       agent_executions (
         id,
@@ -35,13 +36,17 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
           )
         )
       )
-    `)
+    `
+    )
     .eq("id", id)
     .single();
 
   if (error) {
     if (error.code === "PGRST116") {
-      return NextResponse.json({ error: "Bug report not found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "Bug report not found" },
+        { status: 404 }
+      );
     }
     console.error("Fetch bug report error:", error);
     return NextResponse.json(
@@ -72,25 +77,31 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       environmentInfo: report.environment_info,
       createdAt: report.created_at,
       updatedAt: report.updated_at,
-      execution: execution ? {
-        id: execution.id,
-        agentId: execution.agent_id,
-        agentName: execution.agent_name,
-        environmentConfig: execution.environment_config,
-      } : null,
-      session: session ? {
-        id: session.id,
-        status: session.status,
-        triggerType: session.trigger_type,
-        startedAt: session.started_at,
-        completedAt: session.completed_at,
-      } : null,
-      project: project ? {
-        id: project.id,
-        name: project.name,
-        accessUrl: project.access_url,
-        platform: project.platform,
-      } : null,
+      execution: execution
+        ? {
+            id: execution.id,
+            agentId: execution.agent_id,
+            agentName: execution.agent_name,
+            environmentConfig: execution.environment_config,
+          }
+        : null,
+      session: session
+        ? {
+            id: session.id,
+            status: session.status,
+            triggerType: session.trigger_type,
+            startedAt: session.started_at,
+            completedAt: session.completed_at,
+          }
+        : null,
+      project: project
+        ? {
+            id: project.id,
+            name: project.name,
+            accessUrl: project.access_url,
+            platform: project.platform,
+          }
+        : null,
     },
   });
 }
@@ -122,7 +133,10 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
 
     if (error) {
       if (error.code === "PGRST116") {
-        return NextResponse.json({ error: "Bug report not found" }, { status: 404 });
+        return NextResponse.json(
+          { error: "Bug report not found" },
+          { status: 404 }
+        );
       }
       console.error("Update bug report error:", error);
       return NextResponse.json(
@@ -154,10 +168,7 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
   const { id } = await params;
   const supabase = createServerClient();
 
-  const { error } = await supabase
-    .from("bug_reports")
-    .delete()
-    .eq("id", id);
+  const { error } = await supabase.from("bug_reports").delete().eq("id", id);
 
   if (error) {
     console.error("Delete bug report error:", error);

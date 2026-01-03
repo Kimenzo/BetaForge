@@ -30,10 +30,26 @@ const endpoints = [
     description: "Manage your testing projects",
     items: [
       { method: "GET", path: "/v1/projects", description: "List all projects" },
-      { method: "POST", path: "/v1/projects", description: "Create a new project" },
-      { method: "GET", path: "/v1/projects/:id", description: "Get a specific project" },
-      { method: "PUT", path: "/v1/projects/:id", description: "Update a project" },
-      { method: "DELETE", path: "/v1/projects/:id", description: "Delete a project" },
+      {
+        method: "POST",
+        path: "/v1/projects",
+        description: "Create a new project",
+      },
+      {
+        method: "GET",
+        path: "/v1/projects/:id",
+        description: "Get a specific project",
+      },
+      {
+        method: "PUT",
+        path: "/v1/projects/:id",
+        description: "Update a project",
+      },
+      {
+        method: "DELETE",
+        path: "/v1/projects/:id",
+        description: "Delete a project",
+      },
     ],
   },
   {
@@ -41,38 +57,90 @@ const endpoints = [
     description: "Create and manage test sessions",
     items: [
       { method: "GET", path: "/v1/sessions", description: "List all sessions" },
-      { method: "POST", path: "/v1/sessions", description: "Start a new test session" },
-      { method: "GET", path: "/v1/sessions/:id", description: "Get session details" },
-      { method: "GET", path: "/v1/sessions/:id/stream", description: "Stream real-time updates (SSE)" },
-      { method: "POST", path: "/v1/sessions/:id/stop", description: "Stop a running session" },
+      {
+        method: "POST",
+        path: "/v1/sessions",
+        description: "Start a new test session",
+      },
+      {
+        method: "GET",
+        path: "/v1/sessions/:id",
+        description: "Get session details",
+      },
+      {
+        method: "GET",
+        path: "/v1/sessions/:id/stream",
+        description: "Stream real-time updates (SSE)",
+      },
+      {
+        method: "POST",
+        path: "/v1/sessions/:id/stop",
+        description: "Stop a running session",
+      },
     ],
   },
   {
     category: "Bug Reports",
     description: "Access and manage bug reports",
     items: [
-      { method: "GET", path: "/v1/reports", description: "List all bug reports" },
-      { method: "GET", path: "/v1/reports/:id", description: "Get a specific report" },
-      { method: "PUT", path: "/v1/reports/:id", description: "Update report status" },
-      { method: "GET", path: "/v1/sessions/:id/reports", description: "Get reports for a session" },
+      {
+        method: "GET",
+        path: "/v1/reports",
+        description: "List all bug reports",
+      },
+      {
+        method: "GET",
+        path: "/v1/reports/:id",
+        description: "Get a specific report",
+      },
+      {
+        method: "PUT",
+        path: "/v1/reports/:id",
+        description: "Update report status",
+      },
+      {
+        method: "GET",
+        path: "/v1/sessions/:id/reports",
+        description: "Get reports for a session",
+      },
     ],
   },
   {
     category: "Agents",
     description: "Configure AI testing agents",
     items: [
-      { method: "GET", path: "/v1/agents", description: "List available agents" },
-      { method: "GET", path: "/v1/agents/:id", description: "Get agent details" },
-      { method: "PUT", path: "/v1/agents/:id/config", description: "Update agent configuration" },
+      {
+        method: "GET",
+        path: "/v1/agents",
+        description: "List available agents",
+      },
+      {
+        method: "GET",
+        path: "/v1/agents/:id",
+        description: "Get agent details",
+      },
+      {
+        method: "PUT",
+        path: "/v1/agents/:id/config",
+        description: "Update agent configuration",
+      },
     ],
   },
   {
     category: "Webhooks",
     description: "Manage webhook integrations",
     items: [
-      { method: "GET", path: "/v1/webhooks", description: "List configured webhooks" },
+      {
+        method: "GET",
+        path: "/v1/webhooks",
+        description: "List configured webhooks",
+      },
       { method: "POST", path: "/v1/webhooks", description: "Create a webhook" },
-      { method: "DELETE", path: "/v1/webhooks/:id", description: "Delete a webhook" },
+      {
+        method: "DELETE",
+        path: "/v1/webhooks/:id",
+        description: "Delete a webhook",
+      },
     ],
   },
 ];
@@ -129,7 +197,9 @@ const methodColors: Record<string, string> = {
 };
 
 export default function ApiReferencePage() {
-  const [activeTab, setActiveTab] = useState<"curl" | "javascript" | "python">("javascript");
+  const [activeTab, setActiveTab] = useState<"curl" | "javascript" | "python">(
+    "javascript"
+  );
   const [copied, setCopied] = useState(false);
 
   const copyCode = () => {
@@ -156,14 +226,21 @@ export default function ApiReferencePage() {
                 <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-neural-bright to-electric-cyan flex items-center justify-center">
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-xl font-bold gradient-text">BetaForge</span>
+                <span className="text-xl font-bold gradient-text">
+                  BetaForge
+                </span>
               </Link>
               <nav className="hidden md:flex items-center">
-                <Link href="/docs" className="text-phantom-gray hover:text-ghost-white text-sm transition-colors px-3 py-2">
+                <Link
+                  href="/docs"
+                  className="text-phantom-gray hover:text-ghost-white text-sm transition-colors px-3 py-2"
+                >
                   Docs
                 </Link>
                 <ChevronRight className="w-4 h-4 text-mist-gray" />
-                <span className="text-ghost-white text-sm px-3 py-2">API Reference</span>
+                <span className="text-ghost-white text-sm px-3 py-2">
+                  API Reference
+                </span>
               </nav>
             </div>
             <Link
@@ -180,7 +257,10 @@ export default function ApiReferencePage() {
       <section className="relative pt-32 pb-16 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-2 text-sm text-phantom-gray mb-6">
-            <Link href="/docs" className="hover:text-ghost-white transition-colors">
+            <Link
+              href="/docs"
+              className="hover:text-ghost-white transition-colors"
+            >
               Documentation
             </Link>
             <ChevronRight className="w-4 h-4" />
@@ -196,8 +276,9 @@ export default function ApiReferencePage() {
                 API Reference
               </h1>
               <p className="text-lg text-phantom-gray max-w-2xl">
-                Complete REST API documentation for BetaForge. Integrate AI-powered testing
-                into your applications and workflows programmatically.
+                Complete REST API documentation for BetaForge. Integrate
+                AI-powered testing into your applications and workflows
+                programmatically.
               </p>
             </div>
           </div>
@@ -210,7 +291,9 @@ export default function ApiReferencePage() {
               </div>
               <div>
                 <p className="text-sm text-mist-gray">Base URL</p>
-                <p className="text-ghost-white font-mono text-sm">api.betaforge.ai</p>
+                <p className="text-ghost-white font-mono text-sm">
+                  api.betaforge.ai
+                </p>
               </div>
             </div>
             <div className="p-4 bg-void-elevated border border-white/5 rounded-xl flex items-center gap-4">
@@ -219,7 +302,9 @@ export default function ApiReferencePage() {
               </div>
               <div>
                 <p className="text-sm text-mist-gray">Authentication</p>
-                <p className="text-ghost-white font-mono text-sm">Bearer Token</p>
+                <p className="text-ghost-white font-mono text-sm">
+                  Bearer Token
+                </p>
               </div>
             </div>
             <div className="p-4 bg-void-elevated border border-white/5 rounded-xl flex items-center gap-4">
@@ -237,11 +322,13 @@ export default function ApiReferencePage() {
           <div className="p-6 bg-void-elevated border border-white/5 rounded-2xl mb-12">
             <div className="flex items-center gap-3 mb-4">
               <Key className="w-6 h-6 text-neural-bright" />
-              <h2 className="text-xl font-bold text-ghost-white">Authentication</h2>
+              <h2 className="text-xl font-bold text-ghost-white">
+                Authentication
+              </h2>
             </div>
             <p className="text-phantom-gray mb-4">
-              All API requests require authentication using a Bearer token. Include your API key
-              in the Authorization header of every request.
+              All API requests require authentication using a Bearer token.
+              Include your API key in the Authorization header of every request.
             </p>
             <div className="p-4 bg-void-black rounded-xl border border-white/10">
               <code className="text-sm text-phantom-gray font-mono">
@@ -250,7 +337,10 @@ export default function ApiReferencePage() {
             </div>
             <p className="text-sm text-mist-gray mt-4">
               Get your API key from the{" "}
-              <Link href="/dashboard/settings" className="text-neural-bright hover:underline">
+              <Link
+                href="/dashboard/settings"
+                className="text-neural-bright hover:underline"
+              >
                 Dashboard Settings
               </Link>
             </p>
@@ -261,7 +351,9 @@ export default function ApiReferencePage() {
       {/* Example Request */}
       <section className="relative py-12 px-6">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl font-bold text-ghost-white mb-6">Quick Example</h2>
+          <h2 className="text-2xl font-bold text-ghost-white mb-6">
+            Quick Example
+          </h2>
           <div className="bg-void-elevated border border-white/5 rounded-2xl overflow-hidden">
             {/* Language Tabs */}
             <div className="flex items-center gap-1 p-2 border-b border-white/5">
@@ -309,7 +401,9 @@ export default function ApiReferencePage() {
       {/* Endpoints */}
       <section className="relative py-12 px-6">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl font-bold text-ghost-white mb-8">Endpoints</h2>
+          <h2 className="text-2xl font-bold text-ghost-white mb-8">
+            Endpoints
+          </h2>
           <div className="space-y-8">
             {endpoints.map((category, catIndex) => (
               <div
@@ -320,7 +414,9 @@ export default function ApiReferencePage() {
                   <h3 className="text-xl font-bold text-ghost-white mb-1">
                     {category.category}
                   </h3>
-                  <p className="text-sm text-phantom-gray">{category.description}</p>
+                  <p className="text-sm text-phantom-gray">
+                    {category.description}
+                  </p>
                 </div>
                 <div className="divide-y divide-white/5">
                   {category.items.map((endpoint, index) => (
@@ -359,7 +455,9 @@ export default function ApiReferencePage() {
             <div className="p-6 bg-void-elevated border border-white/5 rounded-2xl">
               <div className="flex items-center gap-3 mb-4">
                 <Clock className="w-6 h-6 text-electric-cyan" />
-                <h3 className="text-xl font-bold text-ghost-white">Rate Limiting</h3>
+                <h3 className="text-xl font-bold text-ghost-white">
+                  Rate Limiting
+                </h3>
               </div>
               <p className="text-phantom-gray mb-4">
                 API requests are rate limited based on your plan tier.
@@ -384,7 +482,9 @@ export default function ApiReferencePage() {
             <div className="p-6 bg-void-elevated border border-white/5 rounded-2xl">
               <div className="flex items-center gap-3 mb-4">
                 <AlertCircle className="w-6 h-6 text-plasma-pink" />
-                <h3 className="text-xl font-bold text-ghost-white">Error Codes</h3>
+                <h3 className="text-xl font-bold text-ghost-white">
+                  Error Codes
+                </h3>
               </div>
               <div className="space-y-3">
                 <div className="flex justify-between text-sm">
@@ -416,7 +516,9 @@ export default function ApiReferencePage() {
       {/* SDKs */}
       <section className="relative py-12 px-6">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl font-bold text-ghost-white mb-6">Official SDKs</h2>
+          <h2 className="text-2xl font-bold text-ghost-white mb-6">
+            Official SDKs
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Link
               href="#"
@@ -427,8 +529,12 @@ export default function ApiReferencePage() {
                   JS
                 </div>
                 <div>
-                  <h4 className="font-semibold text-ghost-white">JavaScript / Node.js</h4>
-                  <p className="text-xs text-mist-gray">npm install @betaforge/sdk</p>
+                  <h4 className="font-semibold text-ghost-white">
+                    JavaScript / Node.js
+                  </h4>
+                  <p className="text-xs text-mist-gray">
+                    npm install @betaforge/sdk
+                  </p>
                 </div>
               </div>
               <p className="text-sm text-phantom-gray">
@@ -445,7 +551,9 @@ export default function ApiReferencePage() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-ghost-white">Python</h4>
-                  <p className="text-xs text-mist-gray">pip install betaforge</p>
+                  <p className="text-xs text-mist-gray">
+                    pip install betaforge
+                  </p>
                 </div>
               </div>
               <p className="text-sm text-phantom-gray">
@@ -462,7 +570,9 @@ export default function ApiReferencePage() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-ghost-white">Go</h4>
-                  <p className="text-xs text-mist-gray">go get github.com/betaforge/go-sdk</p>
+                  <p className="text-xs text-mist-gray">
+                    go get github.com/betaforge/go-sdk
+                  </p>
                 </div>
               </div>
               <p className="text-sm text-phantom-gray">

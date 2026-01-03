@@ -54,7 +54,8 @@ const securityPrinciples = [
 const certifications = [
   {
     name: "SOC 2 Type II",
-    description: "Comprehensive security audit covering security, availability, and confidentiality",
+    description:
+      "Comprehensive security audit covering security, availability, and confidentiality",
     icon: ShieldCheck,
     status: "Certified",
   },
@@ -193,7 +194,10 @@ export default function SecurityPage() {
               <span className="text-xl font-bold gradient-text">BetaForge</span>
             </Link>
             <div className="flex items-center gap-4">
-              <Link href="/enterprise" className="text-phantom-gray hover:text-ghost-white text-sm transition-colors">
+              <Link
+                href="/enterprise"
+                className="text-phantom-gray hover:text-ghost-white text-sm transition-colors"
+              >
                 Enterprise
               </Link>
               <Link
@@ -212,15 +216,18 @@ export default function SecurityPage() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-quantum-green/20 mb-6">
             <Shield className="w-4 h-4 text-quantum-green" />
-            <span className="text-sm text-phantom-gray">Security & Privacy</span>
+            <span className="text-sm text-phantom-gray">
+              Security & Privacy
+            </span>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
             <span className="text-ghost-white">Your Security is Our </span>
             <span className="gradient-text">Top Priority</span>
           </h1>
           <p className="text-lg text-phantom-gray max-w-2xl mx-auto mb-8">
-            BetaForge is built with enterprise-grade security from the ground up.
-            We protect your data with industry-leading practices and certifications.
+            BetaForge is built with enterprise-grade security from the ground
+            up. We protect your data with industry-leading practices and
+            certifications.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
@@ -254,7 +261,9 @@ export default function SecurityPage() {
                 <h3 className="text-xl font-semibold text-ghost-white mb-2">
                   {principle.title}
                 </h3>
-                <p className="text-phantom-gray text-sm">{principle.description}</p>
+                <p className="text-phantom-gray text-sm">
+                  {principle.description}
+                </p>
               </div>
             ))}
           </div>
@@ -262,7 +271,10 @@ export default function SecurityPage() {
       </section>
 
       {/* Certifications */}
-      <section id="certifications" className="relative py-20 px-6 bg-void-elevated/50">
+      <section
+        id="certifications"
+        className="relative py-20 px-6 bg-void-elevated/50"
+      >
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-ghost-white mb-4">
@@ -283,10 +295,13 @@ export default function SecurityPage() {
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-1">
-                    <h3 className="text-lg font-semibold text-ghost-white">{cert.name}</h3>
+                    <h3 className="text-lg font-semibold text-ghost-white">
+                      {cert.name}
+                    </h3>
                     <span
                       className={`px-2 py-0.5 text-xs font-medium rounded-full ${
-                        cert.status === "Certified" || cert.status === "Compliant"
+                        cert.status === "Certified" ||
+                        cert.status === "Compliant"
                           ? "bg-quantum-green/20 text-quantum-green"
                           : "bg-yellow-500/20 text-yellow-500"
                       }`}
@@ -294,7 +309,9 @@ export default function SecurityPage() {
                       {cert.status}
                     </span>
                   </div>
-                  <p className="text-sm text-phantom-gray">{cert.description}</p>
+                  <p className="text-sm text-phantom-gray">
+                    {cert.description}
+                  </p>
                 </div>
               </div>
             ))}
@@ -319,7 +336,10 @@ export default function SecurityPage() {
                 </h3>
                 <ul className="space-y-3">
                   {category.items.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-phantom-gray">
+                    <li
+                      key={i}
+                      className="flex items-start gap-2 text-sm text-phantom-gray"
+                    >
                       <CheckCircle2 className="w-4 h-4 text-quantum-green mt-0.5 flex-shrink-0" />
                       {item}
                     </li>
@@ -339,14 +359,22 @@ export default function SecurityPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {dataHandling.map((section, index) => (
-              <div key={index} className="p-6 bg-void-black border border-white/10 rounded-2xl">
+              <div
+                key={index}
+                className="p-6 bg-void-black border border-white/10 rounded-2xl"
+              >
                 <div className="flex items-center gap-3 mb-4">
                   <section.icon className="w-6 h-6 text-neural-bright" />
-                  <h3 className="text-xl font-semibold text-ghost-white">{section.title}</h3>
+                  <h3 className="text-xl font-semibold text-ghost-white">
+                    {section.title}
+                  </h3>
                 </div>
                 <ul className="space-y-3">
                   {section.items.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-phantom-gray">
+                    <li
+                      key={i}
+                      className="flex items-start gap-2 text-phantom-gray"
+                    >
                       <span className="text-neural-bright">•</span>
                       {item}
                     </li>
@@ -395,8 +423,9 @@ export default function SecurityPage() {
                   Found a Security Vulnerability?
                 </h2>
                 <p className="text-phantom-gray mb-4">
-                  We take security seriously. If you&apos;ve discovered a vulnerability,
-                  please report it responsibly and we&apos;ll work with you to address it quickly.
+                  We take security seriously. If you&apos;ve discovered a
+                  vulnerability, please report it responsibly and we&apos;ll
+                  work with you to address it quickly.
                 </p>
                 <Link
                   href="mailto:security@betaforge.ai"

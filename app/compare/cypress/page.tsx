@@ -108,22 +108,26 @@ const metrics = [
 const cypressLimitations = [
   {
     title: "Single Tab Limitation",
-    description: "Cypress can't test multi-tab workflows. BetaForge agents handle complex multi-window scenarios naturally.",
+    description:
+      "Cypress can't test multi-tab workflows. BetaForge agents handle complex multi-window scenarios naturally.",
     icon: Layers,
   },
   {
     title: "Cross-Origin Restrictions",
-    description: "Testing across different domains requires workarounds in Cypress. BetaForge has no such limitations.",
+    description:
+      "Testing across different domains requires workarounds in Cypress. BetaForge has no such limitations.",
     icon: Globe,
   },
   {
     title: "No Native Mobile",
-    description: "Cypress only tests mobile viewports, not actual mobile apps. BetaForge tests native iOS and Android.",
+    description:
+      "Cypress only tests mobile viewports, not actual mobile apps. BetaForge tests native iOS and Android.",
     icon: Smartphone,
   },
   {
     title: "Code-First Approach",
-    description: "Every test requires JavaScript expertise. BetaForge's natural language goals let anyone create tests.",
+    description:
+      "Every test requires JavaScript expertise. BetaForge's natural language goals let anyone create tests.",
     icon: Code2,
   },
 ];
@@ -176,13 +180,15 @@ describe('Login Flow', () => {
 
 const testimonials = [
   {
-    quote: "We love Cypress for component testing, but BetaForge catches things our Cypress E2E tests miss. The AI explores paths we never thought to script.",
+    quote:
+      "We love Cypress for component testing, but BetaForge catches things our Cypress E2E tests miss. The AI explores paths we never thought to script.",
     author: "Amanda Foster",
     role: "Frontend Lead, SaaS Platform",
     result: "30% more bugs caught",
   },
   {
-    quote: "Cypress is great but the maintenance was killing us. Adding BetaForge for exploratory testing let us focus Cypress on critical paths only.",
+    quote:
+      "Cypress is great but the maintenance was killing us. Adding BetaForge for exploratory testing let us focus Cypress on critical paths only.",
     author: "Chris Martinez",
     role: "QA Manager, E-commerce Co",
     result: "60% less test code",
@@ -213,8 +219,12 @@ const whenToUse = [
 ];
 
 export default function CompareCypressPage() {
-  const betaforgeWins = comparisonTable.filter((row) => row.winner === "betaforge").length;
-  const cypressWins = comparisonTable.filter((row) => row.winner === "cypress").length;
+  const betaforgeWins = comparisonTable.filter(
+    (row) => row.winner === "betaforge"
+  ).length;
+  const cypressWins = comparisonTable.filter(
+    (row) => row.winner === "cypress"
+  ).length;
   const ties = comparisonTable.filter((row) => row.winner === "tie").length;
 
   return (
@@ -258,8 +268,9 @@ export default function CompareCypressPage() {
             <span className="gradient-text">Cypress</span>
           </h1>
           <p className="text-lg text-phantom-gray max-w-3xl mx-auto mb-8">
-            Cypress revolutionized frontend testing with its developer experience. BetaForge
-            takes it further with AI that explores your app autonomously—no code required.
+            Cypress revolutionized frontend testing with its developer
+            experience. BetaForge takes it further with AI that explores your
+            app autonomously—no code required.
           </p>
           <div className="flex flex-wrap justify-center gap-8">
             <div className="flex items-center gap-3">
@@ -267,7 +278,9 @@ export default function CompareCypressPage() {
                 <Bot className="w-8 h-8 text-neural-bright" />
               </div>
               <div className="text-left">
-                <div className="text-2xl font-bold text-ghost-white">{betaforgeWins}</div>
+                <div className="text-2xl font-bold text-ghost-white">
+                  {betaforgeWins}
+                </div>
                 <div className="text-sm text-phantom-gray">BetaForge Wins</div>
               </div>
             </div>
@@ -276,7 +289,9 @@ export default function CompareCypressPage() {
                 <Play className="w-8 h-8 text-[#04C38E]" />
               </div>
               <div className="text-left">
-                <div className="text-2xl font-bold text-ghost-white">{cypressWins}</div>
+                <div className="text-2xl font-bold text-ghost-white">
+                  {cypressWins}
+                </div>
                 <div className="text-sm text-phantom-gray">Cypress Wins</div>
               </div>
             </div>
@@ -285,7 +300,9 @@ export default function CompareCypressPage() {
                 <TrendingUp className="w-8 h-8 text-quantum-green" />
               </div>
               <div className="text-left">
-                <div className="text-2xl font-bold text-ghost-white">{ties}</div>
+                <div className="text-2xl font-bold text-ghost-white">
+                  {ties}
+                </div>
                 <div className="text-sm text-phantom-gray">Ties</div>
               </div>
             </div>
@@ -303,7 +320,9 @@ export default function CompareCypressPage() {
                 className="p-6 bg-void-elevated border border-white/5 rounded-2xl text-center"
               >
                 <metric.icon className="w-8 h-8 text-neural-bright mx-auto mb-3" />
-                <div className="text-3xl font-bold gradient-text mb-1">{metric.value}</div>
+                <div className="text-3xl font-bold gradient-text mb-1">
+                  {metric.value}
+                </div>
                 <div className="text-sm text-phantom-gray">{metric.label}</div>
               </div>
             ))}
@@ -318,14 +337,17 @@ export default function CompareCypressPage() {
             Code vs Configuration
           </h2>
           <p className="text-phantom-gray text-center mb-12 max-w-2xl mx-auto">
-            Cypress requires well-crafted test code. BetaForge just needs your goals.
+            Cypress requires well-crafted test code. BetaForge just needs your
+            goals.
           </p>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <Play className="w-5 h-5 text-[#04C38E]" />
                 <span className="font-semibold text-ghost-white">Cypress</span>
-                <span className="text-xs px-2 py-1 rounded bg-[#04C38E]/20 text-[#04C38E]">JavaScript</span>
+                <span className="text-xs px-2 py-1 rounded bg-[#04C38E]/20 text-[#04C38E]">
+                  JavaScript
+                </span>
               </div>
               <div className="p-4 bg-void-elevated border border-white/10 rounded-2xl overflow-auto max-h-[400px]">
                 <pre className="text-xs text-phantom-gray font-mono leading-relaxed">
@@ -336,8 +358,12 @@ export default function CompareCypressPage() {
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <Bot className="w-5 h-5 text-neural-bright" />
-                <span className="font-semibold text-ghost-white">BetaForge</span>
-                <span className="text-xs px-2 py-1 rounded bg-neural/20 text-neural-bright">No-code</span>
+                <span className="font-semibold text-ghost-white">
+                  BetaForge
+                </span>
+                <span className="text-xs px-2 py-1 rounded bg-neural/20 text-neural-bright">
+                  No-code
+                </span>
               </div>
               <div className="p-4 bg-void-elevated border border-neural/30 rounded-2xl overflow-auto max-h-[400px]">
                 <pre className="text-xs text-neural-bright font-mono leading-relaxed">
@@ -356,7 +382,8 @@ export default function CompareCypressPage() {
             Cypress Limitations BetaForge Solves
           </h2>
           <p className="text-phantom-gray text-center mb-12 max-w-2xl mx-auto">
-            We love Cypress, but these architectural constraints can limit your testing.
+            We love Cypress, but these architectural constraints can limit your
+            testing.
           </p>
           <div className="grid md:grid-cols-2 gap-6">
             {cypressLimitations.map((item, index) => (
@@ -392,13 +419,17 @@ export default function CompareCypressPage() {
               <div className="text-center">
                 <div className="inline-flex items-center gap-2">
                   <Bot className="w-5 h-5 text-neural-bright" />
-                  <span className="font-semibold text-ghost-white">BetaForge</span>
+                  <span className="font-semibold text-ghost-white">
+                    BetaForge
+                  </span>
                 </div>
               </div>
               <div className="text-center">
                 <div className="inline-flex items-center gap-2">
                   <Play className="w-5 h-5 text-[#04C38E]" />
-                  <span className="font-semibold text-ghost-white">Cypress</span>
+                  <span className="font-semibold text-ghost-white">
+                    Cypress
+                  </span>
                 </div>
               </div>
             </div>
@@ -407,22 +438,36 @@ export default function CompareCypressPage() {
               <div
                 key={index}
                 className={`grid grid-cols-3 gap-4 p-6 ${
-                  index !== comparisonTable.length - 1 ? "border-b border-white/5" : ""
+                  index !== comparisonTable.length - 1
+                    ? "border-b border-white/5"
+                    : ""
                 }`}
               >
-                <div className="text-ghost-white font-medium">{row.feature}</div>
+                <div className="text-ghost-white font-medium">
+                  {row.feature}
+                </div>
                 <div className="text-center">
-                  <div className={`inline-flex items-center gap-2 ${
-                    row.winner === "betaforge" ? "text-quantum-green" : "text-phantom-gray"
-                  }`}>
-                    {row.winner === "betaforge" && <Check className="w-5 h-5" />}
+                  <div
+                    className={`inline-flex items-center gap-2 ${
+                      row.winner === "betaforge"
+                        ? "text-quantum-green"
+                        : "text-phantom-gray"
+                    }`}
+                  >
+                    {row.winner === "betaforge" && (
+                      <Check className="w-5 h-5" />
+                    )}
                     <span className="text-sm">{row.betaforge}</span>
                   </div>
                 </div>
                 <div className="text-center">
-                  <div className={`inline-flex items-center gap-2 ${
-                    row.winner === "cypress" ? "text-quantum-green" : "text-phantom-gray"
-                  }`}>
+                  <div
+                    className={`inline-flex items-center gap-2 ${
+                      row.winner === "cypress"
+                        ? "text-quantum-green"
+                        : "text-phantom-gray"
+                    }`}
+                  >
                     {row.winner === "cypress" && <Check className="w-5 h-5" />}
                     <span className="text-sm">{row.cypress}</span>
                   </div>
@@ -461,7 +506,10 @@ export default function CompareCypressPage() {
                 </div>
                 <ul className="space-y-2">
                   {item.useCases.map((useCase, i) => (
-                    <li key={i} className="flex items-center gap-2 text-phantom-gray">
+                    <li
+                      key={i}
+                      className="flex items-center gap-2 text-phantom-gray"
+                    >
                       <Check className="w-4 h-4 text-quantum-green" />
                       {useCase}
                     </li>
@@ -488,10 +536,16 @@ export default function CompareCypressPage() {
                 <div className="inline-block px-3 py-1 rounded-full bg-quantum-green/20 text-quantum-green text-sm mb-4">
                   {testimonial.result}
                 </div>
-                <p className="text-ghost-white text-lg mb-4">"{testimonial.quote}"</p>
+                <p className="text-ghost-white text-lg mb-4">
+                  "{testimonial.quote}"
+                </p>
                 <div>
-                  <div className="font-semibold text-ghost-white">{testimonial.author}</div>
-                  <div className="text-sm text-phantom-gray">{testimonial.role}</div>
+                  <div className="font-semibold text-ghost-white">
+                    {testimonial.author}
+                  </div>
+                  <div className="text-sm text-phantom-gray">
+                    {testimonial.role}
+                  </div>
                 </div>
               </div>
             ))}
@@ -506,7 +560,8 @@ export default function CompareCypressPage() {
             Complement Your Cypress Tests
           </h2>
           <p className="text-lg text-phantom-gray mb-8 max-w-2xl mx-auto">
-            Add AI-powered exploratory testing to your existing Cypress workflow.
+            Add AI-powered exploratory testing to your existing Cypress
+            workflow.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link

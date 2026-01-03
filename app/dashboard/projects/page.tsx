@@ -111,10 +111,10 @@ export default function ProjectsPage() {
               <ProjectCard
                 project={{
                   ...project,
-                  status: "idle" as const,
-                  stats: {
-                    bugsFound: Math.floor(Math.random() * 20),
-                    sessionsCount: Math.floor(Math.random() * 10),
+                  status: (project as { status?: string }).status as "active" | "testing" | "idle" | "error" || "idle",
+                  stats: (project as { stats?: { bugsFound: number; sessionsCount: number } }).stats || {
+                    bugsFound: 0,
+                    sessionsCount: 0,
                   },
                 }}
                 onDelete={() => handleDelete(project.id, project.name)}

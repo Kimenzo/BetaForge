@@ -2,6 +2,6 @@
 // Embedding Providers
 // ========================
 
-export * from './ollama';
-export * from './jina';
-export * from './openai';
+export * from "./ollama";
+export * from "./jina";
+export * from "./openai";

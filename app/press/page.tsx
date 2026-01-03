@@ -91,9 +91,21 @@ const mediaCoverage = [
 ];
 
 const logos = [
-  { name: "Primary Logo", description: "Full color on dark background", format: "SVG, PNG" },
-  { name: "White Logo", description: "For dark backgrounds", format: "SVG, PNG" },
-  { name: "Icon Only", description: "App icon and favicons", format: "SVG, PNG, ICO" },
+  {
+    name: "Primary Logo",
+    description: "Full color on dark background",
+    format: "SVG, PNG",
+  },
+  {
+    name: "White Logo",
+    description: "For dark backgrounds",
+    format: "SVG, PNG",
+  },
+  {
+    name: "Icon Only",
+    description: "App icon and favicons",
+    format: "SVG, PNG, ICO",
+  },
   { name: "Wordmark", description: "Text-only version", format: "SVG, PNG" },
 ];
 
@@ -135,7 +147,10 @@ export default function PressPage() {
               <span className="text-xl font-bold gradient-text">BetaForge</span>
             </Link>
             <div className="flex items-center gap-4">
-              <Link href="/about" className="text-phantom-gray hover:text-ghost-white text-sm transition-colors">
+              <Link
+                href="/about"
+                className="text-phantom-gray hover:text-ghost-white text-sm transition-colors"
+              >
                 About
               </Link>
               <Link
@@ -161,8 +176,9 @@ export default function PressPage() {
             <span className="gradient-text">Media Resources</span>
           </h1>
           <p className="text-lg text-phantom-gray max-w-2xl mx-auto mb-8">
-            Everything you need to tell the BetaForge story. Download brand assets,
-            access press releases, and get in touch with our communications team.
+            Everything you need to tell the BetaForge story. Download brand
+            assets, access press releases, and get in touch with our
+            communications team.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
@@ -192,7 +208,9 @@ export default function PressPage() {
                 key={index}
                 className="p-4 bg-void-elevated border border-white/5 rounded-xl text-center"
               >
-                <div className="text-2xl font-bold gradient-text mb-1">{fact.value}</div>
+                <div className="text-2xl font-bold gradient-text mb-1">
+                  {fact.value}
+                </div>
                 <div className="text-sm text-phantom-gray">{fact.label}</div>
               </div>
             ))}
@@ -206,7 +224,9 @@ export default function PressPage() {
           <div className="p-8 bg-void-elevated border border-white/5 rounded-3xl">
             <div className="flex items-center gap-3 mb-6">
               <Quote className="w-8 h-8 text-neural-bright" />
-              <h2 className="text-2xl font-bold text-ghost-white">About BetaForge</h2>
+              <h2 className="text-2xl font-bold text-ghost-white">
+                About BetaForge
+              </h2>
             </div>
             <p className="text-lg text-phantom-gray leading-relaxed mb-6">
               {boilerplate}
@@ -303,17 +323,24 @@ export default function PressPage() {
                 <div className="aspect-square bg-gradient-to-br from-neural/10 to-electric-cyan/10 rounded-xl flex items-center justify-center mb-4">
                   <Sparkles className="w-12 h-12 text-neural-bright" />
                 </div>
-                <h3 className="font-semibold text-ghost-white mb-1">{logo.name}</h3>
-                <p className="text-sm text-phantom-gray mb-2">{logo.description}</p>
+                <h3 className="font-semibold text-ghost-white mb-1">
+                  {logo.name}
+                </h3>
+                <p className="text-sm text-phantom-gray mb-2">
+                  {logo.description}
+                </p>
                 <p className="text-xs text-mist-gray">{logo.format}</p>
               </div>
             ))}
           </div>
           <div className="mt-8 p-6 bg-void-black border border-white/10 rounded-2xl">
-            <h3 className="font-semibold text-ghost-white mb-2">Brand Guidelines</h3>
+            <h3 className="font-semibold text-ghost-white mb-2">
+              Brand Guidelines
+            </h3>
             <p className="text-phantom-gray text-sm mb-4">
-              Please follow our brand guidelines when using BetaForge assets. Download
-              the complete brand book for colors, typography, and usage rules.
+              Please follow our brand guidelines when using BetaForge assets.
+              Download the complete brand book for colors, typography, and usage
+              rules.
             </p>
             <a
               href="#"
@@ -375,8 +402,8 @@ export default function PressPage() {
                 Media Inquiries
               </h2>
               <p className="text-lg text-phantom-gray mb-6 max-w-xl mx-auto">
-                For press inquiries, interview requests, or additional information,
-                please contact our communications team.
+                For press inquiries, interview requests, or additional
+                information, please contact our communications team.
               </p>
               <a
                 href="mailto:press@betaforge.ai"

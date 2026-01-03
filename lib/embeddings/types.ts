@@ -2,7 +2,7 @@
 // Embedding Types
 // ========================
 
-export type EmbeddingProviderType = 'ollama' | 'jina' | 'openai';
+export type EmbeddingProviderType = "ollama" | "jina" | "openai";
 
 export interface EmbeddingConfig {
   provider: EmbeddingProviderType;

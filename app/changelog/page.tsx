@@ -192,10 +192,7 @@ const releases = [
         "Dashboard loading speed",
         "Error handling",
       ],
-      fixed: [
-        "Session status not updating",
-        "Email notification delays",
-      ],
+      fixed: ["Session status not updating", "Email notification delays"],
     },
   },
 ];
@@ -240,14 +237,21 @@ export default function ChangelogPage() {
                 <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-neural-bright to-electric-cyan flex items-center justify-center">
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-xl font-bold gradient-text">BetaForge</span>
+                <span className="text-xl font-bold gradient-text">
+                  BetaForge
+                </span>
               </Link>
               <nav className="hidden md:flex items-center">
-                <Link href="/docs" className="text-phantom-gray hover:text-ghost-white text-sm transition-colors px-3 py-2">
+                <Link
+                  href="/docs"
+                  className="text-phantom-gray hover:text-ghost-white text-sm transition-colors px-3 py-2"
+                >
                   Docs
                 </Link>
                 <ChevronRight className="w-4 h-4 text-mist-gray" />
-                <span className="text-ghost-white text-sm px-3 py-2">Changelog</span>
+                <span className="text-ghost-white text-sm px-3 py-2">
+                  Changelog
+                </span>
               </nav>
             </div>
             <Link

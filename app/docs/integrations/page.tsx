@@ -33,7 +33,8 @@ const integrations = [
     id: "github",
     name: "GitHub Actions",
     icon: Github,
-    description: "Run BetaForge tests automatically on every pull request and push to main.",
+    description:
+      "Run BetaForge tests automatically on every pull request and push to main.",
     category: "CI/CD",
     color: "from-gray-700 to-gray-900",
     iconBg: "bg-gray-800",
@@ -64,7 +65,8 @@ jobs:
     id: "gitlab",
     name: "GitLab CI",
     icon: CircleDot,
-    description: "Integrate BetaForge into your GitLab CI/CD pipelines seamlessly.",
+    description:
+      "Integrate BetaForge into your GitLab CI/CD pipelines seamlessly.",
     category: "CI/CD",
     color: "from-orange-600 to-orange-800",
     iconBg: "bg-orange-600",
@@ -131,7 +133,8 @@ betaforge_test:
     id: "bitbucket",
     name: "Bitbucket Pipelines",
     icon: GitBranch,
-    description: "Run automated AI testing in your Bitbucket Pipelines workflow.",
+    description:
+      "Run automated AI testing in your Bitbucket Pipelines workflow.",
     category: "CI/CD",
     color: "from-blue-600 to-blue-800",
     iconBg: "bg-blue-600",
@@ -156,7 +159,8 @@ pipelines:
     id: "slack",
     name: "Slack",
     icon: Zap,
-    description: "Get real-time notifications about test results and critical bugs.",
+    description:
+      "Get real-time notifications about test results and critical bugs.",
     category: "Notifications",
     color: "from-purple-600 to-purple-800",
     iconBg: "bg-purple-600",
@@ -177,7 +181,8 @@ pipelines:
     id: "jira",
     name: "Jira",
     icon: Box,
-    description: "Automatically create Jira tickets from BetaForge bug reports.",
+    description:
+      "Automatically create Jira tickets from BetaForge bug reports.",
     category: "Issue Tracking",
     color: "from-blue-500 to-blue-700",
     iconBg: "bg-blue-500",
@@ -228,7 +233,8 @@ pipelines:
     id: "webhook",
     name: "Custom Webhooks",
     icon: Webhook,
-    description: "Send test results to any endpoint with customizable payloads.",
+    description:
+      "Send test results to any endpoint with customizable payloads.",
     category: "Custom",
     color: "from-neural to-electric-cyan",
     iconBg: "bg-neural",
@@ -256,27 +262,33 @@ const features = [
   {
     icon: RefreshCw,
     title: "Automatic Triggers",
-    description: "Tests run automatically on every deployment, PR, or scheduled interval.",
+    description:
+      "Tests run automatically on every deployment, PR, or scheduled interval.",
   },
   {
     icon: Shield,
     title: "Secure Credentials",
-    description: "API keys and secrets are encrypted and never exposed in logs.",
+    description:
+      "API keys and secrets are encrypted and never exposed in logs.",
   },
   {
     icon: Clock,
     title: "Async & Sync Modes",
-    description: "Wait for results to block pipelines, or continue asynchronously.",
+    description:
+      "Wait for results to block pipelines, or continue asynchronously.",
   },
   {
     icon: Zap,
     title: "Real-time Updates",
-    description: "Get instant notifications via Slack, email, or custom webhooks.",
+    description:
+      "Get instant notifications via Slack, email, or custom webhooks.",
   },
 ];
 
 export default function IntegrationsPage() {
-  const [selectedIntegration, setSelectedIntegration] = useState(integrations[0]);
+  const [selectedIntegration, setSelectedIntegration] = useState(
+    integrations[0]
+  );
   const [copied, setCopied] = useState(false);
 
   const copyCode = () => {
@@ -305,14 +317,21 @@ export default function IntegrationsPage() {
                 <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-neural-bright to-electric-cyan flex items-center justify-center">
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-xl font-bold gradient-text">BetaForge</span>
+                <span className="text-xl font-bold gradient-text">
+                  BetaForge
+                </span>
               </Link>
               <nav className="hidden md:flex items-center">
-                <Link href="/docs" className="text-phantom-gray hover:text-ghost-white text-sm transition-colors px-3 py-2">
+                <Link
+                  href="/docs"
+                  className="text-phantom-gray hover:text-ghost-white text-sm transition-colors px-3 py-2"
+                >
                   Docs
                 </Link>
                 <ChevronRight className="w-4 h-4 text-mist-gray" />
-                <span className="text-ghost-white text-sm px-3 py-2">Integrations</span>
+                <span className="text-ghost-white text-sm px-3 py-2">
+                  Integrations
+                </span>
               </nav>
             </div>
             <Link
@@ -329,7 +348,10 @@ export default function IntegrationsPage() {
       <section className="relative pt-32 pb-16 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-2 text-sm text-phantom-gray mb-6">
-            <Link href="/docs" className="hover:text-ghost-white transition-colors">
+            <Link
+              href="/docs"
+              className="hover:text-ghost-white transition-colors"
+            >
               Documentation
             </Link>
             <ChevronRight className="w-4 h-4" />
@@ -345,8 +367,9 @@ export default function IntegrationsPage() {
                 Integrations
               </h1>
               <p className="text-lg text-phantom-gray max-w-2xl">
-                Connect BetaForge to your development workflow. Automate testing in CI/CD pipelines,
-                get notifications in Slack, and sync bugs to your issue tracker.
+                Connect BetaForge to your development workflow. Automate testing
+                in CI/CD pipelines, get notifications in Slack, and sync bugs to
+                your issue tracker.
               </p>
             </div>
           </div>
@@ -359,8 +382,12 @@ export default function IntegrationsPage() {
                 className="p-5 bg-void-elevated border border-white/5 rounded-xl"
               >
                 <feature.icon className="w-6 h-6 text-neural-bright mb-3" />
-                <h3 className="font-semibold text-ghost-white mb-1">{feature.title}</h3>
-                <p className="text-sm text-phantom-gray">{feature.description}</p>
+                <h3 className="font-semibold text-ghost-white mb-1">
+                  {feature.title}
+                </h3>
+                <p className="text-sm text-phantom-gray">
+                  {feature.description}
+                </p>
               </div>
             ))}
           </div>
@@ -370,7 +397,9 @@ export default function IntegrationsPage() {
       {/* Integrations Grid */}
       <section className="relative py-12 px-6">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl font-bold text-ghost-white mb-8">Available Integrations</h2>
+          <h2 className="text-2xl font-bold text-ghost-white mb-8">
+            Available Integrations
+          </h2>
 
           {/* Category Filter */}
           <div className="flex flex-wrap gap-2 mb-8">
@@ -406,7 +435,9 @@ export default function IntegrationsPage() {
                 >
                   <integration.icon className="w-5 h-5 text-white" />
                 </div>
-                <h3 className="font-semibold text-ghost-white mb-1">{integration.name}</h3>
+                <h3 className="font-semibold text-ghost-white mb-1">
+                  {integration.name}
+                </h3>
                 <p className="text-xs text-mist-gray">{integration.category}</p>
               </button>
             ))}
@@ -425,7 +456,9 @@ export default function IntegrationsPage() {
                   <h3 className="text-xl font-bold text-ghost-white mb-1">
                     {selectedIntegration.name}
                   </h3>
-                  <p className="text-phantom-gray">{selectedIntegration.description}</p>
+                  <p className="text-phantom-gray">
+                    {selectedIntegration.description}
+                  </p>
                 </div>
               </div>
             </div>
@@ -463,7 +496,9 @@ export default function IntegrationsPage() {
 
             {/* Steps */}
             <div className="p-6 border-t border-white/5">
-              <h4 className="font-semibold text-ghost-white mb-4">Quick Setup Steps</h4>
+              <h4 className="font-semibold text-ghost-white mb-4">
+                Quick Setup Steps
+              </h4>
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 rounded-full bg-neural/20 text-neural-bright flex items-center justify-center text-xs font-bold">
@@ -471,7 +506,10 @@ export default function IntegrationsPage() {
                   </div>
                   <p className="text-phantom-gray text-sm">
                     Get your API key from the{" "}
-                    <Link href="/dashboard/settings" className="text-neural-bright hover:underline">
+                    <Link
+                      href="/dashboard/settings"
+                      className="text-neural-bright hover:underline"
+                    >
                       Dashboard Settings
                     </Link>
                   </p>
@@ -517,8 +555,8 @@ export default function IntegrationsPage() {
                 Need a Custom Integration?
               </h2>
               <p className="text-phantom-gray mb-8 max-w-xl mx-auto">
-                We&apos;re always adding new integrations. Contact us if you need support
-                for a specific tool or platform.
+                We&apos;re always adding new integrations. Contact us if you
+                need support for a specific tool or platform.
               </p>
               <div className="flex items-center justify-center gap-4">
                 <Link

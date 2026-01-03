@@ -1,7 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { Sparkles, Shield, FileText, Lock, Eye, Database, Globe, Mail, Users } from "lucide-react";
+import {
+  Sparkles,
+  Shield,
+  FileText,
+  Lock,
+  Eye,
+  Database,
+  Globe,
+  Mail,
+  Users,
+} from "lucide-react";
 import { Footer } from "@/components/layout";
 
 const sections = [
@@ -311,10 +321,16 @@ export default function PrivacyPage() {
               <span className="text-xl font-bold gradient-text">BetaForge</span>
             </Link>
             <div className="flex items-center gap-4">
-              <Link href="/terms" className="text-phantom-gray hover:text-ghost-white text-sm transition-colors">
+              <Link
+                href="/terms"
+                className="text-phantom-gray hover:text-ghost-white text-sm transition-colors"
+              >
                 Terms
               </Link>
-              <Link href="/contact" className="text-phantom-gray hover:text-ghost-white text-sm transition-colors">
+              <Link
+                href="/contact"
+                className="text-phantom-gray hover:text-ghost-white text-sm transition-colors"
+              >
                 Contact
               </Link>
             </div>
@@ -337,8 +353,8 @@ export default function PrivacyPage() {
             Last updated: January 15, 2026
           </p>
           <p className="text-phantom-gray max-w-2xl mx-auto">
-            Your privacy is important to us. This policy explains how BetaForge collects,
-            uses, and protects your personal information.
+            Your privacy is important to us. This policy explains how BetaForge
+            collects, uses, and protects your personal information.
           </p>
         </div>
       </section>
@@ -347,27 +363,39 @@ export default function PrivacyPage() {
       <section className="relative py-8 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="p-6 bg-gradient-to-r from-neural/10 to-electric-cyan/10 border border-neural/30 rounded-2xl">
-            <h2 className="text-lg font-semibold text-ghost-white mb-4">Privacy at a Glance</h2>
+            <h2 className="text-lg font-semibold text-ghost-white mb-4">
+              Privacy at a Glance
+            </h2>
             <div className="grid md:grid-cols-3 gap-4">
               <div className="flex items-start gap-3">
                 <Lock className="w-5 h-5 text-neural-bright mt-1" />
                 <div>
-                  <h3 className="font-medium text-ghost-white">Data Security</h3>
-                  <p className="text-sm text-phantom-gray">SOC 2 certified, encrypted in transit and at rest</p>
+                  <h3 className="font-medium text-ghost-white">
+                    Data Security
+                  </h3>
+                  <p className="text-sm text-phantom-gray">
+                    SOC 2 certified, encrypted in transit and at rest
+                  </p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <Shield className="w-5 h-5 text-neural-bright mt-1" />
                 <div>
-                  <h3 className="font-medium text-ghost-white">No Data Sales</h3>
-                  <p className="text-sm text-phantom-gray">We never sell your personal information</p>
+                  <h3 className="font-medium text-ghost-white">
+                    No Data Sales
+                  </h3>
+                  <p className="text-sm text-phantom-gray">
+                    We never sell your personal information
+                  </p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <Eye className="w-5 h-5 text-neural-bright mt-1" />
                 <div>
                   <h3 className="font-medium text-ghost-white">Your Control</h3>
-                  <p className="text-sm text-phantom-gray">Access, export, or delete your data anytime</p>
+                  <p className="text-sm text-phantom-gray">
+                    Access, export, or delete your data anytime
+                  </p>
                 </div>
               </div>
             </div>
@@ -379,7 +407,9 @@ export default function PrivacyPage() {
       <section className="relative py-8 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="p-6 bg-void-elevated border border-white/10 rounded-2xl">
-            <h2 className="text-lg font-semibold text-ghost-white mb-4">Table of Contents</h2>
+            <h2 className="text-lg font-semibold text-ghost-white mb-4">
+              Table of Contents
+            </h2>
             <div className="grid md:grid-cols-2 gap-2">
               {sections.map((section) => (
                 <a
@@ -402,7 +432,9 @@ export default function PrivacyPage() {
             {sections.map((section) => (
               <div key={section.id} id={section.id} className="scroll-mt-24">
                 <div className="flex items-center gap-3 mb-4">
-                  {section.icon && <section.icon className="w-6 h-6 text-neural-bright" />}
+                  {section.icon && (
+                    <section.icon className="w-6 h-6 text-neural-bright" />
+                  )}
                   <h2 className="text-2xl font-bold text-ghost-white">
                     {section.title}
                   </h2>
@@ -414,8 +446,14 @@ export default function PrivacyPage() {
                       className="text-phantom-gray leading-relaxed mb-4"
                       dangerouslySetInnerHTML={{
                         __html: paragraph
-                          .replace(/\*\*(.*?)\*\*/g, '<strong class="text-ghost-white">$1</strong>')
-                          .replace(/• /g, '<span class="text-neural-bright">•</span> '),
+                          .replace(
+                            /\*\*(.*?)\*\*/g,
+                            '<strong class="text-ghost-white">$1</strong>'
+                          )
+                          .replace(
+                            /• /g,
+                            '<span class="text-neural-bright">•</span> '
+                          ),
                       }}
                     />
                   ))}
@@ -429,7 +467,9 @@ export default function PrivacyPage() {
       {/* Related Documents */}
       <section className="relative py-12 px-6 bg-void-elevated/50">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-xl font-semibold text-ghost-white mb-6">Related Documents</h2>
+          <h2 className="text-xl font-semibold text-ghost-white mb-6">
+            Related Documents
+          </h2>
           <div className="grid md:grid-cols-3 gap-4">
             <Link
               href="/terms"

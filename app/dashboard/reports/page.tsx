@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   Bug,
@@ -17,6 +17,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { useReports } from "@/lib/hooks";
 
 type Severity = "all" | "critical" | "high" | "medium" | "low";
 
@@ -47,57 +48,46 @@ const severityConfig = {
   },
 };
 
-// Sample reports data
-const sampleReports = [
-  {
-    id: "1",
-    title: "Form validation error not displayed",
-    severity: "high" as const,
-    project: "E-commerce App",
-    agent: "Sarah",
-    createdAt: "2 hours ago",
-    status: "open",
-  },
-  {
-    id: "2",
-    title: "Keyboard navigation broken in modal",
-    severity: "critical" as const,
-    project: "Dashboard Pro",
-    agent: "Ahmed",
-    createdAt: "4 hours ago",
-    status: "open",
-  },
-  {
-    id: "3",
-    title: "Mobile menu doesn't close properly",
-    severity: "medium" as const,
-    project: "Marketing Site",
-    agent: "Lin",
-    createdAt: "1 day ago",
-    status: "fixed",
-  },
-];
+// Helper function to format relative time
+function formatRelativeTime(dateString: string): string {
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
+
+  if (diffMins < 1) return "just now";
+  if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? "s" : ""} ago`;
+  if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? "s" : ""} ago`;
+  return `${diffDays} day${diffDays > 1 ? "s" : ""} ago`;
+}
 
 export default function ReportsPage() {
   const [selectedSeverity, setSelectedSeverity] = useState<Severity>("all");
   const [searchQuery, setSearchQuery] = useState("");
+  
+  const { reports, isLoading, stats } = useReports({
+    severity: selectedSeverity !== "all" ? selectedSeverity : undefined,
+    limit: 100,
+  });
 
   const severities: Severity[] = ["all", "critical", "high", "medium", "low"];
 
-  const filteredReports = sampleReports.filter((report) => {
-    const matchesSeverity =
-      selectedSeverity === "all" || report.severity === selectedSeverity;
+  const filteredReports = reports.filter((report) => {
     const matchesSearch = report.title
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
-    return matchesSeverity && matchesSearch;
+    return matchesSearch;
   });
 
   return (
     <div className="space-y-8">
       {/* Header */}
       <div className="animate-fade-in-up">
-        <h1 className="text-3xl font-bold text-ghost-white mb-2">Bug Reports</h1>
+        <h1 className="text-3xl font-bold text-ghost-white mb-2">
+          Bug Reports
+        </h1>
         <p className="text-phantom-gray">
           All bugs discovered by AI agents across your projects
         </p>
@@ -110,28 +100,28 @@ export default function ReportsPage() {
             <Bug className="w-4 h-4 text-neural-bright" />
             <span className="text-sm text-phantom-gray">Total Bugs</span>
           </div>
-          <p className="text-2xl font-bold text-ghost-white">47</p>
+          <p className="text-2xl font-bold text-ghost-white">{isLoading ? "..." : stats.total}</p>
         </div>
         <div className="glass rounded-xl p-4 border border-white/5">
           <div className="flex items-center gap-2 mb-2">
             <AlertTriangle className="w-4 h-4 text-crimson-red" />
             <span className="text-sm text-phantom-gray">Critical</span>
           </div>
-          <p className="text-2xl font-bold text-ghost-white">3</p>
+          <p className="text-2xl font-bold text-ghost-white">{isLoading ? "..." : stats.critical}</p>
         </div>
         <div className="glass rounded-xl p-4 border border-white/5">
           <div className="flex items-center gap-2 mb-2">
             <AlertCircle className="w-4 h-4 text-ember-orange" />
             <span className="text-sm text-phantom-gray">Open</span>
           </div>
-          <p className="text-2xl font-bold text-ghost-white">28</p>
+          <p className="text-2xl font-bold text-ghost-white">{isLoading ? "..." : stats.open}</p>
         </div>
         <div className="glass rounded-xl p-4 border border-white/5">
           <div className="flex items-center gap-2 mb-2">
             <Info className="w-4 h-4 text-quantum-green" />
             <span className="text-sm text-phantom-gray">Fixed</span>
           </div>
-          <p className="text-2xl font-bold text-ghost-white">19</p>
+          <p className="text-2xl font-bold text-ghost-white">{isLoading ? "..." : stats.fixed}</p>
         </div>
       </div>
 
@@ -185,7 +175,21 @@ export default function ReportsPage() {
       </div>
 
       {/* Reports List */}
-      {filteredReports.length > 0 ? (
+      {isLoading ? (
+        <div className="space-y-3 animate-fade-in-up stagger-3">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="glass rounded-xl border border-white/5 p-5 animate-pulse">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-void-elevated" />
+                <div className="flex-1">
+                  <div className="h-4 w-48 bg-void-elevated rounded mb-2" />
+                  <div className="h-3 w-32 bg-void-elevated rounded" />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : filteredReports.length > 0 ? (
         <div className="space-y-3 animate-fade-in-up stagger-3">
           {filteredReports.map((report, index) => (
             <Link
@@ -197,7 +201,9 @@ export default function ReportsPage() {
               <div className="p-5 flex items-center gap-4">
                 {/* Severity Icon */}
                 <div
-                  className={`p-3 rounded-xl ${severityConfig[report.severity].bg} ${severityConfig[report.severity].color}`}
+                  className={`p-3 rounded-xl ${
+                    severityConfig[report.severity].bg
+                  } ${severityConfig[report.severity].color}`}
                 >
                   {severityConfig[report.severity].icon}
                 </div>
@@ -209,18 +215,20 @@ export default function ReportsPage() {
                       {report.title}
                     </h3>
                     <Badge
-                      variant={report.status === "open" ? "destructive" : "success"}
+                      variant={
+                        report.status === "open" ? "destructive" : "success"
+                      }
                       size="sm"
                     >
                       {report.status}
                     </Badge>
                   </div>
                   <div className="flex items-center gap-3 text-sm text-phantom-gray">
-                    <span>{report.project}</span>
+                    <span>{report.projectName || "Unknown Project"}</span>
                     <span className="w-1 h-1 rounded-full bg-mist-gray" />
-                    <span>by {report.agent}</span>
+                    <span>by {report.agentName || "Agent"}</span>
                     <span className="w-1 h-1 rounded-full bg-mist-gray" />
-                    <span>{report.createdAt}</span>
+                    <span>{formatRelativeTime(report.createdAt)}</span>
                   </div>
                 </div>
 

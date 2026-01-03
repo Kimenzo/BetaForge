@@ -135,22 +135,26 @@ const processSteps = [
   {
     step: 1,
     title: "Discovery Call",
-    description: "We learn about your testing needs, team structure, and security requirements.",
+    description:
+      "We learn about your testing needs, team structure, and security requirements.",
   },
   {
     step: 2,
     title: "Custom Demo",
-    description: "See BetaForge in action with a demo tailored to your specific use cases.",
+    description:
+      "See BetaForge in action with a demo tailored to your specific use cases.",
   },
   {
     step: 3,
     title: "Proof of Concept",
-    description: "Run a pilot project to measure real impact on your testing workflow.",
+    description:
+      "Run a pilot project to measure real impact on your testing workflow.",
   },
   {
     step: 4,
     title: "Deployment",
-    description: "Custom onboarding with dedicated support to ensure successful adoption.",
+    description:
+      "Custom onboarding with dedicated support to ensure successful adoption.",
   },
 ];
 
@@ -175,7 +179,10 @@ export default function EnterprisePage() {
               <span className="text-xl font-bold gradient-text">BetaForge</span>
             </Link>
             <div className="flex items-center gap-4">
-              <Link href="/pricing" className="text-phantom-gray hover:text-ghost-white text-sm transition-colors">
+              <Link
+                href="/pricing"
+                className="text-phantom-gray hover:text-ghost-white text-sm transition-colors"
+              >
                 Pricing
               </Link>
               <Link
@@ -196,15 +203,18 @@ export default function EnterprisePage() {
             <div>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-neural/20 mb-6">
                 <Building2 className="w-4 h-4 text-neural-bright" />
-                <span className="text-sm text-phantom-gray">Enterprise Solutions</span>
+                <span className="text-sm text-phantom-gray">
+                  Enterprise Solutions
+                </span>
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
                 <span className="text-ghost-white">AI Testing at </span>
                 <span className="gradient-text">Enterprise Scale</span>
               </h1>
               <p className="text-lg text-phantom-gray mb-8 leading-relaxed">
-                Empower your organization with unlimited AI-powered beta testing. Get enterprise-grade
-                security, dedicated support, and custom solutions tailored to your needs.
+                Empower your organization with unlimited AI-powered beta
+                testing. Get enterprise-grade security, dedicated support, and
+                custom solutions tailored to your needs.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link
@@ -231,7 +241,9 @@ export default function EnterprisePage() {
                       <div className="text-3xl md:text-4xl font-bold gradient-text mb-1">
                         {metric.value}
                       </div>
-                      <div className="text-sm text-phantom-gray">{metric.label}</div>
+                      <div className="text-sm text-phantom-gray">
+                        {metric.label}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -248,13 +260,18 @@ export default function EnterprisePage() {
             TRUSTED BY ENGINEERING TEAMS AT
           </p>
           <div className="flex flex-wrap justify-center items-center gap-12 opacity-50">
-            {["TechCorp", "FinanceFlow", "HealthTech", "DataSys", "CloudNine", "DevOps Pro"].map(
-              (company) => (
-                <div key={company} className="text-xl font-bold text-ghost-white">
-                  {company}
-                </div>
-              )
-            )}
+            {[
+              "TechCorp",
+              "FinanceFlow",
+              "HealthTech",
+              "DataSys",
+              "CloudNine",
+              "DevOps Pro",
+            ].map((company) => (
+              <div key={company} className="text-xl font-bold text-ghost-white">
+                {company}
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -267,8 +284,8 @@ export default function EnterprisePage() {
               Enterprise-Grade Features
             </h2>
             <p className="text-lg text-phantom-gray max-w-2xl mx-auto">
-              Everything you need to run AI-powered testing at scale with the security
-              and support your organization requires.
+              Everything you need to run AI-powered testing at scale with the
+              security and support your organization requires.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -303,8 +320,9 @@ export default function EnterprisePage() {
                 Security You Can Trust
               </h2>
               <p className="text-lg text-phantom-gray mb-8">
-                BetaForge Enterprise meets the highest security standards. Your data
-                is protected with enterprise-grade encryption and compliance certifications.
+                BetaForge Enterprise meets the highest security standards. Your
+                data is protected with enterprise-grade encryption and
+                compliance certifications.
               </p>
               <div className="grid grid-cols-2 gap-4">
                 {securityFeatures.map((item, index) => (
@@ -313,8 +331,12 @@ export default function EnterprisePage() {
                       <item.icon className="w-4 h-4" />
                     </div>
                     <div>
-                      <h4 className="font-medium text-ghost-white text-sm">{item.title}</h4>
-                      <p className="text-xs text-phantom-gray">{item.description}</p>
+                      <h4 className="font-medium text-ghost-white text-sm">
+                        {item.title}
+                      </h4>
+                      <p className="text-xs text-phantom-gray">
+                        {item.description}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -326,7 +348,9 @@ export default function EnterprisePage() {
                 <div className="flex items-center gap-4 mb-6">
                   <Award className="w-12 h-12 text-quantum-green" />
                   <div>
-                    <h3 className="text-xl font-bold text-ghost-white">SOC 2 Type II</h3>
+                    <h3 className="text-xl font-bold text-ghost-white">
+                      SOC 2 Type II
+                    </h3>
                     <p className="text-phantom-gray">Certified Compliant</p>
                   </div>
                 </div>
@@ -338,7 +362,10 @@ export default function EnterprisePage() {
                     "Employee security training",
                     "Vendor risk management",
                   ].map((item, i) => (
-                    <li key={i} className="flex items-center gap-2 text-phantom-gray">
+                    <li
+                      key={i}
+                      className="flex items-center gap-2 text-phantom-gray"
+                    >
                       <CheckCircle2 className="w-4 h-4 text-quantum-green" />
                       {item}
                     </li>
@@ -362,13 +389,17 @@ export default function EnterprisePage() {
                 key={index}
                 className="p-6 bg-void-elevated border border-white/5 rounded-2xl"
               >
-                <p className="text-phantom-gray mb-6 italic">&ldquo;{testimonial.quote}&rdquo;</p>
+                <p className="text-phantom-gray mb-6 italic">
+                  &ldquo;{testimonial.quote}&rdquo;
+                </p>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-neural to-electric-cyan flex items-center justify-center text-white font-bold text-sm">
                     {testimonial.logo}
                   </div>
                   <div>
-                    <p className="font-semibold text-ghost-white">{testimonial.author}</p>
+                    <p className="font-semibold text-ghost-white">
+                      {testimonial.author}
+                    </p>
                     <p className="text-sm text-mist-gray">
                       {testimonial.role}, {testimonial.company}
                     </p>
@@ -388,7 +419,8 @@ export default function EnterprisePage() {
               Getting Started is Easy
             </h2>
             <p className="text-lg text-phantom-gray">
-              Our enterprise team will guide you through every step of the process.
+              Our enterprise team will guide you through every step of the
+              process.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -404,7 +436,9 @@ export default function EnterprisePage() {
                   <h3 className="text-lg font-semibold text-ghost-white mb-2">
                     {step.title}
                   </h3>
-                  <p className="text-sm text-phantom-gray">{step.description}</p>
+                  <p className="text-sm text-phantom-gray">
+                    {step.description}
+                  </p>
                 </div>
               </div>
             ))}
@@ -423,8 +457,9 @@ export default function EnterprisePage() {
                 Ready to Transform Your Testing?
               </h2>
               <p className="text-lg text-phantom-gray mb-8 max-w-xl mx-auto">
-                Join 500+ enterprise teams using BetaForge to ship better software faster.
-                Let&apos;s discuss how we can help your organization.
+                Join 500+ enterprise teams using BetaForge to ship better
+                software faster. Let&apos;s discuss how we can help your
+                organization.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link

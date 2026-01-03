@@ -3,25 +3,25 @@
 // ========================
 // Purpose: Semantic similarity search using embeddings
 // Use for: Finding similar bugs, semantic search, RAG retrieval
-// 
+//
 // "Vector databases enable semantic understanding - they find
 // things that mean the same, not just match the same keywords."
 //
 // From comments: "For beginners, prioritize vector, relational,
 // and key-value as they cover most early use cases." - Ethan Ruhe
 
-import type { 
-  DataStore, 
-  HealthStatus, 
-  VectorDocument, 
-  VectorSearchResult, 
-  VectorSearchOptions 
+import type {
+  DataStore,
+  HealthStatus,
+  VectorDocument,
+  VectorSearchResult,
+  VectorSearchOptions,
 } from "./types";
 import { getEmbeddingService } from "../embeddings";
 
 /**
  * Vector Store using Supabase pgvector extension
- * 
+ *
  * This provides semantic search capabilities for:
  * - Finding similar bug reports
  * - Matching test scenarios to known patterns
@@ -39,7 +39,7 @@ export class VectorStore implements DataStore {
   async healthCheck(): Promise<HealthStatus> {
     const start = Date.now();
     let provider = "none";
-    
+
     try {
       const embeddingService = getEmbeddingService();
       await embeddingService.initialize();
@@ -47,7 +47,7 @@ export class VectorStore implements DataStore {
     } catch {
       // Embedding service not configured
     }
-    
+
     return {
       healthy: true,
       latencyMs: Date.now() - start,
@@ -68,7 +68,10 @@ export class VectorStore implements DataStore {
       const embeddingService = getEmbeddingService();
       return await embeddingService.embed(text);
     } catch (error) {
-      console.warn("[VectorStore] Real embedding failed, using fallback:", error);
+      console.warn(
+        "[VectorStore] Real embedding failed, using fallback:",
+        error
+      );
       return this.mockEmbedding();
     }
   }
@@ -80,20 +83,22 @@ export class VectorStore implements DataStore {
     const mockEmbedding = new Array(this.embeddingDimension)
       .fill(0)
       .map(() => Math.random() * 2 - 1);
-    
+
     const magnitude = Math.sqrt(
       mockEmbedding.reduce((sum, val) => sum + val * val, 0)
     );
-    return mockEmbedding.map(val => val / magnitude);
+    return mockEmbedding.map((val) => val / magnitude);
   }
 
   // ========================
   // Document Operations
   // ========================
 
-  async upsertDocument(doc: Omit<VectorDocument, "embedding">): Promise<VectorDocument> {
+  async upsertDocument(
+    doc: Omit<VectorDocument, "embedding">
+  ): Promise<VectorDocument> {
     const embedding = await this.generateEmbedding(doc.content);
-    
+
     const vectorDoc: VectorDocument = {
       ...doc,
       embedding,
@@ -122,16 +127,16 @@ export class VectorStore implements DataStore {
    * Find semantically similar documents using cosine similarity
    */
   async search(
-    query: string, 
+    query: string,
     options: VectorSearchOptions = {}
   ): Promise<VectorSearchResult[]> {
     const { topK = 10, threshold = 0.7 } = options;
-    
+
     // Generate embedding for the query
     const queryEmbedding = await this.generateEmbedding(query);
 
     // In production with Supabase pgvector:
-    // SELECT id, content, metadata, 
+    // SELECT id, content, metadata,
     //   1 - (embedding <=> $1) as similarity
     // FROM documents
     // WHERE 1 - (embedding <=> $1) > $2
@@ -140,16 +145,18 @@ export class VectorStore implements DataStore {
 
     // Mock results for development
     const mockResults: VectorSearchResult[] = [];
-    
-    console.log(`[VectorStore] Search for: "${query.substring(0, 50)}..." (top ${topK})`);
-    return mockResults.filter(r => r.similarity >= threshold);
+
+    console.log(
+      `[VectorStore] Search for: "${query.substring(0, 50)}..." (top ${topK})`
+    );
+    return mockResults.filter((r) => r.similarity >= threshold);
   }
 
   /**
    * Find similar bug reports to help with deduplication
    */
   async findSimilarBugs(
-    bugDescription: string, 
+    bugDescription: string,
     projectId?: string,
     options: VectorSearchOptions = {}
   ): Promise<VectorSearchResult[]> {
@@ -164,7 +171,7 @@ export class VectorStore implements DataStore {
     context: string,
     options: VectorSearchOptions = {}
   ): Promise<VectorSearchResult[]> {
-    return this.search(context, { ...options, filter: { type: 'pattern' } });
+    return this.search(context, { ...options, filter: { type: "pattern" } });
   }
 
   // ========================

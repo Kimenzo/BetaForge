@@ -215,10 +215,16 @@ export default function TermsPage() {
               <span className="text-xl font-bold gradient-text">BetaForge</span>
             </Link>
             <div className="flex items-center gap-4">
-              <Link href="/privacy" className="text-phantom-gray hover:text-ghost-white text-sm transition-colors">
+              <Link
+                href="/privacy"
+                className="text-phantom-gray hover:text-ghost-white text-sm transition-colors"
+              >
                 Privacy
               </Link>
-              <Link href="/contact" className="text-phantom-gray hover:text-ghost-white text-sm transition-colors">
+              <Link
+                href="/contact"
+                className="text-phantom-gray hover:text-ghost-white text-sm transition-colors"
+              >
                 Contact
               </Link>
             </div>
@@ -241,8 +247,9 @@ export default function TermsPage() {
             Last updated: January 15, 2026
           </p>
           <p className="text-phantom-gray max-w-2xl mx-auto">
-            These Terms of Service govern your use of BetaForge's AI-powered testing
-            platform. Please read them carefully before using our services.
+            These Terms of Service govern your use of BetaForge's AI-powered
+            testing platform. Please read them carefully before using our
+            services.
           </p>
         </div>
       </section>
@@ -251,7 +258,9 @@ export default function TermsPage() {
       <section className="relative py-8 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="p-6 bg-void-elevated border border-white/10 rounded-2xl">
-            <h2 className="text-lg font-semibold text-ghost-white mb-4">Table of Contents</h2>
+            <h2 className="text-lg font-semibold text-ghost-white mb-4">
+              Table of Contents
+            </h2>
             <div className="grid md:grid-cols-2 gap-2">
               {sections.map((section) => (
                 <a
@@ -283,8 +292,14 @@ export default function TermsPage() {
                       className="text-phantom-gray leading-relaxed mb-4"
                       dangerouslySetInnerHTML={{
                         __html: paragraph
-                          .replace(/\*\*(.*?)\*\*/g, '<strong class="text-ghost-white">$1</strong>')
-                          .replace(/• /g, '<span class="text-neural-bright">•</span> '),
+                          .replace(
+                            /\*\*(.*?)\*\*/g,
+                            '<strong class="text-ghost-white">$1</strong>'
+                          )
+                          .replace(
+                            /• /g,
+                            '<span class="text-neural-bright">•</span> '
+                          ),
                       }}
                     />
                   ))}
@@ -298,7 +313,9 @@ export default function TermsPage() {
       {/* Related Documents */}
       <section className="relative py-12 px-6 bg-void-elevated/50">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-xl font-semibold text-ghost-white mb-6">Related Documents</h2>
+          <h2 className="text-xl font-semibold text-ghost-white mb-6">
+            Related Documents
+          </h2>
           <div className="grid md:grid-cols-3 gap-4">
             <Link
               href="/privacy"
@@ -308,7 +325,9 @@ export default function TermsPage() {
               <h3 className="font-semibold text-ghost-white group-hover:text-neural-bright transition-colors">
                 Privacy Policy
               </h3>
-              <p className="text-sm text-phantom-gray">How we handle your data</p>
+              <p className="text-sm text-phantom-gray">
+                How we handle your data
+              </p>
             </Link>
             <Link
               href="/cookies"

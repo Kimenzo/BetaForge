@@ -90,7 +90,7 @@ export class AgentOrchestrator {
    * Run a single agent to test the application
    * Uses multi-database architecture for enhanced context:
    * - Agent Memory Store: Previous session learnings
-   * - Knowledge Base: Testing patterns and best practices  
+   * - Knowledge Base: Testing patterns and best practices
    * - Cache Store: Session state management
    * - Vector Store: Semantic bug deduplication
    */
@@ -114,9 +114,9 @@ export class AgentOrchestrator {
 
     // Cache the execution state for real-time access
     const cacheStore = getCacheStore();
-    await cacheStore.set(`execution:${executionId}`, execution, { 
+    await cacheStore.set(`execution:${executionId}`, execution, {
       ttlSeconds: 3600,
-      namespace: 'sessions' 
+      namespace: "sessions",
     });
 
     this.emitEvent({
@@ -137,7 +137,10 @@ export class AgentOrchestrator {
       );
 
       // Build the system prompt with agent persona AND context
-      const systemPrompt = await this.buildEnhancedSystemPrompt(agent, agentContext);
+      const systemPrompt = await this.buildEnhancedSystemPrompt(
+        agent,
+        agentContext
+      );
 
       // Use Claude to explore and test the application
       const testOutput = await this.executeAgentTesting(
@@ -147,7 +150,11 @@ export class AgentOrchestrator {
       );
 
       // Process findings into bug reports
-      const bugReports = await this.processBugFindings(executionId, testOutput, agent);
+      const bugReports = await this.processBugFindings(
+        executionId,
+        testOutput,
+        agent
+      );
 
       // Store learnings in agent memory for future sessions
       await this.storeAgentLearnings(agent, sessionId, testOutput, bugReports);
@@ -156,9 +163,9 @@ export class AgentOrchestrator {
       execution.completedAt = new Date();
 
       // Update cached state
-      await cacheStore.set(`execution:${executionId}`, execution, { 
+      await cacheStore.set(`execution:${executionId}`, execution, {
         ttlSeconds: 3600,
-        namespace: 'sessions' 
+        namespace: "sessions",
       });
 
       this.emitEvent({
@@ -249,14 +256,18 @@ After testing, provide your findings as a JSON object:
 
     return `${basePrompt}
 
-${contextSection ? `\n## CONTEXT FROM PREVIOUS SESSIONS\n${contextSection}` : ""}
+${
+  contextSection ? `\n## CONTEXT FROM PREVIOUS SESSIONS\n${contextSection}` : ""
+}
 
 ## LEARNING GUIDANCE
 As you test, take note of patterns you discover. Your learnings will be stored
 and used in future sessions to improve testing efficiency. Focus on:
 - Recurring bug patterns specific to this application
 - UX issues that align with your testing persona
-- Platform-specific quirks on ${agent.deviceConfig.os}/${agent.deviceConfig.browser}`;
+- Platform-specific quirks on ${agent.deviceConfig.os}/${
+      agent.deviceConfig.browser
+    }`;
   }
 
   /**
@@ -302,7 +313,9 @@ and used in future sessions to improve testing efficiency. Focus on:
       // Index in vector store for semantic deduplication
       await vectorStore.upsertDocument({
         id: bug.id,
-        content: `${bug.title} ${bug.description} ${bug.reproductionSteps.join(" ")}`,
+        content: `${bug.title} ${bug.description} ${bug.reproductionSteps.join(
+          " "
+        )}`,
         metadata: {
           type: "bug-report",
           projectId: this.config.projectId,
@@ -347,12 +360,16 @@ and used in future sessions to improve testing efficiency. Focus on:
           role: "user",
           content: `Please test the application at ${this.config.targetUrl}. 
                    
-Simulate exploring the application as ${agent.name} would. Describe what you would test, what issues you might find based on your persona, and provide your findings in the specified JSON format.
+Simulate exploring the application as ${
+            agent.name
+          } would. Describe what you would test, what issues you might find based on your persona, and provide your findings in the specified JSON format.
 
 Focus on:
 - ${agent.testingStrategy}
 
-Remember to stay in character as ${agent.name}: ${agent.personalityTraits.join(", ")}.`,
+Remember to stay in character as ${agent.name}: ${agent.personalityTraits.join(
+            ", "
+          )}.`,
         },
       ],
     });
@@ -399,10 +416,14 @@ Remember to stay in character as ${agent.name}: ${agent.personalityTraits.join("
     for (const bug of output.bugs) {
       // Check for semantic duplicates using vector similarity
       const searchContent = `${bug.title} ${bug.description}`;
-      const similarBugs = await vectorStore.findSimilarBugs(searchContent, this.config.projectId, {
-        topK: 3,
-        threshold: 0.85, // High threshold for duplicate detection
-      });
+      const similarBugs = await vectorStore.findSimilarBugs(
+        searchContent,
+        this.config.projectId,
+        {
+          topK: 3,
+          threshold: 0.85, // High threshold for duplicate detection
+        }
+      );
 
       // Skip if we found a very similar bug already
       const isDuplicate = similarBugs.some((result) => result.similarity > 0.9);
@@ -445,6 +466,8 @@ Remember to stay in character as ${agent.name}: ${agent.personalityTraits.join("
 /**
  * Create a new orchestrator instance
  */
-export function createOrchestrator(config: OrchestratorConfig): AgentOrchestrator {
+export function createOrchestrator(
+  config: OrchestratorConfig
+): AgentOrchestrator {
   return new AgentOrchestrator(config);
 }

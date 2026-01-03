@@ -12,7 +12,8 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 
   const { data: project, error } = await supabase
     .from("projects")
-    .select(`
+    .select(
+      `
       *,
       test_sessions (
         id,
@@ -38,7 +39,8 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
         agent_name,
         created_at
       )
-    `)
+    `
+    )
     .eq("id", id)
     .single();
 
@@ -129,7 +131,10 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
 
     if (error) {
       if (error.code === "PGRST116") {
-        return NextResponse.json({ error: "Project not found" }, { status: 404 });
+        return NextResponse.json(
+          { error: "Project not found" },
+          { status: 404 }
+        );
       }
       console.error("Update project error:", error);
       return NextResponse.json(
@@ -165,10 +170,7 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
   const supabase = createServerClient();
 
   // Delete project (cascades will handle related records if set up)
-  const { error } = await supabase
-    .from("projects")
-    .delete()
-    .eq("id", id);
+  const { error } = await supabase.from("projects").delete().eq("id", id);
 
   if (error) {
     console.error("Delete project error:", error);

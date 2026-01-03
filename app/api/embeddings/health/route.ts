@@ -12,13 +12,13 @@ export async function GET() {
   try {
     const embeddingService = getEmbeddingService();
     const vectorStore = getVectorStore();
-    
+
     // Try to initialize
     await embeddingService.initialize();
-    
+
     const stats = embeddingService.getCacheStats();
     const health = await vectorStore.healthCheck();
-    
+
     return NextResponse.json({
       status: "ok",
       embeddingProvider: stats.provider,
@@ -32,22 +32,26 @@ export async function GET() {
       },
     });
   } catch (error) {
-    return NextResponse.json({
-      status: "error",
-      error: error instanceof Error ? error.message : "Unknown error",
-      setup: {
-        ollama: "Install from https://ollama.ai, run: ollama pull nomic-embed-text",
-        jina: "Get free API key from https://jina.ai/embeddings/",
-        openai: "Get API key from https://platform.openai.com/api-keys",
+    return NextResponse.json(
+      {
+        status: "error",
+        error: error instanceof Error ? error.message : "Unknown error",
+        setup: {
+          ollama:
+            "Install from https://ollama.ai, run: ollama pull nomic-embed-text",
+          jina: "Get free API key from https://jina.ai/embeddings/",
+          openai: "Get API key from https://platform.openai.com/api-keys",
+        },
       },
-    }, { status: 503 });
+      { status: 503 }
+    );
   }
 }
 
 export async function POST(request: Request) {
   try {
     const { text } = await request.json();
-    
+
     if (!text || typeof text !== "string") {
       return NextResponse.json(
         { error: "Missing 'text' field in request body" },
@@ -57,11 +61,11 @@ export async function POST(request: Request) {
 
     const embeddingService = getEmbeddingService();
     await embeddingService.initialize();
-    
+
     const startTime = Date.now();
     const embedding = await embeddingService.embed(text);
     const latencyMs = Date.now() - startTime;
-    
+
     return NextResponse.json({
       success: true,
       provider: embeddingService.getActiveProvider(),
@@ -72,9 +76,12 @@ export async function POST(request: Request) {
       text: text.substring(0, 100) + (text.length > 100 ? "..." : ""),
     });
   } catch (error) {
-    return NextResponse.json({
-      success: false,
-      error: error instanceof Error ? error.message : "Unknown error",
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : "Unknown error",
+      },
+      { status: 500 }
+    );
   }
 }

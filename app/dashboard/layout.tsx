@@ -16,7 +16,7 @@ export default function DashboardLayout({
       <div className="fixed inset-0 pointer-events-none">
         {/* Mesh gradient */}
         <div className="absolute inset-0 mesh-bg opacity-30" />
-        
+
         {/* Subtle grid */}
         <div
           className="absolute inset-0 opacity-[0.015]"
@@ -42,9 +42,7 @@ export default function DashboardLayout({
           sidebarCollapsed ? "ml-20" : "ml-72"
         }`}
       >
-        <div className="p-8">
-          {children}
-        </div>
+        <div className="p-8">{children}</div>
       </main>
     </div>
   );

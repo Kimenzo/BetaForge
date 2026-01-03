@@ -5,7 +5,9 @@ import { Check, Sun, Moon, Monitor } from "lucide-react";
 
 export default function GeneralSettingsPage() {
   const [workspaceName, setWorkspaceName] = useState("Sarah's Workspace");
-  const [selectedTheme, setSelectedTheme] = useState<"dark" | "light" | "auto">("dark");
+  const [selectedTheme, setSelectedTheme] = useState<"dark" | "light" | "auto">(
+    "dark"
+  );
   const [language, setLanguage] = useState("en-US");
   const [timezone, setTimezone] = useState("America/New_York");
   const [notifications, setNotifications] = useState({
@@ -32,14 +34,20 @@ export default function GeneralSettingsPage() {
       {/* Section Header */}
       <div className="mb-8 animate-fade-in-up">
         <h1 className="text-3xl font-bold text-white mb-2">General Settings</h1>
-        <p className="text-phantom-gray">Manage your workspace and preferences</p>
+        <p className="text-phantom-gray">
+          Manage your workspace and preferences
+        </p>
       </div>
 
       {/* Workspace Name */}
       <section className="mb-8 p-6 rounded-2xl bg-white/5 border border-white/10 animate-fade-in-up stagger-1">
         <div className="mb-4">
-          <h3 className="text-lg font-semibold text-white mb-1">Workspace Name</h3>
-          <p className="text-sm text-phantom-gray">This will be displayed across your dashboard</p>
+          <h3 className="text-lg font-semibold text-white mb-1">
+            Workspace Name
+          </h3>
+          <p className="text-sm text-phantom-gray">
+            This will be displayed across your dashboard
+          </p>
         </div>
         <input
           type="text"
@@ -53,7 +61,9 @@ export default function GeneralSettingsPage() {
       <section className="mb-8 p-6 rounded-2xl bg-white/5 border border-white/10 animate-fade-in-up stagger-2">
         <div className="mb-4">
           <h3 className="text-lg font-semibold text-white mb-1">Theme</h3>
-          <p className="text-sm text-phantom-gray">Choose your interface appearance</p>
+          <p className="text-sm text-phantom-gray">
+            Choose your interface appearance
+          </p>
         </div>
 
         <div className="grid grid-cols-3 gap-4">
@@ -88,7 +98,9 @@ export default function GeneralSettingsPage() {
                     }`}
                   />
                 </div>
-                <p className="text-sm font-medium text-white text-center">{theme.label}</p>
+                <p className="text-sm font-medium text-white text-center">
+                  {theme.label}
+                </p>
 
                 {selectedTheme === theme.id && (
                   <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-neural flex items-center justify-center">
@@ -104,13 +116,19 @@ export default function GeneralSettingsPage() {
       {/* Language & Region */}
       <section className="mb-8 p-6 rounded-2xl bg-white/5 border border-white/10 animate-fade-in-up stagger-3">
         <div className="mb-4">
-          <h3 className="text-lg font-semibold text-white mb-1">Language & Region</h3>
-          <p className="text-sm text-phantom-gray">Set your preferred language and time zone</p>
+          <h3 className="text-lg font-semibold text-white mb-1">
+            Language & Region
+          </h3>
+          <p className="text-sm text-phantom-gray">
+            Set your preferred language and time zone
+          </p>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-phantom-gray mb-2">Language</label>
+            <label className="block text-sm font-medium text-phantom-gray mb-2">
+              Language
+            </label>
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value)}
@@ -126,14 +144,18 @@ export default function GeneralSettingsPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-phantom-gray mb-2">Time Zone</label>
+            <label className="block text-sm font-medium text-phantom-gray mb-2">
+              Time Zone
+            </label>
             <select
               value={timezone}
               onChange={(e) => setTimezone(e.target.value)}
               className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-neural transition-all duration-300 appearance-none cursor-pointer"
             >
               <option value="America/New_York">America/New_York (EST)</option>
-              <option value="America/Los_Angeles">America/Los_Angeles (PST)</option>
+              <option value="America/Los_Angeles">
+                America/Los_Angeles (PST)
+              </option>
               <option value="Europe/London">Europe/London (GMT)</option>
               <option value="Europe/Paris">Europe/Paris (CET)</option>
               <option value="Asia/Tokyo">Asia/Tokyo (JST)</option>
@@ -146,8 +168,12 @@ export default function GeneralSettingsPage() {
       {/* Notifications */}
       <section className="mb-8 p-6 rounded-2xl bg-white/5 border border-white/10 animate-fade-in-up stagger-4">
         <div className="mb-6">
-          <h3 className="text-lg font-semibold text-white mb-1">Notifications</h3>
-          <p className="text-sm text-phantom-gray">Choose what updates you want to receive</p>
+          <h3 className="text-lg font-semibold text-white mb-1">
+            Notifications
+          </h3>
+          <p className="text-sm text-phantom-gray">
+            Choose what updates you want to receive
+          </p>
         </div>
 
         <div className="space-y-4">
@@ -161,7 +187,10 @@ export default function GeneralSettingsPage() {
             </div>
             <button
               onClick={() =>
-                setNotifications({ ...notifications, email: !notifications.email })
+                setNotifications({
+                  ...notifications,
+                  email: !notifications.email,
+                })
               }
               className={`w-12 h-6 rounded-full relative transition-colors duration-300 ${
                 notifications.email ? "bg-neural" : "bg-white/20"
@@ -185,7 +214,10 @@ export default function GeneralSettingsPage() {
             </div>
             <button
               onClick={() =>
-                setNotifications({ ...notifications, browser: !notifications.browser })
+                setNotifications({
+                  ...notifications,
+                  browser: !notifications.browser,
+                })
               }
               className={`w-12 h-6 rounded-full relative transition-colors duration-300 ${
                 notifications.browser ? "bg-neural" : "bg-white/20"
@@ -209,7 +241,10 @@ export default function GeneralSettingsPage() {
             </div>
             <button
               onClick={() =>
-                setNotifications({ ...notifications, criticalOnly: !notifications.criticalOnly })
+                setNotifications({
+                  ...notifications,
+                  criticalOnly: !notifications.criticalOnly,
+                })
               }
               className={`w-12 h-6 rounded-full relative transition-colors duration-300 ${
                 notifications.criticalOnly ? "bg-neural" : "bg-white/20"
@@ -233,7 +268,10 @@ export default function GeneralSettingsPage() {
             </div>
             <button
               onClick={() =>
-                setNotifications({ ...notifications, weeklySummary: !notifications.weeklySummary })
+                setNotifications({
+                  ...notifications,
+                  weeklySummary: !notifications.weeklySummary,
+                })
               }
               className={`w-12 h-6 rounded-full relative transition-colors duration-300 ${
                 notifications.weeklySummary ? "bg-neural" : "bg-white/20"

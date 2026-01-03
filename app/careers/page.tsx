@@ -87,7 +87,8 @@ const jobs = [
     department: "Engineering",
     location: "Remote (US/EU)",
     type: "Full-time",
-    description: "Build and scale our AI testing platform using Next.js, TypeScript, and Python.",
+    description:
+      "Build and scale our AI testing platform using Next.js, TypeScript, and Python.",
   },
   {
     id: 2,
@@ -95,7 +96,8 @@ const jobs = [
     department: "Engineering",
     location: "Remote (Worldwide)",
     type: "Full-time",
-    description: "Develop and improve our AI agent capabilities using LLMs and machine learning.",
+    description:
+      "Develop and improve our AI agent capabilities using LLMs and machine learning.",
   },
   {
     id: 3,
@@ -103,7 +105,8 @@ const jobs = [
     department: "Engineering",
     location: "San Francisco, CA",
     type: "Full-time",
-    description: "Design and implement scalable backend systems for high-throughput testing.",
+    description:
+      "Design and implement scalable backend systems for high-throughput testing.",
   },
   {
     id: 4,
@@ -111,7 +114,8 @@ const jobs = [
     department: "Engineering",
     location: "Remote (US)",
     type: "Full-time",
-    description: "Build and maintain our cloud infrastructure and CI/CD pipelines.",
+    description:
+      "Build and maintain our cloud infrastructure and CI/CD pipelines.",
   },
   {
     id: 5,
@@ -119,7 +123,8 @@ const jobs = [
     department: "Product",
     location: "San Francisco, CA",
     type: "Full-time",
-    description: "Drive product strategy and roadmap for our enterprise testing features.",
+    description:
+      "Drive product strategy and roadmap for our enterprise testing features.",
   },
   {
     id: 6,
@@ -127,7 +132,8 @@ const jobs = [
     department: "Design",
     location: "Remote (US/EU)",
     type: "Full-time",
-    description: "Design intuitive user experiences for complex testing workflows.",
+    description:
+      "Design intuitive user experiences for complex testing workflows.",
   },
   {
     id: 7,
@@ -135,7 +141,8 @@ const jobs = [
     department: "Marketing",
     location: "Remote (US)",
     type: "Full-time",
-    description: "Lead acquisition and conversion optimization across all channels.",
+    description:
+      "Lead acquisition and conversion optimization across all channels.",
   },
   {
     id: 8,
@@ -143,7 +150,8 @@ const jobs = [
     department: "Marketing",
     location: "Remote (Worldwide)",
     type: "Full-time",
-    description: "Create compelling content that educates developers about AI testing.",
+    description:
+      "Create compelling content that educates developers about AI testing.",
   },
   {
     id: 9,
@@ -151,7 +159,8 @@ const jobs = [
     department: "Sales",
     location: "New York, NY",
     type: "Full-time",
-    description: "Close enterprise deals and build relationships with Fortune 500 companies.",
+    description:
+      "Close enterprise deals and build relationships with Fortune 500 companies.",
   },
   {
     id: 10,
@@ -159,7 +168,8 @@ const jobs = [
     department: "Sales",
     location: "Remote (US)",
     type: "Full-time",
-    description: "Partner with sales to provide technical expertise and custom solutions.",
+    description:
+      "Partner with sales to provide technical expertise and custom solutions.",
   },
   {
     id: 11,
@@ -167,7 +177,8 @@ const jobs = [
     department: "Customer Success",
     location: "Remote (US/EU)",
     type: "Full-time",
-    description: "Ensure customer success and drive adoption of BetaForge across organizations.",
+    description:
+      "Ensure customer success and drive adoption of BetaForge across organizations.",
   },
   {
     id: 12,
@@ -175,7 +186,8 @@ const jobs = [
     department: "Customer Success",
     location: "Remote (Worldwide)",
     type: "Full-time",
-    description: "Provide world-class technical support to our growing customer base.",
+    description:
+      "Provide world-class technical support to our growing customer base.",
   },
 ];
 
@@ -183,12 +195,14 @@ const values = [
   {
     icon: Zap,
     title: "Move Fast",
-    description: "We ship quickly and iterate based on feedback. Perfect is the enemy of good.",
+    description:
+      "We ship quickly and iterate based on feedback. Perfect is the enemy of good.",
   },
   {
     icon: Users,
     title: "Customers First",
-    description: "Every decision starts with how it impacts our customers' success.",
+    description:
+      "Every decision starts with how it impacts our customers' success.",
   },
   {
     icon: Globe,
@@ -229,7 +243,10 @@ export default function CareersPage() {
               <span className="text-xl font-bold gradient-text">BetaForge</span>
             </Link>
             <div className="flex items-center gap-4">
-              <Link href="/about" className="text-phantom-gray hover:text-ghost-white text-sm transition-colors">
+              <Link
+                href="/about"
+                className="text-phantom-gray hover:text-ghost-white text-sm transition-colors"
+              >
                 About
               </Link>
               <Link
@@ -255,8 +272,9 @@ export default function CareersPage() {
             <span className="gradient-text">Software Testing</span>
           </h1>
           <p className="text-lg text-phantom-gray max-w-2xl mx-auto mb-8">
-            Join our mission to help every software team ship exceptional products.
-            We&apos;re looking for passionate people to help us revolutionize testing with AI.
+            Join our mission to help every software team ship exceptional
+            products. We&apos;re looking for passionate people to help us
+            revolutionize testing with AI.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
@@ -282,8 +300,13 @@ export default function CareersPage() {
               { value: "4.8", label: "Glassdoor Rating" },
               { value: "12", label: "Open Positions" },
             ].map((stat, index) => (
-              <div key={index} className="p-4 bg-void-elevated border border-white/5 rounded-xl">
-                <div className="text-2xl font-bold gradient-text">{stat.value}</div>
+              <div
+                key={index}
+                className="p-4 bg-void-elevated border border-white/5 rounded-xl"
+              >
+                <div className="text-2xl font-bold gradient-text">
+                  {stat.value}
+                </div>
                 <div className="text-sm text-phantom-gray">{stat.label}</div>
               </div>
             ))}
@@ -329,7 +352,8 @@ export default function CareersPage() {
               Benefits & Perks
             </h2>
             <p className="text-lg text-phantom-gray max-w-2xl mx-auto">
-              We take care of our team so they can focus on doing their best work.
+              We take care of our team so they can focus on doing their best
+              work.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -342,7 +366,9 @@ export default function CareersPage() {
                 <h3 className="text-lg font-semibold text-ghost-white mb-1">
                   {benefit.title}
                 </h3>
-                <p className="text-sm text-phantom-gray">{benefit.description}</p>
+                <p className="text-sm text-phantom-gray">
+                  {benefit.description}
+                </p>
               </div>
             ))}
           </div>
@@ -350,7 +376,10 @@ export default function CareersPage() {
       </section>
 
       {/* Open Positions */}
-      <section id="positions" className="relative py-20 px-6 bg-void-elevated/50">
+      <section
+        id="positions"
+        className="relative py-20 px-6 bg-void-elevated/50"
+      >
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-ghost-white mb-4">
@@ -392,7 +421,9 @@ export default function CareersPage() {
                     <h3 className="text-xl font-semibold text-ghost-white group-hover:text-neural-bright transition-colors">
                       {job.title}
                     </h3>
-                    <p className="text-sm text-phantom-gray mt-1">{job.description}</p>
+                    <p className="text-sm text-phantom-gray mt-1">
+                      {job.description}
+                    </p>
                     <div className="flex flex-wrap items-center gap-4 mt-3 text-sm text-mist-gray">
                       <span className="flex items-center gap-1">
                         <Building2 className="w-4 h-4" />
@@ -416,7 +447,9 @@ export default function CareersPage() {
 
           {filteredJobs.length === 0 && (
             <div className="text-center py-12">
-              <p className="text-phantom-gray">No positions in this department right now.</p>
+              <p className="text-phantom-gray">
+                No positions in this department right now.
+              </p>
               <p className="text-sm text-mist-gray mt-2">
                 Check back soon or explore other departments.
               </p>
@@ -436,8 +469,8 @@ export default function CareersPage() {
                 Don&apos;t See Your Role?
               </h2>
               <p className="text-lg text-phantom-gray mb-8 max-w-xl mx-auto">
-                We&apos;re always looking for exceptional people. Send us your resume
-                and tell us how you can contribute.
+                We&apos;re always looking for exceptional people. Send us your
+                resume and tell us how you can contribute.
               </p>
               <Link
                 href="mailto:careers@betaforge.ai"

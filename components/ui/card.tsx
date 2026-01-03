@@ -2,39 +2,37 @@ import { cn } from "@/lib/utils";
 import { HTMLAttributes, forwardRef } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
-const cardVariants = cva(
-  "rounded-2xl border transition-all duration-300",
-  {
-    variants: {
-      variant: {
-        default: "bg-void-surface/80 border-white/5 backdrop-blur-sm",
-        glass: "glass",
-        elevated: "bg-void-elevated border-white/10 shadow-xl",
-        outline: "bg-transparent border-neural/20 hover:border-neural/40",
-        ghost: "bg-transparent border-transparent",
-        gradient: "bg-gradient-to-br from-void-surface to-void-elevated border-white/10",
-        glow: "bg-void-surface/80 border-neural/20 shadow-glow hover:shadow-glow-intense",
-      },
-      hover: {
-        none: "",
-        lift: "card-hover",
-        glow: "hover:shadow-glow hover:border-neural/30",
-        scale: "hover:scale-[1.02] active:scale-[0.98]",
-      },
-      padding: {
-        none: "",
-        sm: "p-4",
-        default: "p-6",
-        lg: "p-8",
-      },
+const cardVariants = cva("rounded-2xl border transition-all duration-300", {
+  variants: {
+    variant: {
+      default: "bg-void-surface/80 border-white/5 backdrop-blur-sm",
+      glass: "glass",
+      elevated: "bg-void-elevated border-white/10 shadow-xl",
+      outline: "bg-transparent border-neural/20 hover:border-neural/40",
+      ghost: "bg-transparent border-transparent",
+      gradient:
+        "bg-gradient-to-br from-void-surface to-void-elevated border-white/10",
+      glow: "bg-void-surface/80 border-neural/20 shadow-glow hover:shadow-glow-intense",
     },
-    defaultVariants: {
-      variant: "default",
-      hover: "none",
-      padding: "none",
+    hover: {
+      none: "",
+      lift: "card-hover",
+      glow: "hover:shadow-glow hover:border-neural/30",
+      scale: "hover:scale-[1.02] active:scale-[0.98]",
     },
-  }
-);
+    padding: {
+      none: "",
+      sm: "p-4",
+      default: "p-6",
+      lg: "p-8",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+    hover: "none",
+    padding: "none",
+  },
+});
 
 export interface CardProps
   extends HTMLAttributes<HTMLDivElement>,
@@ -62,29 +60,31 @@ const CardHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
 );
 CardHeader.displayName = "CardHeader";
 
-const CardTitle = forwardRef<HTMLHeadingElement, HTMLAttributes<HTMLHeadingElement>>(
-  ({ className, ...props }, ref) => (
-    <h3
-      ref={ref}
-      className={cn(
-        "text-lg font-semibold leading-tight tracking-tight text-ghost-white",
-        className
-      )}
-      {...props}
-    />
-  )
-);
+const CardTitle = forwardRef<
+  HTMLHeadingElement,
+  HTMLAttributes<HTMLHeadingElement>
+>(({ className, ...props }, ref) => (
+  <h3
+    ref={ref}
+    className={cn(
+      "text-lg font-semibold leading-tight tracking-tight text-ghost-white",
+      className
+    )}
+    {...props}
+  />
+));
 CardTitle.displayName = "CardTitle";
 
-const CardDescription = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLParagraphElement>>(
-  ({ className, ...props }, ref) => (
-    <p
-      ref={ref}
-      className={cn("text-sm text-phantom-gray leading-relaxed", className)}
-      {...props}
-    />
-  )
-);
+const CardDescription = forwardRef<
+  HTMLParagraphElement,
+  HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => (
+  <p
+    ref={ref}
+    className={cn("text-sm text-phantom-gray leading-relaxed", className)}
+    {...props}
+  />
+));
 CardDescription.displayName = "CardDescription";
 
 const CardContent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
@@ -98,7 +98,10 @@ const CardFooter = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn("flex items-center gap-3 p-6 pt-4 border-t border-white/5", className)}
+      className={cn(
+        "flex items-center gap-3 p-6 pt-4 border-t border-white/5",
+        className
+      )}
       {...props}
     />
   )
@@ -115,7 +118,10 @@ interface MetricCardProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const MetricCard = forwardRef<HTMLDivElement, MetricCardProps>(
-  ({ className, label, value, change, trend = "neutral", icon, ...props }, ref) => {
+  (
+    { className, label, value, change, trend = "neutral", icon, ...props },
+    ref
+  ) => {
     const trendColors = {
       up: "text-quantum-green",
       down: "text-crimson-red",
@@ -125,10 +131,7 @@ const MetricCard = forwardRef<HTMLDivElement, MetricCardProps>(
     return (
       <div
         ref={ref}
-        className={cn(
-          "glass rounded-2xl p-6 card-hover group",
-          className
-        )}
+        className={cn("glass rounded-2xl p-6 card-hover group", className)}
         {...props}
       >
         <div className="flex items-start justify-between mb-4">
@@ -157,4 +160,13 @@ const MetricCard = forwardRef<HTMLDivElement, MetricCardProps>(
 );
 MetricCard.displayName = "MetricCard";
 
-export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, MetricCard, cardVariants };
+export {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+  MetricCard,
+  cardVariants,
+};

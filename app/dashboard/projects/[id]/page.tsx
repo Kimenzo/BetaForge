@@ -14,51 +14,93 @@ import {
   Activity,
 } from "lucide-react";
 import { AGENTS } from "@/lib/agents";
+import { createServerClient } from "@/lib/supabase";
+import { notFound } from "next/navigation";
 
 interface ProjectPageProps {
   params: Promise<{ id: string }>;
 }
 
+// Helper function to format relative time
+function formatRelativeTime(dateString: string | null): string {
+  if (!dateString) return "Never";
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
+
+  if (diffMins < 1) return "just now";
+  if (diffMins < 60) return `${diffMins}m ago`;
+  if (diffHours < 24) return `${diffHours}h ago`;
+  return `${diffDays}d ago`;
+}
+
 export default async function ProjectDetailPage({ params }: ProjectPageProps) {
   const { id } = await params;
+  const supabase = createServerClient();
 
-  // TODO: Fetch project from database
-  const project = {
-    id,
-    name: "Sample Project",
-    description: "A sample web application for testing our AI-powered beta testing platform.",
-    platform: "web",
-    accessUrl: "https://example.com",
-    createdAt: new Date().toISOString(),
-    status: "active",
-  };
+  // Fetch project from database
+  const { data: project, error } = await supabase
+    .from("projects")
+    .select(`
+      *,
+      test_sessions (
+        id,
+        status,
+        bugs_found,
+        completed_at
+      ),
+      bug_reports (
+        id,
+        severity,
+        status
+      )
+    `)
+    .eq("id", id)
+    .single();
+
+  if (error || !project) {
+    notFound();
+  }
+
+  // Calculate stats
+  const sessions = project.test_sessions || [];
+  const bugReports = project.bug_reports || [];
+  const completedSessions = sessions.filter((s: { status: string }) => s.status === "completed").length;
+  const passRate = sessions.length > 0 ? Math.round((completedSessions / sessions.length) * 100) : 0;
+  const lastSession = sessions.sort((a: { completed_at: string | null }, b: { completed_at: string | null }) => 
+    new Date(b.completed_at || 0).getTime() - new Date(a.completed_at || 0).getTime()
+  )[0];
+  const openBugs = bugReports.filter((b: { status: string }) => b.status === "open").length;
 
   const stats = [
     {
       icon: <PlayCircle className="w-5 h-5" />,
       label: "Total Tests",
-      value: "24",
+      value: sessions.length.toString(),
       color: "text-neural-bright",
       bgColor: "bg-neural/10",
     },
     {
       icon: <Clock className="w-5 h-5" />,
       label: "Last Tested",
-      value: "2h ago",
+      value: formatRelativeTime(lastSession?.completed_at),
       color: "text-electric-cyan",
       bgColor: "bg-electric-cyan/10",
     },
     {
       icon: <CheckCircle2 className="w-5 h-5" />,
       label: "Pass Rate",
-      value: "87%",
+      value: `${passRate}%`,
       color: "text-quantum-green",
       bgColor: "bg-quantum-green/10",
     },
     {
       icon: <Bug className="w-5 h-5" />,
       label: "Open Bugs",
-      value: "12",
+      value: openBugs.toString(),
       color: "text-ember-orange",
       bgColor: "bg-ember-orange/10",
     },
@@ -83,26 +125,40 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
               <Globe className="w-6 h-6 text-electric-cyan" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-ghost-white">{project.name}</h1>
-              <span className="inline-flex items-center gap-1.5 text-sm text-quantum-green">
-                <span className="w-2 h-2 rounded-full bg-quantum-green animate-pulse" />
-                Active
+              <h1 className="text-3xl font-bold text-ghost-white">
+                {project.name}
+              </h1>
+              <span className={`inline-flex items-center gap-1.5 text-sm ${
+                project.status === "active" ? "text-quantum-green" : 
+                project.status === "testing" ? "text-neural-bright" : 
+                project.status === "error" ? "text-crimson-red" : "text-mist-gray"
+              }`}>
+                <span className={`w-2 h-2 rounded-full ${
+                  project.status === "active" ? "bg-quantum-green animate-pulse" : 
+                  project.status === "testing" ? "bg-neural-bright animate-pulse" : 
+                  project.status === "error" ? "bg-crimson-red" : "bg-mist-gray"
+                }`} />
+                {(project.status?.charAt(0).toUpperCase() ?? "") + (project.status?.slice(1) ?? "") || "Idle"}
               </span>
             </div>
           </div>
-          <p className="text-phantom-gray max-w-2xl mb-4">{project.description}</p>
-          
+          <p className="text-phantom-gray max-w-2xl mb-4">
+            {project.description || "No description provided."}
+          </p>
+
           {/* URL */}
-          <a
-            href={project.accessUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-void-elevated border border-white/5 text-sm text-electric-cyan hover:text-electric-cyan/80 hover:border-white/10 transition-all group"
-          >
-            <Globe className="w-4 h-4" />
-            <span className="font-mono">{project.accessUrl}</span>
-            <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-          </a>
+          {project.access_url && (
+            <a
+              href={project.access_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-void-elevated border border-white/5 text-sm text-electric-cyan hover:text-electric-cyan/80 hover:border-white/10 transition-all group"
+            >
+              <Globe className="w-4 h-4" />
+              <span className="font-mono">{project.access_url}</span>
+              <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </a>
+          )}
         </div>
 
         {/* Actions */}
@@ -128,7 +184,9 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
             className="glass rounded-xl p-5 border border-white/5 hover:border-white/10 transition-all duration-300"
             style={{ animationDelay: `${index * 0.1}s` }}
           >
-            <div className={`inline-flex p-2 rounded-lg ${stat.bgColor} ${stat.color} mb-3`}>
+            <div
+              className={`inline-flex p-2 rounded-lg ${stat.bgColor} ${stat.color} mb-3`}
+            >
               {stat.icon}
             </div>
             <p className="text-2xl font-bold text-ghost-white">{stat.value}</p>
@@ -140,7 +198,9 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
       {/* Testing Agents */}
       <section className="animate-fade-in-up stagger-2">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold text-ghost-white">Testing Agents</h2>
+          <h2 className="text-xl font-semibold text-ghost-white">
+            Testing Agents
+          </h2>
           <button className="text-sm text-neural-bright hover:text-neural transition-colors">
             Configure Agents
           </button>
@@ -167,7 +227,9 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
                   ? "🔥"
                   : "✨"}
               </div>
-              <p className="font-medium text-ghost-white text-sm">{agent.name}</p>
+              <p className="font-medium text-ghost-white text-sm">
+                {agent.name}
+              </p>
               <p className="text-xs text-mist-gray mt-0.5">Ready</p>
             </div>
           ))}
@@ -224,7 +286,8 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
               <Bug className="w-8 h-8 text-mist-gray" />
             </div>
             <p className="text-phantom-gray">
-              No bugs reported yet. Our AI agents will find issues and report them here.
+              No bugs reported yet. Our AI agents will find issues and report
+              them here.
             </p>
           </div>
         </div>

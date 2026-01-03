@@ -24,7 +24,7 @@ export default {
         destructive: "var(--destructive)",
         border: "var(--border)",
         ring: "var(--ring)",
-        
+
         // New Neural Color System
         void: {
           black: "#0A0A0F",
@@ -77,9 +77,9 @@ export default {
         "2xl": "1.5rem",
       },
       fontFamily: {
-        sans: ['var(--font-primary)', 'system-ui', 'sans-serif'],
-        display: ['var(--font-primary)', 'system-ui', 'sans-serif'],
-        mono: ['var(--font-mono)', 'JetBrains Mono', 'monospace'],
+        sans: ["var(--font-primary)", "system-ui", "sans-serif"],
+        display: ["var(--font-primary)", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "JetBrains Mono", "monospace"],
       },
       fontSize: {
         "fluid-xs": "var(--text-xs)",
@@ -104,10 +104,10 @@ export default {
         "scale-in": "scale-in 0.3s ease-out forwards",
         "slide-in-left": "slide-in-left 0.4s ease-out forwards",
         "slide-in-right": "slide-in-right 0.4s ease-out forwards",
-        "float": "float 6s ease-in-out infinite",
+        float: "float 6s ease-in-out infinite",
         "glow-breathe": "glow-breathe 3s ease-in-out infinite",
         "bounce-subtle": "bounce-subtle 2s ease-in-out infinite",
-        "shimmer": "shimmer 1.5s infinite",
+        shimmer: "shimmer 1.5s infinite",
         "pulse-ring": "pulse-ring 2s ease-out infinite",
         "mesh-float": "mesh-float 20s ease-in-out infinite",
         "spin-slow": "spin-slow 3s linear infinite",
@@ -133,19 +133,25 @@ export default {
           from: { opacity: "0", transform: "translateX(20px)" },
           to: { opacity: "1", transform: "translateX(0)" },
         },
-        "float": {
+        float: {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-10px)" },
         },
         "glow-breathe": {
-          "0%, 100%": { boxShadow: "0 0 20px rgba(139, 92, 246, 0.2), 0 0 40px rgba(139, 92, 246, 0.1)" },
-          "50%": { boxShadow: "0 0 30px rgba(139, 92, 246, 0.4), 0 0 60px rgba(139, 92, 246, 0.2)" },
+          "0%, 100%": {
+            boxShadow:
+              "0 0 20px rgba(139, 92, 246, 0.2), 0 0 40px rgba(139, 92, 246, 0.1)",
+          },
+          "50%": {
+            boxShadow:
+              "0 0 30px rgba(139, 92, 246, 0.4), 0 0 60px rgba(139, 92, 246, 0.2)",
+          },
         },
         "bounce-subtle": {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-5px)" },
         },
-        "shimmer": {
+        shimmer: {
           "0%": { backgroundPosition: "-200% 0" },
           "100%": { backgroundPosition: "200% 0" },
         },
@@ -164,7 +170,8 @@ export default {
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "gradient-conic":
+          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
         "mesh-gradient": `
           radial-gradient(at 20% 30%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
           radial-gradient(at 80% 70%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
@@ -174,11 +181,15 @@ export default {
         "void-gradient": "linear-gradient(180deg, #0A0A0F 0%, #050508 100%)",
       },
       boxShadow: {
-        "glow": "0 0 20px rgba(139, 92, 246, 0.3), 0 0 40px rgba(139, 92, 246, 0.2)",
-        "glow-intense": "0 0 30px rgba(139, 92, 246, 0.5), 0 0 60px rgba(139, 92, 246, 0.3)",
-        "glow-cyan": "0 0 20px rgba(6, 182, 212, 0.3), 0 0 40px rgba(6, 182, 212, 0.2)",
-        "glow-pink": "0 0 20px rgba(236, 72, 153, 0.3), 0 0 40px rgba(236, 72, 153, 0.2)",
-        "glow-green": "0 0 20px rgba(16, 185, 129, 0.3), 0 0 40px rgba(16, 185, 129, 0.2)",
+        glow: "0 0 20px rgba(139, 92, 246, 0.3), 0 0 40px rgba(139, 92, 246, 0.2)",
+        "glow-intense":
+          "0 0 30px rgba(139, 92, 246, 0.5), 0 0 60px rgba(139, 92, 246, 0.3)",
+        "glow-cyan":
+          "0 0 20px rgba(6, 182, 212, 0.3), 0 0 40px rgba(6, 182, 212, 0.2)",
+        "glow-pink":
+          "0 0 20px rgba(236, 72, 153, 0.3), 0 0 40px rgba(236, 72, 153, 0.2)",
+        "glow-green":
+          "0 0 20px rgba(16, 185, 129, 0.3), 0 0 40px rgba(16, 185, 129, 0.2)",
         "inner-glow": "inset 0 0 20px rgba(139, 92, 246, 0.1)",
       },
       transitionTimingFunction: {

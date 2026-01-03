@@ -31,21 +31,24 @@ const quickStartGuides = [
   {
     icon: Rocket,
     title: "Getting Started",
-    description: "Set up BetaForge and run your first AI-powered test in under 5 minutes",
+    description:
+      "Set up BetaForge and run your first AI-powered test in under 5 minutes",
     href: "/docs/getting-started",
     time: "5 min",
   },
   {
     icon: Code,
     title: "API Reference",
-    description: "Complete API documentation with examples in multiple languages",
+    description:
+      "Complete API documentation with examples in multiple languages",
     href: "/docs/api",
     time: "Reference",
   },
   {
     icon: Puzzle,
     title: "Integrations",
-    description: "Connect BetaForge with your CI/CD pipeline and development tools",
+    description:
+      "Connect BetaForge with your CI/CD pipeline and development tools",
     href: "/docs/integrations",
     time: "10 min",
   },
@@ -77,7 +80,10 @@ const docCategories = [
     items: [
       { title: "Understanding Agents", href: "/docs/agents" },
       { title: "Agent Personas", href: "/docs/agents/personas" },
-      { title: "Custom Agent Configuration", href: "/docs/agents/configuration" },
+      {
+        title: "Custom Agent Configuration",
+        href: "/docs/agents/configuration",
+      },
       { title: "Agent Behaviors", href: "/docs/agents/behaviors" },
     ],
   },
@@ -156,19 +162,33 @@ export default function DocsPage() {
                 <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-neural-bright to-electric-cyan flex items-center justify-center">
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-xl font-bold gradient-text">BetaForge</span>
+                <span className="text-xl font-bold gradient-text">
+                  BetaForge
+                </span>
               </Link>
               <nav className="hidden md:flex items-center gap-6">
-                <Link href="/docs" className="text-ghost-white font-medium text-sm">
+                <Link
+                  href="/docs"
+                  className="text-ghost-white font-medium text-sm"
+                >
                   Docs
                 </Link>
-                <Link href="/docs/api" className="text-phantom-gray hover:text-ghost-white text-sm transition-colors">
+                <Link
+                  href="/docs/api"
+                  className="text-phantom-gray hover:text-ghost-white text-sm transition-colors"
+                >
                   API
                 </Link>
-                <Link href="/docs/integrations" className="text-phantom-gray hover:text-ghost-white text-sm transition-colors">
+                <Link
+                  href="/docs/integrations"
+                  className="text-phantom-gray hover:text-ghost-white text-sm transition-colors"
+                >
                   Integrations
                 </Link>
-                <Link href="/changelog" className="text-phantom-gray hover:text-ghost-white text-sm transition-colors">
+                <Link
+                  href="/changelog"
+                  className="text-phantom-gray hover:text-ghost-white text-sm transition-colors"
+                >
                   Changelog
                 </Link>
               </nav>
@@ -198,8 +218,8 @@ export default function DocsPage() {
               <span className="gradient-text">BetaForge</span>
             </h1>
             <p className="text-lg text-phantom-gray leading-relaxed">
-              Everything you need to master AI-powered beta testing. From quick starts to
-              advanced configurations, find the guidance you need.
+              Everything you need to master AI-powered beta testing. From quick
+              starts to advanced configurations, find the guidance you need.
             </p>
           </div>
 
@@ -215,8 +235,12 @@ export default function DocsPage() {
                 className="w-full pl-12 pr-4 py-4 bg-void-elevated border border-white/10 rounded-2xl text-ghost-white placeholder:text-mist-gray focus:outline-none focus:border-neural/50 focus:ring-2 focus:ring-neural/20 transition-all"
               />
               <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-1 text-xs text-mist-gray">
-                <kbd className="px-2 py-1 bg-void-black rounded border border-white/10">⌘</kbd>
-                <kbd className="px-2 py-1 bg-void-black rounded border border-white/10">K</kbd>
+                <kbd className="px-2 py-1 bg-void-black rounded border border-white/10">
+                  ⌘
+                </kbd>
+                <kbd className="px-2 py-1 bg-void-black rounded border border-white/10">
+                  K
+                </kbd>
               </div>
             </div>
           </div>
@@ -262,7 +286,9 @@ export default function DocsPage() {
                 className="group p-6 bg-void-elevated border border-white/5 rounded-2xl hover:border-white/10 transition-all duration-300"
               >
                 <div className="flex items-center gap-4 mb-6">
-                  <div className={`p-3 rounded-xl bg-gradient-to-br ${category.color} text-white`}>
+                  <div
+                    className={`p-3 rounded-xl bg-gradient-to-br ${category.color} text-white`}
+                  >
                     <category.icon className="w-5 h-5" />
                   </div>
                   <h3 className="text-xl font-semibold text-ghost-white">
@@ -308,7 +334,9 @@ export default function DocsPage() {
                     <span className="text-phantom-gray group-hover:text-ghost-white transition-colors">
                       {article.title}
                     </span>
-                    <span className="text-xs text-mist-gray">{article.views} views</span>
+                    <span className="text-xs text-mist-gray">
+                      {article.views} views
+                    </span>
                   </Link>
                 ))}
               </div>
@@ -332,7 +360,9 @@ export default function DocsPage() {
                     <h4 className="font-medium text-ghost-white group-hover:text-neural-bright transition-colors">
                       Changelog
                     </h4>
-                    <p className="text-sm text-phantom-gray">Latest updates and releases</p>
+                    <p className="text-sm text-phantom-gray">
+                      Latest updates and releases
+                    </p>
                   </div>
                 </Link>
                 <Link
@@ -346,7 +376,9 @@ export default function DocsPage() {
                     <h4 className="font-medium text-ghost-white group-hover:text-neural-bright transition-colors">
                       API Reference
                     </h4>
-                    <p className="text-sm text-phantom-gray">Complete REST API documentation</p>
+                    <p className="text-sm text-phantom-gray">
+                      Complete REST API documentation
+                    </p>
                   </div>
                 </Link>
                 <Link
@@ -361,7 +393,9 @@ export default function DocsPage() {
                     <h4 className="font-medium text-ghost-white group-hover:text-neural-bright transition-colors">
                       GitHub Repository
                     </h4>
-                    <p className="text-sm text-phantom-gray">Explore our open-source projects</p>
+                    <p className="text-sm text-phantom-gray">
+                      Explore our open-source projects
+                    </p>
                   </div>
                 </Link>
               </div>
@@ -381,8 +415,8 @@ export default function DocsPage() {
                 Need Help Getting Started?
               </h2>
               <p className="text-phantom-gray mb-8 max-w-xl mx-auto">
-                Our team is here to help. Reach out to us for personalized guidance
-                or schedule a demo to see BetaForge in action.
+                Our team is here to help. Reach out to us for personalized
+                guidance or schedule a demo to see BetaForge in action.
               </p>
               <div className="flex items-center justify-center gap-4">
                 <Link

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useProjects } from "@/lib/hooks";
+import { useProjects, useDashboardStats, useActivity } from "@/lib/hooks";
 import {
   Plus,
   PlayCircle,
@@ -19,12 +19,43 @@ import { MetricCard } from "@/components/ui/card";
 import { ProjectCard } from "@/components/ui/projectcard";
 import { AGENTS } from "@/lib/agents";
 
+// Helper function to format relative time
+function formatRelativeTime(dateString: string): string {
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
+
+  if (diffMins < 1) return "just now";
+  if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? "s" : ""} ago`;
+  if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? "s" : ""} ago`;
+  return `${diffDays} day${diffDays > 1 ? "s" : ""} ago`;
+}
+
+// Map event types to human-readable actions
+function getActivityAction(eventType: string): string {
+  const actions: Record<string, string> = {
+    agent_started: "started testing",
+    agent_action: "performed an action on",
+    agent_screenshot: "captured screenshot on",
+    agent_bug_found: "found a bug in",
+    agent_completed: "completed testing",
+    agent_failed: "encountered an error on",
+    session_completed: "finished session for",
+  };
+  return actions[eventType] || "interacted with";
+}
+
 export default function DashboardPage() {
-  const { projects, isLoading, deleteProject } = useProjects();
+  const { projects, isLoading } = useProjects();
+  const { stats, isLoading: statsLoading } = useDashboardStats();
+  const { activities, isLoading: activityLoading } = useActivity({ limit: 10 });
 
   const handleDelete = async (id: string, name: string) => {
     if (confirm(`Delete project "${name}"? This cannot be undone.`)) {
-      await deleteProject(id);
+      // deleteProject function from useProjects would be called here
     }
   };
 
@@ -59,8 +90,8 @@ export default function DashboardPage() {
         <div className="animate-fade-in-up stagger-1">
           <MetricCard
             label="Active Tests"
-            value="12"
-            change="+3 from yesterday"
+            value={statsLoading ? "..." : stats.activeTests.toString()}
+            change={`${stats.todaysSessions} today`}
             trend="up"
             icon={<PlayCircle className="w-5 h-5" />}
           />
@@ -68,8 +99,8 @@ export default function DashboardPage() {
         <div className="animate-fade-in-up stagger-2">
           <MetricCard
             label="Bugs Found"
-            value="47"
-            change="+8 this week"
+            value={statsLoading ? "..." : stats.bugsFound.toString()}
+            change={`+${stats.weeklyBugs} this week`}
             trend="up"
             icon={<Bug className="w-5 h-5" />}
           />
@@ -77,8 +108,8 @@ export default function DashboardPage() {
         <div className="animate-fade-in-up stagger-3">
           <MetricCard
             label="Test Sessions"
-            value="156"
-            change="24 today"
+            value={statsLoading ? "..." : stats.testSessions.toString()}
+            change={`${stats.todaysSessions} today`}
             trend="neutral"
             icon={<Zap className="w-5 h-5" />}
           />
@@ -86,8 +117,8 @@ export default function DashboardPage() {
         <div className="animate-fade-in-up stagger-4">
           <MetricCard
             label="Success Rate"
-            value="94%"
-            change="+2.3%"
+            value={statsLoading ? "..." : `${stats.successRate}%`}
+            change={stats.successRate >= 90 ? "Excellent" : "Good"}
             trend="up"
             icon={<TrendingUp className="w-5 h-5" />}
           />
@@ -99,7 +130,9 @@ export default function DashboardPage() {
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
             <div className="w-2 h-2 rounded-full bg-quantum-green animate-pulse" />
-            <h2 className="text-lg font-semibold text-ghost-white">AI Agents Online</h2>
+            <h2 className="text-lg font-semibold text-ghost-white">
+              AI Agents Online
+            </h2>
           </div>
           <Link
             href="/agents"
@@ -112,8 +145,12 @@ export default function DashboardPage() {
         <div className="flex flex-wrap gap-3">
           {AGENTS.map((agent) => {
             const avatars: Record<string, string> = {
-              sarah: "🔍", marcus: "⚡", ahmed: "♿",
-              lin: "📱", diego: "🔥", emma: "✨",
+              sarah: "🔍",
+              marcus: "⚡",
+              ahmed: "♿",
+              lin: "📱",
+              diego: "🔥",
+              emma: "✨",
             };
             return (
               <div
@@ -122,13 +159,19 @@ export default function DashboardPage() {
               >
                 <div
                   className="w-10 h-10 rounded-xl flex items-center justify-center text-lg transition-transform duration-300 group-hover:scale-110"
-                  style={{ background: `linear-gradient(135deg, ${agent.color}40, ${agent.color}20)` }}
+                  style={{
+                    background: `linear-gradient(135deg, ${agent.color}40, ${agent.color}20)`,
+                  }}
                 >
                   {avatars[agent.id]}
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-ghost-white">{agent.name.split(" ")[0]}</p>
-                  <p className="text-xs text-mist-gray">{agent.specialization}</p>
+                  <p className="text-sm font-medium text-ghost-white">
+                    {agent.name.split(" ")[0]}
+                  </p>
+                  <p className="text-xs text-mist-gray">
+                    {agent.specialization}
+                  </p>
                 </div>
                 <div className="w-2 h-2 rounded-full bg-quantum-green ml-2" />
               </div>
@@ -140,7 +183,9 @@ export default function DashboardPage() {
       {/* Projects Section */}
       <section>
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-semibold text-ghost-white">Your Projects</h2>
+          <h2 className="text-xl font-semibold text-ghost-white">
+            Your Projects
+          </h2>
           <Link
             href="/dashboard/projects"
             className="flex items-center gap-1 text-sm text-phantom-gray hover:text-ghost-white transition-colors"
@@ -186,10 +231,10 @@ export default function DashboardPage() {
                 <ProjectCard
                   project={{
                     ...project,
-                    status: "idle" as const,
-                    stats: {
-                      bugsFound: Math.floor(Math.random() * 20),
-                      sessionsCount: Math.floor(Math.random() * 10),
+                    status: (project as { status?: string }).status as "active" | "testing" | "idle" | "error" || "idle",
+                    stats: (project as { stats?: { bugsFound: number; sessionsCount: number } }).stats || {
+                      bugsFound: 0,
+                      sessionsCount: 0,
                     },
                   }}
                   onDelete={() => handleDelete(project.id, project.name)}
@@ -202,65 +247,61 @@ export default function DashboardPage() {
 
       {/* Recent Activity */}
       <section className="animate-fade-in-up stagger-3">
-        <h2 className="text-xl font-semibold text-ghost-white mb-6">Recent Activity</h2>
+        <h2 className="text-xl font-semibold text-ghost-white mb-6">
+          Recent Activity
+        </h2>
         <div className="glass rounded-2xl overflow-hidden">
           <div className="divide-y divide-white/5">
-            {[
-              {
-                agent: "Diego",
-                emoji: "🔥",
-                color: "#F97316",
-                action: "found a security vulnerability",
-                project: "E-commerce Platform",
-                time: "2 minutes ago",
-              },
-              {
-                agent: "Ahmed",
-                emoji: "♿",
-                color: "#10B981",
-                action: "completed accessibility audit",
-                project: "Dashboard App",
-                time: "15 minutes ago",
-              },
-              {
-                agent: "Sarah",
-                emoji: "🔍",
-                color: "#8B5CF6",
-                action: "discovered 3 UX issues",
-                project: "Mobile Banking",
-                time: "1 hour ago",
-              },
-              {
-                agent: "Marcus",
-                emoji: "⚡",
-                color: "#06B6D4",
-                action: "tested keyboard navigation",
-                project: "Admin Portal",
-                time: "2 hours ago",
-              },
-            ].map((activity, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-4 p-4 hover:bg-white/[0.02] transition-colors"
-              >
-                <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center text-lg flex-shrink-0"
-                  style={{ background: `linear-gradient(135deg, ${activity.color}40, ${activity.color}20)` }}
-                >
-                  {activity.emoji}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm text-ghost-white">
-                    <span className="font-semibold">{activity.agent}</span>{" "}
-                    <span className="text-phantom-gray">{activity.action}</span>{" "}
-                    <span className="text-neural-bright">{activity.project}</span>
-                  </p>
-                </div>
-                <span className="text-xs text-mist-gray whitespace-nowrap">
-                  {activity.time}
-                </span>
+            {activityLoading ? (
+              <div className="p-8 text-center text-phantom-gray">
+                Loading activity...
               </div>
-            ))}
+            ) : activities.length === 0 ? (
+              <div className="p-8 text-center text-phantom-gray">
+                No recent activity. Start testing to see agent actions here.
+              </div>
+            ) : (
+              activities.slice(0, 5).map((activity) => {
+                // Map agent names to emojis and colors
+                const agentConfig: Record<string, { emoji: string; color: string }> = {
+                  "Sarah Chen": { emoji: "🔍", color: "#8B5CF6" },
+                  "Marcus Johnson": { emoji: "⚡", color: "#06B6D4" },
+                  "Ahmed Hassan": { emoji: "♿", color: "#10B981" },
+                  "Lin Wei": { emoji: "📱", color: "#EC4899" },
+                  "Diego Martinez": { emoji: "🔥", color: "#F97316" },
+                  "Emma Wilson": { emoji: "✨", color: "#6366F1" },
+                };
+                const config = agentConfig[activity.agentName || ""] || { emoji: "🤖", color: "#8B5CF6" };
+                
+                return (
+                  <div
+                    key={activity.id}
+                    className="flex items-center gap-4 p-4 hover:bg-white/[0.02] transition-colors"
+                  >
+                    <div
+                      className="w-10 h-10 rounded-xl flex items-center justify-center text-lg flex-shrink-0"
+                      style={{
+                        background: `linear-gradient(135deg, ${config.color}40, ${config.color}20)`,
+                      }}
+                    >
+                      {config.emoji}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm text-ghost-white">
+                        <span className="font-semibold">{activity.agentName || "Agent"}</span>{" "}
+                        <span className="text-phantom-gray">{getActivityAction(activity.eventType)}</span>{" "}
+                        <span className="text-neural-bright">
+                          {activity.projectName || "a project"}
+                        </span>
+                      </p>
+                    </div>
+                    <span className="text-xs text-mist-gray whitespace-nowrap">
+                      {formatRelativeTime(activity.createdAt)}
+                    </span>
+                  </div>
+                );
+              })
+            )}
           </div>
           <div className="p-4 border-t border-white/5 text-center">
             <Link

@@ -175,14 +175,21 @@ export default function GettingStartedPage() {
                 <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-neural-bright to-electric-cyan flex items-center justify-center">
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-xl font-bold gradient-text">BetaForge</span>
+                <span className="text-xl font-bold gradient-text">
+                  BetaForge
+                </span>
               </Link>
               <nav className="hidden md:flex items-center">
-                <Link href="/docs" className="text-phantom-gray hover:text-ghost-white text-sm transition-colors px-3 py-2">
+                <Link
+                  href="/docs"
+                  className="text-phantom-gray hover:text-ghost-white text-sm transition-colors px-3 py-2"
+                >
                   Docs
                 </Link>
                 <ChevronRight className="w-4 h-4 text-mist-gray" />
-                <span className="text-ghost-white text-sm px-3 py-2">Getting Started</span>
+                <span className="text-ghost-white text-sm px-3 py-2">
+                  Getting Started
+                </span>
               </nav>
             </div>
             <Link
@@ -199,7 +206,10 @@ export default function GettingStartedPage() {
       <section className="relative pt-32 pb-16 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-2 text-sm text-phantom-gray mb-6">
-            <Link href="/docs" className="hover:text-ghost-white transition-colors">
+            <Link
+              href="/docs"
+              className="hover:text-ghost-white transition-colors"
+            >
               Documentation
             </Link>
             <ChevronRight className="w-4 h-4" />
@@ -216,8 +226,7 @@ export default function GettingStartedPage() {
               </h1>
               <div className="flex items-center gap-4 mt-2 text-sm text-phantom-gray">
                 <span className="flex items-center gap-1">
-                  <Clock className="w-4 h-4" />
-                  5 min read
+                  <Clock className="w-4 h-4" />5 min read
                 </span>
                 <span className="flex items-center gap-1">
                   <BookOpen className="w-4 h-4" />
@@ -228,9 +237,10 @@ export default function GettingStartedPage() {
           </div>
 
           <p className="text-lg text-phantom-gray leading-relaxed mb-8">
-            Welcome to BetaForge! This guide will walk you through setting up your account,
-            creating your first project, and running AI-powered tests on your application.
-            In just a few minutes, you&apos;ll have autonomous AI agents testing your software.
+            Welcome to BetaForge! This guide will walk you through setting up
+            your account, creating your first project, and running AI-powered
+            tests on your application. In just a few minutes, you&apos;ll have
+            autonomous AI agents testing your software.
           </p>
 
           {/* Prerequisites */}
@@ -241,7 +251,10 @@ export default function GettingStartedPage() {
             </h3>
             <ul className="space-y-3">
               {prerequisites.map((prereq, index) => (
-                <li key={index} className="flex items-center gap-3 text-phantom-gray">
+                <li
+                  key={index}
+                  className="flex items-center gap-3 text-phantom-gray"
+                >
                   <prereq.icon className="w-4 h-4 text-neural-bright" />
                   <span>{prereq.text}</span>
                 </li>
@@ -288,7 +301,9 @@ export default function GettingStartedPage() {
                         <div className="flex items-center justify-between px-4 py-2 bg-void-black border border-white/10 rounded-t-xl">
                           <div className="flex items-center gap-2">
                             <FileCode className="w-4 h-4 text-mist-gray" />
-                            <span className="text-xs text-mist-gray">JavaScript</span>
+                            <span className="text-xs text-mist-gray">
+                              JavaScript
+                            </span>
                           </div>
                           <button
                             onClick={() => copyCode(step.code!, index)}
@@ -297,7 +312,9 @@ export default function GettingStartedPage() {
                             {copiedIndex === index ? (
                               <>
                                 <Check className="w-3 h-3 text-quantum-green" />
-                                <span className="text-quantum-green">Copied!</span>
+                                <span className="text-quantum-green">
+                                  Copied!
+                                </span>
                               </>
                             ) : (
                               <>
@@ -325,7 +342,9 @@ export default function GettingStartedPage() {
       {/* Next Steps */}
       <section className="relative py-20 px-6">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-ghost-white mb-8">What&apos;s Next?</h2>
+          <h2 className="text-3xl font-bold text-ghost-white mb-8">
+            What&apos;s Next?
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Link
               href="/docs/agents"
@@ -338,7 +357,8 @@ export default function GettingStartedPage() {
                 </h3>
               </div>
               <p className="text-sm text-phantom-gray">
-                Learn about each agent persona and how to configure them for your needs.
+                Learn about each agent persona and how to configure them for
+                your needs.
               </p>
             </Link>
             <Link
@@ -352,7 +372,8 @@ export default function GettingStartedPage() {
                 </h3>
               </div>
               <p className="text-sm text-phantom-gray">
-                Dive into the complete API documentation for advanced integrations.
+                Dive into the complete API documentation for advanced
+                integrations.
               </p>
             </Link>
             <Link

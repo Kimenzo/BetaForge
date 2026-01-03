@@ -133,7 +133,9 @@ export async function POST(request: NextRequest) {
 
         // Update execution progress
         if (event.agentId && executions) {
-          const execution = executions.find((e) => e.agent_id === event.agentId);
+          const execution = executions.find(
+            (e) => e.agent_id === event.agentId
+          );
           if (execution) {
             const updateData: Record<string, unknown> = {};
 
@@ -214,9 +216,11 @@ export async function POST(request: NextRequest) {
   }
 }
 
-function detectWebhookSource(request: NextRequest): "github" | "gitlab" | "bitbucket" | "unknown" {
+function detectWebhookSource(
+  request: NextRequest
+): "github" | "gitlab" | "bitbucket" | "unknown" {
   const headers = request.headers;
-  
+
   if (headers.get("x-github-event")) {
     return "github";
   }
@@ -253,19 +257,21 @@ function parseWebhookEvent(
   }
 }
 
-function parseGitHubEvent(body: Record<string, unknown>): WebhookEventInfo | null {
+function parseGitHubEvent(
+  body: Record<string, unknown>
+): WebhookEventInfo | null {
   // Handle push events
   if (body.ref && body.after) {
     const ref = body.ref as string;
     const repository = body.repository as Record<string, unknown>;
     const pusher = body.pusher as Record<string, unknown>;
-    
+
     return {
       type: "push",
       branch: ref.replace("refs/heads/", ""),
       commit: body.after as string,
-      repository: repository?.html_url as string || "",
-      author: pusher?.name as string || "",
+      repository: (repository?.html_url as string) || "",
+      author: (pusher?.name as string) || "",
     };
   }
 
@@ -275,28 +281,32 @@ function parseGitHubEvent(body: Record<string, unknown>): WebhookEventInfo | nul
     const head = pr.head as Record<string, unknown>;
     const repo = pr.base as Record<string, unknown>;
     const user = pr.user as Record<string, unknown>;
-    
+
     return {
       type: "pull_request",
-      branch: head?.ref as string || "",
-      commit: head?.sha as string || "",
-      repository: (repo?.repo as Record<string, unknown>)?.html_url as string || "",
-      author: user?.login as string || "",
+      branch: (head?.ref as string) || "",
+      commit: (head?.sha as string) || "",
+      repository:
+        ((repo?.repo as Record<string, unknown>)?.html_url as string) || "",
+      author: (user?.login as string) || "",
     };
   }
 
   return null;
 }
 
-function parseGitLabEvent(body: Record<string, unknown>): WebhookEventInfo | null {
+function parseGitLabEvent(
+  body: Record<string, unknown>
+): WebhookEventInfo | null {
   // Handle push events
   if (body.object_kind === "push") {
     return {
       type: "push",
-      branch: (body.ref as string || "").replace("refs/heads/", ""),
-      commit: body.after as string || "",
-      repository: (body.project as Record<string, unknown>)?.web_url as string || "",
-      author: body.user_name as string || "",
+      branch: ((body.ref as string) || "").replace("refs/heads/", ""),
+      commit: (body.after as string) || "",
+      repository:
+        ((body.project as Record<string, unknown>)?.web_url as string) || "",
+      author: (body.user_name as string) || "",
     };
   }
 
@@ -305,19 +315,22 @@ function parseGitLabEvent(body: Record<string, unknown>): WebhookEventInfo | nul
     const attrs = body.object_attributes as Record<string, unknown>;
     return {
       type: "pull_request",
-      branch: attrs?.source_branch as string || "",
-      commit: attrs?.last_commit as Record<string, unknown>
-        ? (attrs.last_commit as Record<string, unknown>).id as string
+      branch: (attrs?.source_branch as string) || "",
+      commit: (attrs?.last_commit as Record<string, unknown>)
+        ? ((attrs.last_commit as Record<string, unknown>).id as string)
         : "",
-      repository: (body.project as Record<string, unknown>)?.web_url as string || "",
-      author: (body.user as Record<string, unknown>)?.name as string || "",
+      repository:
+        ((body.project as Record<string, unknown>)?.web_url as string) || "",
+      author: ((body.user as Record<string, unknown>)?.name as string) || "",
     };
   }
 
   return null;
 }
 
-function parseBitbucketEvent(body: Record<string, unknown>): WebhookEventInfo | null {
+function parseBitbucketEvent(
+  body: Record<string, unknown>
+): WebhookEventInfo | null {
   // Handle push events
   if (body.push) {
     const push = body.push as Record<string, unknown>;
@@ -330,10 +343,11 @@ function parseBitbucketEvent(body: Record<string, unknown>): WebhookEventInfo | 
 
     return {
       type: "push",
-      branch: newChange?.name as string || "",
-      commit: (newChange?.target as Record<string, unknown>)?.hash as string || "",
-      repository: html?.href as string || "",
-      author: actor?.display_name as string || "",
+      branch: (newChange?.name as string) || "",
+      commit:
+        ((newChange?.target as Record<string, unknown>)?.hash as string) || "",
+      repository: (html?.href as string) || "",
+      author: (actor?.display_name as string) || "",
     };
   }
 

@@ -58,32 +58,38 @@ const timeline = [
   {
     year: "2023",
     title: "BetaForge Founded",
-    description: "Started with a vision to revolutionize software testing using AI agents.",
+    description:
+      "Started with a vision to revolutionize software testing using AI agents.",
   },
   {
     year: "2024",
     title: "Seed Funding",
-    description: "Raised $5M seed round to accelerate product development and team growth.",
+    description:
+      "Raised $5M seed round to accelerate product development and team growth.",
   },
   {
     year: "2024",
     title: "Public Launch",
-    description: "Launched publicly with 6 AI agent personas and full CI/CD integration.",
+    description:
+      "Launched publicly with 6 AI agent personas and full CI/CD integration.",
   },
   {
     year: "2025",
     title: "Series A",
-    description: "Raised $25M Series A to expand enterprise offerings and global reach.",
+    description:
+      "Raised $25M Series A to expand enterprise offerings and global reach.",
   },
   {
     year: "2025",
     title: "500+ Customers",
-    description: "Reached 500+ enterprise customers across 40+ countries worldwide.",
+    description:
+      "Reached 500+ enterprise customers across 40+ countries worldwide.",
   },
   {
     year: "2026",
     title: "The Future",
-    description: "Continuing to innovate and shape the future of AI-powered testing.",
+    description:
+      "Continuing to innovate and shape the future of AI-powered testing.",
   },
 ];
 
@@ -166,7 +172,10 @@ export default function AboutPage() {
               <span className="text-xl font-bold gradient-text">BetaForge</span>
             </Link>
             <div className="flex items-center gap-4">
-              <Link href="/careers" className="text-phantom-gray hover:text-ghost-white text-sm transition-colors">
+              <Link
+                href="/careers"
+                className="text-phantom-gray hover:text-ghost-white text-sm transition-colors"
+              >
                 Careers
               </Link>
               <Link
@@ -188,18 +197,23 @@ export default function AboutPage() {
             <span className="text-sm text-phantom-gray">About BetaForge</span>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            <span className="text-ghost-white">We&apos;re Building the Future of </span>
+            <span className="text-ghost-white">
+              We&apos;re Building the Future of{" "}
+            </span>
             <span className="gradient-text">Software Testing</span>
           </h1>
           <p className="text-lg text-phantom-gray max-w-2xl mx-auto mb-12">
-            Our mission is to help every software team ship better products by harnessing
-            the power of AI to find bugs before users do.
+            Our mission is to help every software team ship better products by
+            harnessing the power of AI to find bugs before users do.
           </p>
 
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {stats.map((stat, index) => (
-              <div key={index} className="p-6 bg-void-elevated border border-white/5 rounded-2xl">
+              <div
+                key={index}
+                className="p-6 bg-void-elevated border border-white/5 rounded-2xl"
+              >
                 <div className="text-3xl md:text-4xl font-bold gradient-text mb-1">
                   {stat.value}
                 </div>
@@ -220,19 +234,21 @@ export default function AboutPage() {
               </h2>
               <div className="space-y-4 text-phantom-gray">
                 <p>
-                  BetaForge was born from a simple observation: traditional testing can&apos;t keep
-                  up with modern software development. As companies ship faster, the gap between
-                  development speed and testing capability continues to widen.
+                  BetaForge was born from a simple observation: traditional
+                  testing can&apos;t keep up with modern software development.
+                  As companies ship faster, the gap between development speed
+                  and testing capability continues to widen.
                 </p>
                 <p>
-                  Our founders, having experienced this firsthand at companies like Stripe and Google,
-                  set out to build something different—AI agents that could test software the way
-                  humans do, but with tireless persistence and diverse perspectives.
+                  Our founders, having experienced this firsthand at companies
+                  like Stripe and Google, set out to build something
+                  different—AI agents that could test software the way humans
+                  do, but with tireless persistence and diverse perspectives.
                 </p>
                 <p>
-                  Today, BetaForge&apos;s AI agents have discovered over 10 million bugs for companies
-                  ranging from early-stage startups to Fortune 500 enterprises. We&apos;re just getting
-                  started.
+                  Today, BetaForge&apos;s AI agents have discovered over 10
+                  million bugs for companies ranging from early-stage startups
+                  to Fortune 500 enterprises. We&apos;re just getting started.
                 </p>
               </div>
             </div>
@@ -242,13 +258,16 @@ export default function AboutPage() {
                 <div className="flex items-center gap-4 mb-6">
                   <Rocket className="w-10 h-10 text-neural-bright" />
                   <div>
-                    <h3 className="text-xl font-bold text-ghost-white">Our Mission</h3>
+                    <h3 className="text-xl font-bold text-ghost-white">
+                      Our Mission
+                    </h3>
                     <p className="text-phantom-gray">Why we exist</p>
                   </div>
                 </div>
                 <p className="text-lg text-ghost-white italic">
-                  &ldquo;To empower every software team to ship exceptional products by making
-                  comprehensive testing accessible, intelligent, and effortless.&rdquo;
+                  &ldquo;To empower every software team to ship exceptional
+                  products by making comprehensive testing accessible,
+                  intelligent, and effortless.&rdquo;
                 </p>
               </div>
             </div>
@@ -295,12 +314,14 @@ export default function AboutPage() {
           <div className="relative">
             {/* Timeline Line */}
             <div className="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-neural via-electric-cyan to-plasma-pink" />
-            
+
             <div className="space-y-8">
               {timeline.map((item, index) => (
                 <div key={index} className="relative flex gap-8">
                   <div className="flex-shrink-0 w-16 h-16 rounded-full bg-void-black border-2 border-neural flex items-center justify-center">
-                    <span className="text-xs font-bold text-neural-bright">{item.year}</span>
+                    <span className="text-xs font-bold text-neural-bright">
+                      {item.year}
+                    </span>
                   </div>
                   <div className="pt-3">
                     <h3 className="text-lg font-semibold text-ghost-white mb-1">
@@ -371,18 +392,18 @@ export default function AboutPage() {
             Backed by the Best
           </h2>
           <p className="text-lg text-phantom-gray mb-12">
-            We&apos;re fortunate to partner with world-class investors who share our vision.
+            We&apos;re fortunate to partner with world-class investors who share
+            our vision.
           </p>
           <div className="flex flex-wrap justify-center items-center gap-12">
             {investors.map((investor, index) => (
-              <div
-                key={index}
-                className="flex flex-col items-center gap-2"
-              >
+              <div key={index} className="flex flex-col items-center gap-2">
                 <div className="w-20 h-20 rounded-2xl bg-void-black border border-white/10 flex items-center justify-center text-xl font-bold text-ghost-white">
                   {investor.logo}
                 </div>
-                <span className="text-sm text-phantom-gray">{investor.name}</span>
+                <span className="text-sm text-phantom-gray">
+                  {investor.name}
+                </span>
               </div>
             ))}
           </div>
@@ -419,8 +440,8 @@ export default function AboutPage() {
                 Join Our Team
               </h2>
               <p className="text-lg text-phantom-gray mb-8 max-w-xl mx-auto">
-                We&apos;re always looking for talented people who share our passion
-                for building exceptional software.
+                We&apos;re always looking for talented people who share our
+                passion for building exceptional software.
               </p>
               <Link
                 href="/careers"

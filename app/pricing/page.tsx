@@ -136,15 +136,57 @@ const faqs = [
 ];
 
 const comparisonFeatures = [
-  { name: "Projects", free: "1", pro: "10", team: "Unlimited", enterprise: "Unlimited" },
-  { name: "Test Sessions/Month", free: "3", pro: "100", team: "500", enterprise: "Unlimited" },
-  { name: "Agents per Session", free: "2", pro: "6", team: "6", enterprise: "Unlimited" },
-  { name: "Report Retention", free: "7 days", pro: "90 days", team: "1 year", enterprise: "Unlimited" },
+  {
+    name: "Projects",
+    free: "1",
+    pro: "10",
+    team: "Unlimited",
+    enterprise: "Unlimited",
+  },
+  {
+    name: "Test Sessions/Month",
+    free: "3",
+    pro: "100",
+    team: "500",
+    enterprise: "Unlimited",
+  },
+  {
+    name: "Agents per Session",
+    free: "2",
+    pro: "6",
+    team: "6",
+    enterprise: "Unlimited",
+  },
+  {
+    name: "Report Retention",
+    free: "7 days",
+    pro: "90 days",
+    team: "1 year",
+    enterprise: "Unlimited",
+  },
   { name: "API Access", free: "—", pro: "✓", team: "✓", enterprise: "Custom" },
-  { name: "CI/CD Integrations", free: "—", pro: "✓", team: "✓", enterprise: "✓" },
-  { name: "Custom Agents", free: "—", pro: "—", team: "3", enterprise: "Unlimited" },
+  {
+    name: "CI/CD Integrations",
+    free: "—",
+    pro: "✓",
+    team: "✓",
+    enterprise: "✓",
+  },
+  {
+    name: "Custom Agents",
+    free: "—",
+    pro: "—",
+    team: "3",
+    enterprise: "Unlimited",
+  },
   { name: "SSO/SAML", free: "—", pro: "—", team: "—", enterprise: "✓" },
-  { name: "Support", free: "Community", pro: "Email", team: "Priority", enterprise: "24/7 Dedicated" },
+  {
+    name: "Support",
+    free: "Community",
+    pro: "Email",
+    team: "Priority",
+    enterprise: "24/7 Dedicated",
+  },
 ];
 
 export default function PricingPage() {
@@ -171,7 +213,10 @@ export default function PricingPage() {
               <span className="text-xl font-bold gradient-text">BetaForge</span>
             </Link>
             <div className="flex items-center gap-4">
-              <Link href="/login" className="text-phantom-gray hover:text-ghost-white text-sm transition-colors">
+              <Link
+                href="/login"
+                className="text-phantom-gray hover:text-ghost-white text-sm transition-colors"
+              >
                 Sign In
               </Link>
               <Link
@@ -190,15 +235,17 @@ export default function PricingPage() {
         <div className="max-w-7xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-neural/20 mb-6">
             <Zap className="w-4 h-4 text-neural-bright" />
-            <span className="text-sm text-phantom-gray">Simple, transparent pricing</span>
+            <span className="text-sm text-phantom-gray">
+              Simple, transparent pricing
+            </span>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
             <span className="text-ghost-white">Choose Your </span>
             <span className="gradient-text">Testing Power</span>
           </h1>
           <p className="text-lg text-phantom-gray max-w-2xl mx-auto mb-10">
-            Start free and scale as you grow. All plans include our full suite of AI agents
-            and comprehensive bug reports.
+            Start free and scale as you grow. All plans include our full suite
+            of AI agents and comprehensive bug reports.
           </p>
 
           {/* Billing Toggle */}
@@ -251,8 +298,12 @@ export default function PricingPage() {
                 )}
 
                 <div className="mb-6">
-                  <h3 className="text-xl font-bold text-ghost-white mb-1">{plan.name}</h3>
-                  <p className="text-sm text-phantom-gray">{plan.description}</p>
+                  <h3 className="text-xl font-bold text-ghost-white mb-1">
+                    {plan.name}
+                  </h3>
+                  <p className="text-sm text-phantom-gray">
+                    {plan.description}
+                  </p>
                 </div>
 
                 <div className="mb-6">
@@ -264,13 +315,18 @@ export default function PricingPage() {
                       <span className="text-phantom-gray">/month</span>
                     </div>
                   ) : (
-                    <div className="text-2xl font-bold text-ghost-white">Custom Pricing</div>
+                    <div className="text-2xl font-bold text-ghost-white">
+                      Custom Pricing
+                    </div>
                   )}
-                  {isYearly && plan.price.monthly !== null && plan.price.monthly > 0 && (
-                    <p className="text-sm text-quantum-green mt-1">
-                      Save ${(plan.price.monthly - plan.price.yearly) * 12}/year
-                    </p>
-                  )}
+                  {isYearly &&
+                    plan.price.monthly !== null &&
+                    plan.price.monthly > 0 && (
+                      <p className="text-sm text-quantum-green mt-1">
+                        Save ${(plan.price.monthly - plan.price.yearly) * 12}
+                        /year
+                      </p>
+                    )}
                 </div>
 
                 <Link
@@ -289,7 +345,9 @@ export default function PricingPage() {
                     <li
                       key={i}
                       className={`flex items-start gap-3 text-sm ${
-                        feature.included ? "text-phantom-gray" : "text-mist-gray"
+                        feature.included
+                          ? "text-phantom-gray"
+                          : "text-mist-gray"
                       }`}
                     >
                       {feature.included ? (
@@ -317,21 +375,41 @@ export default function PricingPage() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-white/10">
-                  <th className="text-left py-4 px-4 text-phantom-gray font-medium">Feature</th>
-                  <th className="text-center py-4 px-4 text-ghost-white font-semibold">Free</th>
-                  <th className="text-center py-4 px-4 text-ghost-white font-semibold">Pro</th>
-                  <th className="text-center py-4 px-4 text-ghost-white font-semibold">Team</th>
-                  <th className="text-center py-4 px-4 text-ghost-white font-semibold">Enterprise</th>
+                  <th className="text-left py-4 px-4 text-phantom-gray font-medium">
+                    Feature
+                  </th>
+                  <th className="text-center py-4 px-4 text-ghost-white font-semibold">
+                    Free
+                  </th>
+                  <th className="text-center py-4 px-4 text-ghost-white font-semibold">
+                    Pro
+                  </th>
+                  <th className="text-center py-4 px-4 text-ghost-white font-semibold">
+                    Team
+                  </th>
+                  <th className="text-center py-4 px-4 text-ghost-white font-semibold">
+                    Enterprise
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {comparisonFeatures.map((feature, index) => (
                   <tr key={index} className="border-b border-white/5">
-                    <td className="py-4 px-4 text-phantom-gray">{feature.name}</td>
-                    <td className="py-4 px-4 text-center text-phantom-gray">{feature.free}</td>
-                    <td className="py-4 px-4 text-center text-phantom-gray">{feature.pro}</td>
-                    <td className="py-4 px-4 text-center text-phantom-gray">{feature.team}</td>
-                    <td className="py-4 px-4 text-center text-phantom-gray">{feature.enterprise}</td>
+                    <td className="py-4 px-4 text-phantom-gray">
+                      {feature.name}
+                    </td>
+                    <td className="py-4 px-4 text-center text-phantom-gray">
+                      {feature.free}
+                    </td>
+                    <td className="py-4 px-4 text-center text-phantom-gray">
+                      {feature.pro}
+                    </td>
+                    <td className="py-4 px-4 text-center text-phantom-gray">
+                      {feature.team}
+                    </td>
+                    <td className="py-4 px-4 text-center text-phantom-gray">
+                      {feature.enterprise}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -347,21 +425,31 @@ export default function PricingPage() {
             <div className="flex items-center gap-4 p-6 bg-void-elevated border border-white/5 rounded-xl">
               <Shield className="w-10 h-10 text-quantum-green" />
               <div>
-                <h4 className="font-semibold text-ghost-white">SOC 2 Compliant</h4>
-                <p className="text-sm text-phantom-gray">Enterprise-grade security</p>
+                <h4 className="font-semibold text-ghost-white">
+                  SOC 2 Compliant
+                </h4>
+                <p className="text-sm text-phantom-gray">
+                  Enterprise-grade security
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-4 p-6 bg-void-elevated border border-white/5 rounded-xl">
               <Clock className="w-10 h-10 text-electric-cyan" />
               <div>
-                <h4 className="font-semibold text-ghost-white">14-Day Free Trial</h4>
-                <p className="text-sm text-phantom-gray">No credit card required</p>
+                <h4 className="font-semibold text-ghost-white">
+                  14-Day Free Trial
+                </h4>
+                <p className="text-sm text-phantom-gray">
+                  No credit card required
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-4 p-6 bg-void-elevated border border-white/5 rounded-xl">
               <Headphones className="w-10 h-10 text-plasma-pink" />
               <div>
-                <h4 className="font-semibold text-ghost-white">Expert Support</h4>
+                <h4 className="font-semibold text-ghost-white">
+                  Expert Support
+                </h4>
                 <p className="text-sm text-phantom-gray">We're here to help</p>
               </div>
             </div>
@@ -385,7 +473,9 @@ export default function PricingPage() {
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
                   className="w-full flex items-center justify-between p-5 text-left bg-void-elevated hover:bg-void-elevated/80 transition-colors"
                 >
-                  <span className="font-medium text-ghost-white">{faq.question}</span>
+                  <span className="font-medium text-ghost-white">
+                    {faq.question}
+                  </span>
                   <ChevronDown
                     className={`w-5 h-5 text-phantom-gray transition-transform ${
                       openFaq === index ? "rotate-180" : ""
@@ -415,8 +505,8 @@ export default function PricingPage() {
                 Need Enterprise Features?
               </h2>
               <p className="text-phantom-gray mb-8 max-w-xl mx-auto">
-                Get custom pricing, dedicated support, SSO, and advanced security features
-                tailored to your organization&apos;s needs.
+                Get custom pricing, dedicated support, SSO, and advanced
+                security features tailored to your organization&apos;s needs.
               </p>
               <Link
                 href="/enterprise"

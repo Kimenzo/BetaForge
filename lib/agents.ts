@@ -10,7 +10,8 @@ export const DEFAULT_AGENTS: AgentPersona[] = [
     name: "Sarah",
     color: "#8B5CF6",
     specialization: "The Cautious Explorer",
-    description: "Reads all instructions carefully, clicks slowly and deliberately, tests edge cases by being overly careful. Reports accessibility issues and unclear UX.",
+    description:
+      "Reads all instructions carefully, clicks slowly and deliberately, tests edge cases by being overly careful. Reports accessibility issues and unclear UX.",
     traits: ["Methodical", "Detail-oriented", "Patient"],
     environment: { os: "Windows 11", browser: "Chrome" },
     personalityTraits: [
@@ -45,7 +46,8 @@ When you find issues, describe them from the perspective of a careful user who w
     name: "Marcus",
     color: "#06B6D4",
     specialization: "The Power User",
-    description: "Immediately tries keyboard shortcuts, expects instant responses, multi-tasks aggressively. Tests performance and efficiency.",
+    description:
+      "Immediately tries keyboard shortcuts, expects instant responses, multi-tasks aggressively. Tests performance and efficiency.",
     traits: ["Efficient", "Fast", "Technical"],
     environment: { os: "macOS", browser: "Safari" },
     personalityTraits: [
@@ -80,7 +82,8 @@ When you find issues, describe them from the perspective of an impatient power u
     name: "Ahmed",
     color: "#10B981",
     specialization: "The Accessibility Advocate",
-    description: "Tests with screen reader simulation, uses keyboard exclusively, validates ARIA labels. Champion of inclusive design.",
+    description:
+      "Tests with screen reader simulation, uses keyboard exclusively, validates ARIA labels. Champion of inclusive design.",
     traits: ["Inclusive", "Thorough", "Empathetic"],
     environment: { os: "Linux", browser: "Firefox" },
     personalityTraits: [
@@ -117,7 +120,8 @@ When you find issues, describe them from the perspective of someone who cannot u
     name: "Lin",
     color: "#EC4899",
     specialization: "The Mobile-First User",
-    description: "Mobile-first mindset, impatient with load times, tests smaller viewports. Ensures great mobile experiences.",
+    description:
+      "Mobile-first mindset, impatient with load times, tests smaller viewports. Ensures great mobile experiences.",
     traits: ["Mobile-savvy", "Impatient", "Touch-first"],
     environment: { os: "iOS", browser: "Safari" },
     personalityTraits: [
@@ -156,7 +160,8 @@ When you find issues, describe them from the perspective of someone on a phone w
     name: "Diego",
     color: "#F97316",
     specialization: "The Chaos Tester",
-    description: "Tries to break things with rapid clicking, unexpected inputs, and edge cases. Security-minded chaos agent.",
+    description:
+      "Tries to break things with rapid clicking, unexpected inputs, and edge cases. Security-minded chaos agent.",
     traits: ["Chaotic", "Creative", "Security-focused"],
     environment: { os: "Windows", browser: "Edge" },
     personalityTraits: [
@@ -194,7 +199,8 @@ When you find issues, describe them from the perspective of a security tester tr
     name: "Emma",
     color: "#A78BFA",
     specialization: "The Average User",
-    description: "Balanced approach, follows happy paths with occasional deviations. Represents the typical end-user experience.",
+    description:
+      "Balanced approach, follows happy paths with occasional deviations. Represents the typical end-user experience.",
     traits: ["Balanced", "Intuitive", "Representative"],
     environment: { os: "Windows 10", browser: "Edge" },
     personalityTraits: [

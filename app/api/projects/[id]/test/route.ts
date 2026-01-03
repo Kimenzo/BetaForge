@@ -3,7 +3,12 @@ import { createServerClient } from "@/lib/supabase";
 import { createOrchestrator } from "@/lib/orchestrator";
 import { getEnabledAgents } from "@/lib/agents";
 import type { AgentEvent } from "@/lib/types";
-import type { TestSessionInsert, AgentExecutionInsert, ActivityLogInsert, Json } from "@/lib/database.types";
+import type {
+  TestSessionInsert,
+  AgentExecutionInsert,
+  ActivityLogInsert,
+  Json,
+} from "@/lib/database.types";
 
 interface RouteParams {
   params: Promise<{ id: string }>;
@@ -26,10 +31,7 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
       .single();
 
     if (projectError || !project) {
-      return NextResponse.json(
-        { error: "Project not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Project not found" }, { status: 404 });
     }
 
     const testUrl = targetUrl || project.access_url;
@@ -138,7 +140,9 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
 
         // Update agent execution progress
         if (event.agentId) {
-          const execution = executions?.find((e) => e.agent_id === event.agentId);
+          const execution = executions?.find(
+            (e) => e.agent_id === event.agentId
+          );
           if (execution) {
             const updateData: Record<string, unknown> = {};
 
@@ -240,7 +244,8 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 
   const { data: sessions, error } = await supabase
     .from("test_sessions")
-    .select(`
+    .select(
+      `
       *,
       agent_executions (
         id,
@@ -251,7 +256,8 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
         started_at,
         completed_at
       )
-    `)
+    `
+    )
     .eq("project_id", projectId)
     .order("created_at", { ascending: false })
     .limit(20);
@@ -271,27 +277,30 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     .eq("project_id", projectId);
 
   return NextResponse.json({
-    sessions: sessions?.map((s) => {
-      const sessionBugs = bugs?.filter((b) => 
-        s.agent_executions?.some((e) => e.id === b.execution_id)
-      ) || [];
+    sessions:
+      sessions?.map((s) => {
+        const sessionBugs =
+          bugs?.filter((b) =>
+            s.agent_executions?.some((e) => e.id === b.execution_id)
+          ) || [];
 
-      return {
-        id: s.id,
-        status: s.status,
-        triggerType: s.trigger_type,
-        progress: s.progress,
-        bugsFound: s.bugs_found,
-        startedAt: s.started_at,
-        completedAt: s.completed_at,
-        agents: s.agent_executions || [],
-        bugSummary: {
-          critical: sessionBugs.filter((b) => b.severity === "critical").length,
-          high: sessionBugs.filter((b) => b.severity === "high").length,
-          medium: sessionBugs.filter((b) => b.severity === "medium").length,
-          low: sessionBugs.filter((b) => b.severity === "low").length,
-        },
-      };
-    }) || [],
+        return {
+          id: s.id,
+          status: s.status,
+          triggerType: s.trigger_type,
+          progress: s.progress,
+          bugsFound: s.bugs_found,
+          startedAt: s.started_at,
+          completedAt: s.completed_at,
+          agents: s.agent_executions || [],
+          bugSummary: {
+            critical: sessionBugs.filter((b) => b.severity === "critical")
+              .length,
+            high: sessionBugs.filter((b) => b.severity === "high").length,
+            medium: sessionBugs.filter((b) => b.severity === "medium").length,
+            low: sessionBugs.filter((b) => b.severity === "low").length,
+          },
+        };
+      }) || [],
   });
 }

@@ -113,7 +113,10 @@ export default function ContactPage() {
               <span className="text-xl font-bold gradient-text">BetaForge</span>
             </Link>
             <div className="flex items-center gap-4">
-              <Link href="/docs" className="text-phantom-gray hover:text-ghost-white text-sm transition-colors">
+              <Link
+                href="/docs"
+                className="text-phantom-gray hover:text-ghost-white text-sm transition-colors"
+              >
                 Documentation
               </Link>
               <Link
@@ -139,8 +142,8 @@ export default function ContactPage() {
             <span className="gradient-text">Hear From You</span>
           </h1>
           <p className="text-lg text-phantom-gray max-w-2xl mx-auto">
-            Have questions about BetaForge? Want to learn more about our enterprise solutions?
-            Our team is here to help.
+            Have questions about BetaForge? Want to learn more about our
+            enterprise solutions? Our team is here to help.
           </p>
         </div>
       </section>
@@ -160,7 +163,8 @@ export default function ContactPage() {
                     Message Sent!
                   </h2>
                   <p className="text-phantom-gray mb-6">
-                    Thank you for reaching out. We&apos;ll get back to you within 24 hours.
+                    Thank you for reaching out. We&apos;ll get back to you
+                    within 24 hours.
                   </p>
                   <button
                     onClick={() => {
@@ -179,7 +183,10 @@ export default function ContactPage() {
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="p-8 bg-void-elevated border border-white/5 rounded-3xl">
+                <form
+                  onSubmit={handleSubmit}
+                  className="p-8 bg-void-elevated border border-white/5 rounded-3xl"
+                >
                   <h2 className="text-2xl font-bold text-ghost-white mb-6">
                     Send Us a Message
                   </h2>
@@ -194,7 +201,9 @@ export default function ContactPage() {
                         <button
                           key={reason.id}
                           type="button"
-                          onClick={() => setFormData({ ...formData, reason: reason.id })}
+                          onClick={() =>
+                            setFormData({ ...formData, reason: reason.id })
+                          }
                           className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm transition-all ${
                             formData.reason === reason.id
                               ? "bg-neural/20 text-ghost-white border border-neural/30"
@@ -218,7 +227,9 @@ export default function ContactPage() {
                         type="text"
                         required
                         value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, name: e.target.value })
+                        }
                         className="w-full px-4 py-3 bg-void-black border border-white/10 rounded-xl text-ghost-white placeholder:text-mist-gray focus:outline-none focus:border-neural/50 transition-colors"
                         placeholder="John Doe"
                       />
@@ -231,7 +242,9 @@ export default function ContactPage() {
                         type="email"
                         required
                         value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, email: e.target.value })
+                        }
                         className="w-full px-4 py-3 bg-void-black border border-white/10 rounded-xl text-ghost-white placeholder:text-mist-gray focus:outline-none focus:border-neural/50 transition-colors"
                         placeholder="john@company.com"
                       />
@@ -245,7 +258,9 @@ export default function ContactPage() {
                     <input
                       type="text"
                       value={formData.company}
-                      onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, company: e.target.value })
+                      }
                       className="w-full px-4 py-3 bg-void-black border border-white/10 rounded-xl text-ghost-white placeholder:text-mist-gray focus:outline-none focus:border-neural/50 transition-colors"
                       placeholder="Your company name"
                     />
@@ -259,7 +274,9 @@ export default function ContactPage() {
                       required
                       rows={5}
                       value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, message: e.target.value })
+                      }
                       className="w-full px-4 py-3 bg-void-black border border-white/10 rounded-xl text-ghost-white placeholder:text-mist-gray focus:outline-none focus:border-neural/50 transition-colors resize-none"
                       placeholder="Tell us how we can help..."
                     />
@@ -327,8 +344,8 @@ export default function ContactPage() {
                   </h3>
                 </div>
                 <p className="text-phantom-gray text-sm">
-                  We typically respond within 24 hours. Enterprise customers receive
-                  priority support with 4-hour response time.
+                  We typically respond within 24 hours. Enterprise customers
+                  receive priority support with 4-hour response time.
                 </p>
               </div>
 

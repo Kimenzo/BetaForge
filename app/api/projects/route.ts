@@ -10,7 +10,8 @@ export async function GET(request: NextRequest) {
   // TODO: Get user from auth and filter by user_id
   const { data: projects, error } = await supabase
     .from("projects")
-    .select(`
+    .select(
+      `
       *,
       test_sessions (
         id,
@@ -18,7 +19,8 @@ export async function GET(request: NextRequest) {
         bugs_found,
         completed_at
       )
-    `)
+    `
+    )
     .order("created_at", { ascending: false });
 
   if (error) {

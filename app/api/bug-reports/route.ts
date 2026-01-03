@@ -13,7 +13,8 @@ export async function GET(request: NextRequest) {
 
   let query = supabase
     .from("bug_reports")
-    .select(`
+    .select(
+      `
       *,
       agent_executions (
         id,
@@ -28,7 +29,8 @@ export async function GET(request: NextRequest) {
           )
         )
       )
-    `)
+    `
+    )
     .order("created_at", { ascending: false })
     .limit(limit);
 
@@ -53,27 +55,28 @@ export async function GET(request: NextRequest) {
   }
 
   return NextResponse.json({
-    reports: reports?.map((r) => ({
-      id: r.id,
-      severity: r.severity,
-      status: r.status,
-      title: r.title,
-      description: r.description,
-      agentName: r.agent_name,
-      agentColor: r.agent_color,
-      reproductionSteps: r.reproduction_steps,
-      expectedBehavior: r.expected_behavior,
-      actualBehavior: r.actual_behavior,
-      screenshots: r.screenshots,
-      consoleErrors: r.console_errors,
-      networkLogs: r.network_logs,
-      environmentInfo: r.environment_info,
-      projectId: r.project_id,
-      projectName: r.agent_executions?.test_sessions?.projects?.name,
-      sessionId: r.agent_executions?.test_sessions?.id,
-      createdAt: r.created_at,
-      updatedAt: r.updated_at,
-    })) || [],
+    reports:
+      reports?.map((r) => ({
+        id: r.id,
+        severity: r.severity,
+        status: r.status,
+        title: r.title,
+        description: r.description,
+        agentName: r.agent_name,
+        agentColor: r.agent_color,
+        reproductionSteps: r.reproduction_steps,
+        expectedBehavior: r.expected_behavior,
+        actualBehavior: r.actual_behavior,
+        screenshots: r.screenshots,
+        consoleErrors: r.console_errors,
+        networkLogs: r.network_logs,
+        environmentInfo: r.environment_info,
+        projectId: r.project_id,
+        projectName: r.agent_executions?.test_sessions?.projects?.name,
+        sessionId: r.agent_executions?.test_sessions?.id,
+        createdAt: r.created_at,
+        updatedAt: r.updated_at,
+      })) || [],
   });
 }
 
@@ -102,7 +105,10 @@ export async function POST(request: NextRequest) {
 
     if (!executionId || !projectId || !severity || !title || !description) {
       return NextResponse.json(
-        { error: "executionId, projectId, severity, title, and description are required" },
+        {
+          error:
+            "executionId, projectId, severity, title, and description are required",
+        },
         { status: 400 }
       );
     }
