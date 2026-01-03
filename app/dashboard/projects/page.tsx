@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Plus, Search, Filter, Grid3X3, List, Sparkles } from "lucide-react";
-import { useProjects } from "@/lib/hooks";
+import { Plus, Search, Filter, Grid3X3, List, Sparkles, Loader2 } from "lucide-react";
+import { useProjects, useTestSession } from "@/lib/hooks";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ProjectCard } from "@/components/ui/projectcard";
@@ -11,8 +11,10 @@ import { useState } from "react";
 
 export default function ProjectsPage() {
   const { projects, isLoading, deleteProject } = useProjects();
+  const { startTest, isStarting } = useTestSession();
   const [searchQuery, setSearchQuery] = useState("");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [startingProjectId, setStartingProjectId] = useState<string | null>(null);
 
   const filteredProjects = projects.filter(
     (p) =>
@@ -24,6 +26,12 @@ export default function ProjectsPage() {
     if (confirm(`Delete project "${name}"? This cannot be undone.`)) {
       await deleteProject(id);
     }
+  };
+
+  const handleStartTest = async (projectId: string) => {
+    setStartingProjectId(projectId);
+    await startTest(projectId);
+    setStartingProjectId(null);
   };
 
   return (
@@ -111,12 +119,15 @@ export default function ProjectsPage() {
               <ProjectCard
                 project={{
                   ...project,
-                  status: (project as { status?: string }).status as "active" | "testing" | "idle" | "error" || "idle",
+                  status: startingProjectId === project.id 
+                    ? "testing" 
+                    : (project as { status?: string }).status as "active" | "testing" | "idle" | "error" || "idle",
                   stats: (project as { stats?: { bugsFound: number; sessionsCount: number } }).stats || {
                     bugsFound: 0,
                     sessionsCount: 0,
                   },
                 }}
+                onStartTest={() => handleStartTest(project.id)}
                 onDelete={() => handleDelete(project.id, project.name)}
               />
             </div>

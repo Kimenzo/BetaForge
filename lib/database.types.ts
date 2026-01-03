@@ -314,6 +314,326 @@ export type Database = {
         };
         Relationships: [];
       };
+      payments: {
+        Row: {
+          id: string;
+          user_id: string;
+          provider: string;
+          provider_payment_id: string;
+          amount: number;
+          currency: string;
+          status: string;
+          plan_id: string | null;
+          metadata: Json | null;
+          created_at: string | null;
+          updated_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          provider: string;
+          provider_payment_id: string;
+          amount: number;
+          currency: string;
+          status: string;
+          plan_id?: string | null;
+          metadata?: Json | null;
+          created_at?: string | null;
+          updated_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          provider?: string;
+          provider_payment_id?: string;
+          amount?: number;
+          currency?: string;
+          status?: string;
+          plan_id?: string | null;
+          metadata?: Json | null;
+          created_at?: string | null;
+          updated_at?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "payments_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      invoices: {
+        Row: {
+          id: string;
+          user_id: string;
+          amount: number;
+          currency: string;
+          status: string;
+          invoice_number: string | null;
+          description: string | null;
+          pdf_url: string | null;
+          created_at: string | null;
+          paid_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          amount: number;
+          currency?: string;
+          status?: string;
+          invoice_number?: string | null;
+          description?: string | null;
+          pdf_url?: string | null;
+          created_at?: string | null;
+          paid_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          amount?: number;
+          currency?: string;
+          status?: string;
+          invoice_number?: string | null;
+          description?: string | null;
+          pdf_url?: string | null;
+          created_at?: string | null;
+          paid_at?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "invoices_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      user_subscriptions: {
+        Row: {
+          id: string;
+          user_id: string;
+          provider: string;
+          provider_subscription_id: string;
+          provider_customer_id: string | null;
+          plan_id: string;
+          status: string;
+          current_period_start: string | null;
+          current_period_end: string | null;
+          cancel_at_period_end: boolean;
+          canceled_at: string | null;
+          metadata: Json | null;
+          created_at: string | null;
+          updated_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          provider: string;
+          provider_subscription_id: string;
+          provider_customer_id?: string | null;
+          plan_id: string;
+          status: string;
+          current_period_start?: string | null;
+          current_period_end?: string | null;
+          cancel_at_period_end?: boolean;
+          canceled_at?: string | null;
+          metadata?: Json | null;
+          created_at?: string | null;
+          updated_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          provider?: string;
+          provider_subscription_id?: string;
+          provider_customer_id?: string | null;
+          plan_id?: string;
+          status?: string;
+          current_period_start?: string | null;
+          current_period_end?: string | null;
+          cancel_at_period_end?: boolean;
+          canceled_at?: string | null;
+          metadata?: Json | null;
+          created_at?: string | null;
+          updated_at?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "user_subscriptions_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      api_keys: {
+        Row: {
+          id: string;
+          user_id: string;
+          project_id: string | null;
+          name: string;
+          key_hash: string;
+          key_prefix: string;
+          scopes: string[];
+          is_active: boolean;
+          expires_at: string | null;
+          last_used_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          project_id?: string | null;
+          name: string;
+          key_hash: string;
+          key_prefix: string;
+          scopes?: string[];
+          is_active?: boolean;
+          expires_at?: string | null;
+          last_used_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          project_id?: string | null;
+          name?: string;
+          key_hash?: string;
+          key_prefix?: string;
+          scopes?: string[];
+          is_active?: boolean;
+          expires_at?: string | null;
+          last_used_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "api_keys_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "api_keys_project_id_fkey";
+            columns: ["project_id"];
+            isOneToOne: false;
+            referencedRelation: "projects";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      webhook_endpoints: {
+        Row: {
+          id: string;
+          user_id: string;
+          project_id: string | null;
+          url: string;
+          secret: string;
+          events: string[];
+          is_active: boolean;
+          description: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          project_id?: string | null;
+          url: string;
+          secret: string;
+          events: string[];
+          is_active?: boolean;
+          description?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          project_id?: string | null;
+          url?: string;
+          secret?: string;
+          events?: string[];
+          is_active?: boolean;
+          description?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "webhook_endpoints_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "webhook_endpoints_project_id_fkey";
+            columns: ["project_id"];
+            isOneToOne: false;
+            referencedRelation: "projects";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      webhook_deliveries: {
+        Row: {
+          id: string;
+          webhook_id: string;
+          event_type: string;
+          payload: Json;
+          status: string;
+          response_status: number | null;
+          response_body: string | null;
+          attempts: number;
+          next_retry_at: string | null;
+          created_at: string;
+          delivered_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          webhook_id: string;
+          event_type: string;
+          payload: Json;
+          status?: string;
+          response_status?: number | null;
+          response_body?: string | null;
+          attempts?: number;
+          next_retry_at?: string | null;
+          created_at?: string;
+          delivered_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          webhook_id?: string;
+          event_type?: string;
+          payload?: Json;
+          status?: string;
+          response_status?: number | null;
+          response_body?: string | null;
+          attempts?: number;
+          next_retry_at?: string | null;
+          created_at?: string;
+          delivered_at?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "webhook_deliveries_webhook_id_fkey";
+            columns: ["webhook_id"];
+            isOneToOne: false;
+            referencedRelation: "webhook_endpoints";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
     };
     Views: {
       [_ in never]: never;
@@ -336,13 +656,18 @@ export type Database = {
         | "agent_bug_found"
         | "agent_completed"
         | "agent_failed"
-        | "session_completed";
+        | "session_started"
+        | "session_completed"
+        | "session_failed";
       bug_severity: "critical" | "high" | "medium" | "low";
       console_error_type: "error" | "warning" | "log";
       platform_type: "web" | "mobile" | "desktop";
       project_status: "active" | "testing" | "idle" | "error";
       test_status: "queued" | "running" | "completed" | "failed";
       trigger_type: "manual" | "webhook" | "scheduled";
+      payment_status: "pending" | "succeeded" | "failed" | "refunded";
+      subscription_status: "active" | "cancelled" | "past_due" | "incomplete" | "trialing";
+      payment_provider: "paystack" | "dodo";
     };
     CompositeTypes: {
       [_ in never]: never;
@@ -367,12 +692,22 @@ export type TestSession = Tables<"test_sessions">;
 export type AgentExecution = Tables<"agent_executions">;
 export type BugReport = Tables<"bug_reports">;
 export type ActivityLog = Tables<"activity_logs">;
+export type Payment = Tables<"payments">;
+export type UserSubscription = Tables<"user_subscriptions">;
 
 export type ProjectInsert = TablesInsert<"projects">;
 export type TestSessionInsert = TablesInsert<"test_sessions">;
 export type AgentExecutionInsert = TablesInsert<"agent_executions">;
 export type BugReportInsert = TablesInsert<"bug_reports">;
 export type ActivityLogInsert = TablesInsert<"activity_logs">;
+export type PaymentInsert = TablesInsert<"payments">;
+export type UserSubscriptionInsert = TablesInsert<"user_subscriptions">;
+export type ApiKey = Tables<"api_keys">;
+export type ApiKeyInsert = TablesInsert<"api_keys">;
+export type WebhookEndpoint = Tables<"webhook_endpoints">;
+export type WebhookEndpointInsert = TablesInsert<"webhook_endpoints">;
+export type WebhookDelivery = Tables<"webhook_deliveries">;
+export type WebhookDeliveryInsert = TablesInsert<"webhook_deliveries">;
 
 // Enum constants for easy access
 export const BugSeverity = ["critical", "high", "medium", "low"] as const;
@@ -380,6 +715,9 @@ export const ProjectStatus = ["active", "testing", "idle", "error"] as const;
 export const TestStatus = ["queued", "running", "completed", "failed"] as const;
 export const TriggerType = ["manual", "webhook", "scheduled"] as const;
 export const PlatformType = ["web", "mobile", "desktop"] as const;
+export const PaymentStatus = ["pending", "succeeded", "failed", "refunded"] as const;
+export const SubscriptionStatus = ["active", "cancelled", "past_due", "incomplete", "trialing"] as const;
+export const PaymentProvider = ["paystack", "dodo"] as const;
 export const AgentEventType = [
   "agent_started",
   "agent_action",
@@ -387,5 +725,7 @@ export const AgentEventType = [
   "agent_bug_found",
   "agent_completed",
   "agent_failed",
+  "session_started",
   "session_completed",
+  "session_failed",
 ] as const;

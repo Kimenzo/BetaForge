@@ -16,6 +16,7 @@ import {
 import { AGENTS } from "@/lib/agents";
 import { createServerClient } from "@/lib/supabase";
 import { notFound } from "next/navigation";
+import { StartTestButton } from "@/components/ui/StartTestButton";
 
 interface ProjectPageProps {
   params: Promise<{ id: string }>;
@@ -193,10 +194,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
           <button className="p-3 rounded-xl bg-void-elevated border border-white/5 text-phantom-gray hover:text-ghost-white hover:border-white/10 transition-all">
             <MoreVertical className="w-5 h-5" />
           </button>
-          <button className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-neural to-neural-bright text-white font-semibold hover:shadow-glow transition-all duration-300">
-            <Zap className="w-5 h-5" />
-            Run Test
-          </button>
+          <StartTestButton projectId={id} variant="primary" />
         </div>
       </div>
 
@@ -282,10 +280,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
             <p className="text-phantom-gray mb-4">
               No test sessions yet. Run your first test to see results here.
             </p>
-            <button className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-neural/10 text-neural-bright hover:bg-neural/20 transition-colors">
-              <Zap className="w-4 h-4" />
-              Start Testing
-            </button>
+            <StartTestButton projectId={id} variant="secondary" />
           </div>
         </div>
       </section>
@@ -319,7 +314,10 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
 
       {/* Quick Actions */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-4 animate-fade-in-up stagger-5">
-        <button className="glass rounded-xl p-5 border border-white/5 hover:border-neural/30 transition-all text-left group">
+        <Link
+          href={`/dashboard/projects/${id}/analytics`}
+          className="glass rounded-xl p-5 border border-white/5 hover:border-neural/30 transition-all text-left group"
+        >
           <div className="flex items-center gap-3 mb-2">
             <div className="p-2 rounded-lg bg-neural/10 text-neural-bright">
               <TrendingUp className="w-5 h-5" />
@@ -331,8 +329,11 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
           <p className="text-sm text-phantom-gray">
             Detailed insights and trends from your tests
           </p>
-        </button>
-        <button className="glass rounded-xl p-5 border border-white/5 hover:border-electric-cyan/30 transition-all text-left group">
+        </Link>
+        <Link
+          href={`/dashboard/projects/${id}/settings`}
+          className="glass rounded-xl p-5 border border-white/5 hover:border-electric-cyan/30 transition-all text-left group"
+        >
           <div className="flex items-center gap-3 mb-2">
             <div className="p-2 rounded-lg bg-electric-cyan/10 text-electric-cyan">
               <Settings className="w-5 h-5" />
@@ -344,8 +345,11 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
           <p className="text-sm text-phantom-gray">
             Update settings, agents, and test parameters
           </p>
-        </button>
-        <button className="glass rounded-xl p-5 border border-white/5 hover:border-quantum-green/30 transition-all text-left group">
+        </Link>
+        <Link
+          href="/docs/integrations/webhooks"
+          className="glass rounded-xl p-5 border border-white/5 hover:border-quantum-green/30 transition-all text-left group"
+        >
           <div className="flex items-center gap-3 mb-2">
             <div className="p-2 rounded-lg bg-quantum-green/10 text-quantum-green">
               <Zap className="w-5 h-5" />
@@ -357,7 +361,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
           <p className="text-sm text-phantom-gray">
             Automate testing with CI/CD integration
           </p>
-        </button>
+        </Link>
       </section>
     </div>
   );

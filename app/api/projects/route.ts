@@ -2,6 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { createServerClient } from "@/lib/supabase";
 import type { ProjectInsert } from "@/lib/database.types";
 
+// ===========================================
+// 🚀 PERFORMANCE OPTIMIZATIONS
+// ===========================================
+
+// Enable caching for GET requests
+export const revalidate = 60; // Cache for 60 seconds
+
 // GET /api/projects - List all projects for the authenticated user
 export async function GET(request: NextRequest) {
   const supabase = createServerClient();
@@ -54,7 +61,15 @@ export async function GET(request: NextRequest) {
     };
   });
 
-  return NextResponse.json({ projects: projectsWithStats || [] });
+  // Return with cache headers
+  return NextResponse.json(
+    { projects: projectsWithStats || [] },
+    {
+      headers: {
+        "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+      },
+    }
+  );
 }
 
 // POST /api/projects - Create a new project

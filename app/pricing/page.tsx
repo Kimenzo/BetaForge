@@ -16,8 +16,10 @@ import {
   Headphones,
   ChevronDown,
   Star,
+  Globe,
 } from "lucide-react";
 import { Footer } from "@/components/layout";
+import { CheckoutModal } from "@/components/payments";
 
 const plans = [
   {
@@ -124,11 +126,6 @@ const faqs = [
       "Yes! We offer 50% off for verified startups (under $5M funding) and 30% off for registered non-profit organizations. Contact us to apply for these discounts.",
   },
   {
-    question: "What's included in the free trial?",
-    answer:
-      "Pro and Team plans come with a 14-day free trial with full access to all features. No credit card required to start. You'll only be charged if you decide to continue after the trial.",
-  },
-  {
     question: "How does annual billing work?",
     answer:
       "Annual billing saves you 20% compared to monthly billing. You're billed once per year, and you can cancel anytime with a prorated refund for unused months.",
@@ -192,9 +189,45 @@ const comparisonFeatures = [
 export default function PricingPage() {
   const [isYearly, setIsYearly] = useState(true);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [checkoutModal, setCheckoutModal] = useState<{
+    isOpen: boolean;
+    plan: typeof plans[0] | null;
+  }>({ isOpen: false, plan: null });
+
+  const handlePlanSelect = (plan: typeof plans[0]) => {
+    // Enterprise plans go to contact
+    if (plan.name === "Enterprise") {
+      window.location.href = "/contact?type=enterprise";
+      return;
+    }
+    
+    // Free plans go directly to signup
+    if (plan.price.monthly === 0) {
+      window.location.href = "/signup?plan=free";
+      return;
+    }
+    
+    // Open checkout modal for paid plans
+    setCheckoutModal({ isOpen: true, plan });
+  };
 
   return (
     <div className="min-h-screen bg-void-black">
+      {/* Checkout Modal */}
+      {checkoutModal.plan && (
+        <CheckoutModal
+          isOpen={checkoutModal.isOpen}
+          onClose={() => setCheckoutModal({ isOpen: false, plan: null })}
+          plan={{
+            id: checkoutModal.plan.name.toLowerCase(),
+            name: checkoutModal.plan.name,
+            price: checkoutModal.plan.price as { monthly: number; yearly: number },
+            description: checkoutModal.plan.description,
+          }}
+          billingInterval={isYearly ? "yearly" : "monthly"}
+        />
+      )}
+
       {/* Background */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute inset-0 mesh-bg opacity-30" />
@@ -327,10 +360,15 @@ export default function PricingPage() {
                         /year
                       </p>
                     )}
+                  {plan.price.monthly !== null && plan.price.monthly > 0 && (
+                    <p className="text-xs text-mist-gray mt-1">
+                      excl. VAT/tax
+                    </p>
+                  )}
                 </div>
 
-                <Link
-                  href={plan.ctaLink}
+                <button
+                  onClick={() => handlePlanSelect(plan)}
                   className={`block w-full py-3 rounded-xl font-semibold text-center transition-all mb-6 ${
                     plan.popular
                       ? "bg-gradient-to-r from-neural to-electric-cyan text-white hover:shadow-glow"
@@ -338,7 +376,7 @@ export default function PricingPage() {
                   }`}
                 >
                   {plan.cta}
-                </Link>
+                </button>
 
                 <ul className="space-y-3">
                   {plan.features.map((feature, i) => (
@@ -361,6 +399,14 @@ export default function PricingPage() {
                 </ul>
               </div>
             ))}
+          </div>
+          
+          {/* VAT/Tax Notice */}
+          <div className="mt-8 text-center">
+            <p className="text-sm text-mist-gray flex items-center justify-center gap-2">
+              <Globe className="w-4 h-4" />
+              Prices shown are exclusive of VAT/taxes. Applicable taxes will be calculated at checkout based on your location.
+            </p>
           </div>
         </div>
       </section>
@@ -430,17 +476,6 @@ export default function PricingPage() {
                 </h4>
                 <p className="text-sm text-phantom-gray">
                   Enterprise-grade security
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4 p-6 bg-void-elevated border border-white/5 rounded-xl">
-              <Clock className="w-10 h-10 text-electric-cyan" />
-              <div>
-                <h4 className="font-semibold text-ghost-white">
-                  14-Day Free Trial
-                </h4>
-                <p className="text-sm text-phantom-gray">
-                  No credit card required
                 </p>
               </div>
             </div>

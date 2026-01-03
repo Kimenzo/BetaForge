@@ -143,7 +143,9 @@ export type AgentEventType =
   | "agent_bug_found"
   | "agent_completed"
   | "agent_failed"
-  | "session_completed";
+  | "session_started"
+  | "session_completed"
+  | "session_failed";
 
 export interface AgentEvent {
   type: AgentEventType;

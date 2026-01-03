@@ -39,6 +39,7 @@ const integrations = [
     color: "from-gray-700 to-gray-900",
     iconBg: "bg-gray-800",
     popular: true,
+    hasDetailPage: true,
     setup: `name: BetaForge Testing
 
 on:
@@ -52,14 +53,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run BetaForge Tests
-        uses: betaforge/action@v2
-        with:
-          api-key: \${{ secrets.BETAFORGE_API_KEY }}
-          project-id: \${{ secrets.BETAFORGE_PROJECT_ID }}
-          test-url: https://staging.myapp.com
-          agents: sarah,marcus,diego
-          wait-for-results: true
-          fail-on-critical: true`,
+        run: |
+          response=$(curl -s -X POST https://api.betaforge.ai/v1/sessions \\
+            -H "Authorization: Bearer \${{ secrets.BETAFORGE_API_KEY }}" \\
+            -H "Content-Type: application/json" \\
+            -d '{
+              "projectId": "\${{ secrets.BETAFORGE_PROJECT_ID }}",
+              "testUrl": "https://staging.myapp.com",
+              "agents": ["sarah", "marcus", "diego"],
+              "waitForResults": true,
+              "failOnCritical": true
+            }')
+          echo "$response"
+          # Fail if critical bugs found (exit code 422)
+          echo "$response" | jq -e '.success == true'`,
   },
   {
     id: "gitlab",
@@ -71,19 +78,27 @@ jobs:
     color: "from-orange-600 to-orange-800",
     iconBg: "bg-orange-600",
     popular: true,
+    hasDetailPage: true,
     setup: `stages:
   - test
 
 betaforge_test:
   stage: test
-  image: betaforge/cli:latest
+  image: curlimages/curl:latest
   script:
-    - betaforge test \\
-        --api-key $BETAFORGE_API_KEY \\
-        --project-id $BETAFORGE_PROJECT_ID \\
-        --url $CI_ENVIRONMENT_URL \\
-        --agents sarah,marcus,ahmed \\
-        --wait
+    - |
+      response=$(curl -s -X POST https://api.betaforge.ai/v1/sessions \\
+        -H "Authorization: Bearer $BETAFORGE_API_KEY" \\
+        -H "Content-Type: application/json" \\
+        -d '{
+          "projectId": "'$BETAFORGE_PROJECT_ID'",
+          "testUrl": "'$CI_ENVIRONMENT_URL'",
+          "agents": ["sarah", "marcus", "ahmed"],
+          "waitForResults": true,
+          "failOnCritical": true
+        }')
+      echo "$response"
+      echo "$response" | grep -q '"success":true'
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH`,
@@ -97,6 +112,7 @@ betaforge_test:
     color: "from-red-600 to-red-800",
     iconBg: "bg-red-600",
     popular: false,
+    hasDetailPage: true,
     setup: `pipeline {
     agent any
     
@@ -139,6 +155,7 @@ betaforge_test:
     color: "from-blue-600 to-blue-800",
     iconBg: "bg-blue-600",
     popular: false,
+    hasDetailPage: true,
     setup: `image: node:18
 
 pipelines:
@@ -165,6 +182,7 @@ pipelines:
     color: "from-purple-600 to-purple-800",
     iconBg: "bg-purple-600",
     popular: true,
+    hasDetailPage: true,
     setup: `// Webhook configuration in BetaForge Dashboard
 {
   "type": "slack",
@@ -187,6 +205,7 @@ pipelines:
     color: "from-blue-500 to-blue-700",
     iconBg: "bg-blue-500",
     popular: true,
+    hasDetailPage: true,
     setup: `// Jira integration settings
 {
   "type": "jira",
@@ -239,6 +258,7 @@ pipelines:
     color: "from-neural to-electric-cyan",
     iconBg: "bg-neural",
     popular: false,
+    hasDetailPage: true,
     setup: `// Custom webhook payload example
 {
   "url": "https://your-api.com/betaforge-webhook",
@@ -452,7 +472,7 @@ export default function IntegrationsPage() {
                 >
                   <selectedIntegration.icon className="w-6 h-6 text-white" />
                 </div>
-                <div>
+                <div className="flex-1">
                   <h3 className="text-xl font-bold text-ghost-white mb-1">
                     {selectedIntegration.name}
                   </h3>
@@ -460,6 +480,15 @@ export default function IntegrationsPage() {
                     {selectedIntegration.description}
                   </p>
                 </div>
+                {selectedIntegration.hasDetailPage && (
+                  <Link
+                    href={selectedIntegration.id === "webhook" ? "/docs/integrations/webhooks" : `/docs/integrations/${selectedIntegration.id}`}
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-neural/20 text-neural-bright text-sm font-medium hover:bg-neural/30 transition-colors"
+                  >
+                    Full Documentation
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                )}
               </div>
             </div>
 

@@ -116,7 +116,7 @@
   --z-max: 999;
 }
 
-/* === BASE STYLES === */
+/* === BASE STYLES - GPU OPTIMIZED === */
 * {
   box-sizing: border-box;
   border-color: var(--border);
@@ -124,7 +124,11 @@
 
 html {
   color-scheme: dark;
+  /* Smooth scrolling with performance */
   scroll-behavior: smooth;
+  /* Prevent layout thrashing */
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -132,9 +136,53 @@ body {
   background: var(--void-black);
   color: var(--ghost-white);
   line-height: 1.7;
+  /* Font rendering optimization */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  /* Prevent horizontal scroll */
   overflow-x: hidden;
+  /* GPU layer promotion for smoother scrolling */
+  -webkit-overflow-scrolling: touch;
+  /* Contain layout to prevent reflows */
+  contain: layout style;
+}
+
+/* === GPU ACCELERATION UTILITIES === */
+.gpu-accelerate {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform;
+}
+
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+.will-change-auto {
+  will-change: auto;
+}
+
+/* Contain for performance */
+.contain-layout {
+  contain: layout;
+}
+
+.contain-paint {
+  contain: paint;
+}
+
+.contain-strict {
+  contain: strict;
+}
+
+.contain-content {
+  contain: content;
 }
 
 /* === SELECTION === */
@@ -169,7 +217,8 @@ body {
   box-shadow: 0 0 0 2px var(--void-black), 0 0 0 4px var(--neural-purple);
 }
 
-/* === KEYFRAME ANIMATIONS === */
+/* === GPU-ACCELERATED KEYFRAME ANIMATIONS === */
+/* All transforms use translateZ(0) for GPU acceleration */
 
 @keyframes mesh-float {
   0%,
@@ -205,24 +254,26 @@ body {
   }
 }
 
+/* GPU-accelerated float animation */
 @keyframes float {
   0%,
   100% {
-    transform: translateY(0);
+    transform: translateY(0) translateZ(0);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-10px) translateZ(0);
   }
 }
 
+/* GPU-accelerated fade-in-up */
 @keyframes fade-in-up {
   from {
     opacity: 0;
-    transform: translateY(30px) scale(0.95);
+    transform: translateY(20px) translateZ(0);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0) translateZ(0);
   }
 }
 
@@ -235,55 +286,58 @@ body {
   }
 }
 
+/* GPU-accelerated scale-in */
 @keyframes scale-in {
   from {
     opacity: 0;
-    transform: scale(0.9);
+    transform: scale(0.95) translateZ(0);
   }
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: scale(1) translateZ(0);
   }
 }
 
+/* GPU-accelerated slide animations */
 @keyframes slide-in-left {
   from {
     opacity: 0;
-    transform: translateX(-20px);
+    transform: translateX(-20px) translateZ(0);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateX(0) translateZ(0);
   }
 }
 
 @keyframes slide-in-right {
   from {
     opacity: 0;
-    transform: translateX(20px);
+    transform: translateX(20px) translateZ(0);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateX(0) translateZ(0);
   }
 }
 
+/* Optimized shimmer - uses GPU-accelerated transform */
 @keyframes shimmer {
   0% {
-    background-position: -200% 0;
+    transform: translateX(-100%) translateZ(0);
   }
   100% {
-    background-position: 200% 0;
+    transform: translateX(100%) translateZ(0);
   }
 }
 
 @keyframes pulse-ring {
   0% {
-    transform: scale(0.8);
+    transform: scale(0.8) translateZ(0);
     opacity: 1;
   }
   100% {
-    transform: scale(2);
+    transform: scale(2) translateZ(0);
     opacity: 0;
   }
 }
@@ -300,29 +354,29 @@ body {
 @keyframes bounce-subtle {
   0%,
   100% {
-    transform: translateY(0);
+    transform: translateY(0) translateZ(0);
   }
   50% {
-    transform: translateY(-5px);
+    transform: translateY(-5px) translateZ(0);
   }
 }
 
 @keyframes count-pulse {
   0% {
-    transform: scale(1);
+    transform: scale(1) translateZ(0);
   }
   50% {
-    transform: scale(1.1);
+    transform: scale(1.1) translateZ(0);
   }
   100% {
-    transform: scale(1);
+    transform: scale(1) translateZ(0);
   }
 }
 
 @keyframes particle-float {
   0%,
   100% {
-    transform: translateY(0) translateX(0);
+    transform: translateY(0) translateX(0) translateZ(0);
     opacity: 0;
   }
   10% {
@@ -332,7 +386,7 @@ body {
     opacity: 1;
   }
   100% {
-    transform: translateY(-100vh) translateX(20px);
+    transform: translateY(-100vh) translateX(20px) translateZ(0);
     opacity: 0;
   }
 }
@@ -353,11 +407,38 @@ body {
 
 @keyframes spin-slow {
   from {
-    transform: rotate(0deg);
+    transform: rotate(0deg) translateZ(0);
   }
   to {
-    transform: rotate(360deg);
+    transform: rotate(360deg) translateZ(0);
   }
+}
+
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+@keyframes tilt {
+    0%, 50%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(0.5deg);
+    }
+    75% {
+        transform: rotate(-0.5deg);
+    }
 }
 
 /* === LAYER: COMPONENTS === */
@@ -610,6 +691,18 @@ body {
   .animate-spin-slow {
     animation: spin-slow 3s linear infinite;
   }
+  .animate-blob {
+    animation: blob 7s infinite;
+  }
+  .animate-tilt {
+    animation: tilt 10s infinite linear;
+  }
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
 
   /* Text utilities */
   .text-balance {
@@ -626,7 +719,7 @@ body {
   }
 }
 
-/* Reduced motion */
+/* Reduced motion - respects user preferences */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -634,5 +727,272 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .animate-fade-in-up,
+  .animate-fade-in,
+  .animate-scale-in,
+  .animate-slide-in-left,
+  .animate-slide-in-right,
+  .animate-float,
+  .animate-glow-breathe,
+  .animate-bounce-subtle,
+  .animate-spin-slow {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* === SKELETON SHIMMER ANIMATION === */
+.skeleton-shimmer {
+  position: relative;
+  overflow: hidden;
+  background: var(--void-elevated);
+}
+
+.skeleton-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%) translateZ(0);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(139, 92, 246, 0.08),
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
+  will-change: transform;
+}
+
+/* === PERFORMANCE-OPTIMIZED TRANSITIONS === */
+/* Use GPU-accelerated properties only */
+.transition-gpu {
+  transition-property: transform, opacity;
+  transition-duration: 300ms;
+  transition-timing-function: var(--ease-out-expo);
+  will-change: transform, opacity;
+}
+
+.transition-fast {
+  transition-duration: 150ms;
+}
+
+.transition-slow {
+  transition-duration: 500ms;
+}
+
+/* === CONTENT VISIBILITY FOR VIRTUALIZATION === */
+.content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 300px;
+}
+
+/* === LAZY IMAGE PLACEHOLDER === */
+.lazy-image {
+  background: var(--void-elevated);
+  object-fit: cover;
+}
+
+.lazy-image[data-loaded="true"] {
+  animation: fade-in 300ms ease-out;
+}
+
+/* === OPTIMIZED BACKDROP BLUR === */
+/* Only apply blur where needed to save GPU resources */
+.backdrop-blur-optimized {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  /* Force GPU layer */
+  transform: translateZ(0);
+}
+
+/* ============================================
+   PWA ANIMATIONS & STYLES
+   ============================================ */
+
+/* Slide up animation for toasts and install prompts */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out forwards;
+}
+
+/* Scale in animation for modals */
+@keyframes scale-in-center {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-scale-in {
+  animation: scale-in-center 0.2s ease-out forwards;
+}
+
+/* Fade in animation */
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out forwards;
+}
+
+/* Pulse animation for notifications */
+@keyframes notification-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.animate-notification-pulse {
+  animation: notification-pulse 0.3s ease-in-out;
+}
+
+/* Offline indicator animation */
+@keyframes offline-pulse {
+  0%, 100% {
+    background-color: rgba(245, 158, 11, 1);
+  }
+  50% {
+    background-color: rgba(245, 158, 11, 0.8);
+  }
+}
+
+.animate-offline-pulse {
+  animation: offline-pulse 2s ease-in-out infinite;
+}
+
+/* PWA Install prompt glow effect */
+.pwa-install-glow {
+  box-shadow: 
+    0 0 20px rgba(249, 115, 22, 0.3),
+    0 0 40px rgba(249, 115, 22, 0.2),
+    0 0 60px rgba(249, 115, 22, 0.1);
+}
+
+/* Wake lock indicator */
+@keyframes screen-active {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-screen-active {
+  animation: screen-active 2s ease-in-out infinite;
+}
+
+/* Background sync indicator */
+@keyframes sync-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-sync {
+  animation: sync-rotate 1s linear infinite;
+}
+
+/* PWA Safe Areas for notched devices */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .safe-area-inset {
+    padding-top: env(safe-area-inset-top);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+  }
+  
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Standalone mode styles (when installed as PWA) */
+@media (display-mode: standalone) {
+  .hide-when-standalone {
+    display: none !important;
+  }
+  
+  .show-when-standalone {
+    display: block !important;
+  }
+  
+  /* Adjust header for standalone mode */
+  .standalone-header {
+    padding-top: env(safe-area-inset-top, 0);
+  }
+}
+
+/* Window Controls Overlay support (for desktop PWA) */
+@media (display-mode: window-controls-overlay) {
+  .titlebar-area {
+    position: fixed;
+    top: 0;
+    left: env(titlebar-area-x, 0);
+    width: env(titlebar-area-width, 100%);
+    height: env(titlebar-area-height, 33px);
+    -webkit-app-region: drag;
+    app-region: drag;
+  }
+  
+  .no-drag {
+    -webkit-app-region: no-drag;
+    app-region: no-drag;
+  }
+  
+  .content-below-titlebar {
+    margin-top: env(titlebar-area-height, 33px);
+  }
+}
+
+/* Touch target sizes for mobile */
+@media (pointer: coarse) {
+  .touch-target {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  .touch-target-lg {
+    min-width: 48px;
+    min-height: 48px;
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .animate-slide-up,
+  .animate-scale-in,
+  .animate-fade-in,
+  .animate-notification-pulse,
+  .animate-offline-pulse,
+  .animate-screen-active,
+  .animate-sync {
+    animation: none !important;
+    transition: none !important;
   }
 }

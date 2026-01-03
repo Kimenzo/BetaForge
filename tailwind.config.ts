@@ -196,11 +196,30 @@ export default {
         "out-expo": "cubic-bezier(0.16, 1, 0.3, 1)",
         "out-back": "cubic-bezier(0.34, 1.56, 0.64, 1)",
         "in-out-circ": "cubic-bezier(0.85, 0, 0.15, 1)",
+        "spring": "cubic-bezier(0.34, 1.2, 0.64, 1)",
       },
       backdropBlur: {
         xs: "2px",
       },
+      // GPU-accelerated animation presets
+      transitionProperty: {
+        "gpu": "transform, opacity",
+        "colors-gpu": "color, background-color, border-color, opacity",
+      },
+      // Performance-optimized durations
+      transitionDuration: {
+        "instant": "50ms",
+        "fast": "150ms",
+        "normal": "300ms",
+        "slow": "500ms",
+      },
     },
+  },
+  // ===========================================
+  // 🚀 PERFORMANCE OPTIMIZATIONS
+  // ===========================================
+  future: {
+    hoverOnlyWhenSupported: true, // Reduces CSS for touch devices
   },
   plugins: [],
 } satisfies Config;

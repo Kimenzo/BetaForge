@@ -1,0 +1,186 @@
+{
+  "name": "BetaForge - AI-Powered Beta Testing",
+  "short_name": "BetaForge",
+  "description": "Deploy autonomous AI agents to test your web, mobile, and desktop applications and receive human-like bug reports.",
+  "start_url": "/dashboard",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "any",
+  "theme_color": "#F97316",
+  "background_color": "#0A0A0F",
+  "categories": ["developer tools", "productivity", "utilities"],
+  "dir": "ltr",
+  "lang": "en-US",
+  "iarc_rating_id": "",
+  "prefer_related_applications": false,
+  
+  "icons": [
+    {
+      "src": "/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-monochrome.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "monochrome"
+    }
+  ],
+
+  "screenshots": [
+    {
+      "src": "/screenshots/dashboard-wide.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "BetaForge Dashboard - Manage your AI testing projects"
+    },
+    {
+      "src": "/screenshots/dashboard-narrow.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "BetaForge Mobile Dashboard"
+    }
+  ],
+
+  "shortcuts": [
+    {
+      "name": "New Project",
+      "short_name": "New Project",
+      "description": "Create a new testing project",
+      "url": "/dashboard/projects/new",
+      "icons": [{ "src": "/icons/shortcut-new.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "View Reports",
+      "short_name": "Reports",
+      "description": "View all bug reports",
+      "url": "/dashboard/reports",
+      "icons": [{ "src": "/icons/shortcut-reports.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Run Tests",
+      "short_name": "Run Tests",
+      "description": "Start a new test session",
+      "url": "/dashboard?action=run",
+      "icons": [{ "src": "/icons/shortcut-run.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Agent Status",
+      "short_name": "Agents",
+      "description": "Check AI agent status",
+      "url": "/agents",
+      "icons": [{ "src": "/icons/shortcut-agents.png", "sizes": "192x192" }]
+    }
+  ],
+
+  "share_target": {
+    "action": "/api/share-target",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+
+  "file_handlers": [
+    {
+      "action": "/dashboard/import",
+      "accept": {
+        "application/json": [".json"],
+        "text/plain": [".txt", ".log"]
+      }
+    }
+  ],
+
+  "launch_handler": {
+    "client_mode": ["navigate-existing", "auto"]
+  },
+
+  "handle_links": "preferred",
+
+  "edge_side_panel": {
+    "preferred_width": 480
+  },
+
+  "protocol_handlers": [
+    {
+      "protocol": "web+betaforge",
+      "url": "/protocol?type=%s"
+    }
+  ],
+
+  "related_applications": [],
+
+  "widgets": [
+    {
+      "name": "BetaForge Quick Stats",
+      "description": "View testing stats at a glance",
+      "tag": "betaforge-stats-widget",
+      "ms_ac_template": "widgets/stats-widget.json",
+      "data": "/api/widgets/stats",
+      "type": "application/json",
+      "screenshots": [
+        {
+          "src": "/widgets/stats-screenshot.png",
+          "sizes": "300x200",
+          "label": "Quick Stats Widget"
+        }
+      ],
+      "icons": [
+        {
+          "src": "/icons/widget-stats.png",
+          "sizes": "64x64"
+        }
+      ]
+    }
+  ]
+}

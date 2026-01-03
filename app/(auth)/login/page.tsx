@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Bot, ArrowRight, SkipForward } from "lucide-react";
-import { LoginLink } from "@kinde-oss/kinde-auth-nextjs/components";
 
 export default function LoginPage() {
   return (
@@ -31,19 +30,20 @@ export default function LoginPage() {
             Sign in to access your dashboard and AI agents.
           </p>
 
-          {/* Kinde Login Button */}
-          <LoginLink className="w-full h-14 rounded-xl bg-gradient-to-r from-neural to-electric-cyan text-white font-semibold hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2 mb-4">
-            Sign In
-            <ArrowRight className="w-4 h-4" />
-          </LoginLink>
+          {/* Auth Coming Soon Notice */}
+          <div className="mb-6 p-4 rounded-xl bg-neural/10 border border-neural/20">
+            <p className="text-sm text-phantom-gray">
+              🔐 Authentication coming soon. For now, continue as guest.
+            </p>
+          </div>
 
-          {/* Maybe Later - Guest Access */}
+          {/* Continue as Guest */}
           <Link
             href="/dashboard"
-            className="w-full h-12 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300 flex items-center justify-center gap-2 text-phantom-gray hover:text-white"
+            className="w-full h-14 rounded-xl bg-gradient-to-r from-neural to-electric-cyan text-white font-semibold hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2 mb-4"
           >
-            <SkipForward className="w-4 h-4" />
-            Maybe later - Continue as guest
+            Continue to Dashboard
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 

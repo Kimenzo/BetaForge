@@ -12,9 +12,15 @@ import {
   Bug,
   Globe,
   Zap,
+  Loader2,
+  AlertCircle,
+  Play,
+  Eye,
 } from "lucide-react";
 import { AGENTS } from "@/lib/agents";
 import { Button } from "@/components/ui/button";
+import { useSessionDetails } from "@/lib/hooks";
+import { TestSimulator } from "@/components/simulation";
 
 interface SessionPageProps {
   params: Promise<{ id: string }>;
@@ -22,72 +28,33 @@ interface SessionPageProps {
 
 export default function SessionDetailPage({ params }: SessionPageProps) {
   const [id, setId] = useState<string>("");
-  const [activityLogs] = useState<
-    { time: string; agent: string; action: string; type?: "bug" | "success" }[]
-  >([
-    { time: "12:34:01", agent: "Sarah", action: "Started testing session" },
-    { time: "12:34:05", agent: "Sarah", action: "Navigated to homepage" },
-    { time: "12:34:08", agent: "Sarah", action: "Clicked 'Sign Up' button" },
-    {
-      time: "12:34:12",
-      agent: "Sarah",
-      action: "Found bug: Form validation error not shown",
-      type: "bug",
-    },
-    { time: "12:34:15", agent: "Marcus", action: "Started testing session" },
-    {
-      time: "12:34:18",
-      agent: "Marcus",
-      action: "Testing keyboard shortcuts...",
-    },
-  ]);
+  const [showSimulator, setShowSimulator] = useState(false);
+  const [selectedAgent, setSelectedAgent] = useState<{ id: string; name: string } | null>(null);
+  const { session, loading, error, refetch } = useSessionDetails(id);
 
   useEffect(() => {
     params.then((p) => setId(p.id));
   }, [params]);
 
-  // TODO: Fetch session from database
-  const session = {
-    id,
-    projectName: "Sample Project",
-    projectUrl: "https://example.com",
-    status: "running" as const,
-    startedAt: new Date().toISOString(),
-    totalBugs: 2,
-    progress: 35,
-    agents: [
-      {
-        id: "sarah",
-        name: "Sarah",
-        status: "completed",
-        bugsFound: 2,
-        progress: 100,
-      },
-      {
-        id: "marcus",
-        name: "Marcus",
-        status: "running",
-        bugsFound: 0,
-        progress: 45,
-      },
-      {
-        id: "ahmed",
-        name: "Ahmed",
-        status: "queued",
-        bugsFound: 0,
-        progress: 0,
-      },
-      { id: "lin", name: "Lin", status: "queued", bugsFound: 0, progress: 0 },
-      {
-        id: "diego",
-        name: "Diego",
-        status: "queued",
-        bugsFound: 0,
-        progress: 0,
-      },
-      { id: "emma", name: "Emma", status: "queued", bugsFound: 0, progress: 0 },
-    ],
-  };
+  // Auto-refresh while session is running
+  useEffect(() => {
+    if (!session || session.status !== "running") return;
+    
+    const interval = setInterval(() => {
+      refetch();
+    }, 3000); // Refresh every 3 seconds while running
+    
+    return () => clearInterval(interval);
+  }, [session?.status, refetch]);
+
+  // Format activity log entries from API data
+  const activityLogs = session?.activityLog?.map(log => ({
+    time: new Date(log.timestamp).toLocaleTimeString('en-US', { hour12: false }),
+    agent: log.agentName || 'System',
+    action: log.message,
+    type: log.type === 'bug_found' ? 'bug' as const : 
+          log.type === 'agent_completed' ? 'success' as const : undefined,
+  })) || [];
 
   const statusConfig = {
     running: {
@@ -137,6 +104,46 @@ export default function SessionDetailPage({ params }: SessionPageProps) {
     return agent?.color || "#8B5CF6";
   };
 
+  // Loading state
+  if (loading || !id) {
+    return (
+      <div className="min-h-screen bg-void-black flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-12 h-12 text-neural-bright animate-spin mx-auto mb-4" />
+          <p className="text-phantom-gray">Loading session details...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error || !session) {
+    return (
+      <div className="min-h-screen bg-void-black flex items-center justify-center">
+        <div className="text-center max-w-md">
+          <AlertCircle className="w-12 h-12 text-crimson-red mx-auto mb-4" />
+          <h2 className="text-xl font-semibold text-ghost-white mb-2">Session Not Found</h2>
+          <p className="text-phantom-gray mb-6">{error || "Unable to load session details."}</p>
+          <Link href="/dashboard">
+            <Button>
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Dashboard
+            </Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  // Map agents for display
+  const displayAgents = session.agents?.map(agent => ({
+    id: agent.id,
+    name: agent.name,
+    status: agent.status,
+    progress: agent.progress || 0,
+    bugsFound: session.bugReports?.filter(b => b.agentName === agent.name).length || 0,
+  })) || [];
+
   return (
     <div className="min-h-screen bg-void-black">
       {/* Background Effects */}
@@ -166,7 +173,7 @@ export default function SessionDetailPage({ params }: SessionPageProps) {
                 <h1 className="text-3xl font-bold text-ghost-white">
                   Test Session
                 </h1>
-                <p className="text-phantom-gray">{session.projectName}</p>
+                <p className="text-phantom-gray">{session.project?.name || "Test Session"}</p>
               </div>
             </div>
 
@@ -187,28 +194,64 @@ export default function SessionDetailPage({ params }: SessionPageProps) {
               </span>
               <span className="text-sm text-phantom-gray flex items-center gap-1.5">
                 <Clock className="w-4 h-4" />
-                Started {new Date(session.startedAt).toLocaleString()}
+                Started {new Date(session.startedAt || session.createdAt).toLocaleString()}
               </span>
-              <a
-                href={session.projectUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-electric-cyan hover:text-electric-cyan/80 flex items-center gap-1.5"
-              >
-                <Globe className="w-4 h-4" />
-                {session.projectUrl}
-              </a>
+              {session.project?.accessUrl && (
+                <a
+                  href={session.project.accessUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-electric-cyan hover:text-electric-cyan/80 flex items-center gap-1.5"
+                >
+                  <Globe className="w-4 h-4" />
+                  {session.project.accessUrl}
+                </a>
+              )}
             </div>
           </div>
 
           {/* Actions */}
           <div className="flex items-center gap-3">
+            {session.project?.accessUrl && (
+              <Button 
+                onClick={() => {
+                  // Pick first available agent or Sarah as default
+                  const agent = session.agents?.[0] || { id: "sarah", name: "Sarah" };
+                  setSelectedAgent({ id: agent.id, name: agent.name });
+                  setShowSimulator(true);
+                }}
+                className="bg-neural hover:bg-neural-bright text-void-black group"
+              >
+                <Eye className="w-4 h-4 mr-2 transition-transform group-hover:scale-110" />
+                Watch Live Test
+              </Button>
+            )}
             <Button variant="destructive" className="group">
               <StopCircle className="w-4 h-4 transition-transform group-hover:scale-110" />
               Stop Test
             </Button>
           </div>
         </div>
+
+        {/* Live Test Simulator Modal */}
+        {showSimulator && selectedAgent && session.project?.accessUrl && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-void-black/80 backdrop-blur-sm animate-fade-in">
+            <div className="w-full max-w-7xl max-h-[90vh] overflow-hidden">
+              <TestSimulator
+                targetUrl={session.project.accessUrl}
+                agentId={selectedAgent.id}
+                agentName={selectedAgent.name}
+                onComplete={() => {
+                  refetch();
+                }}
+                onClose={() => {
+                  setShowSimulator(false);
+                  setSelectedAgent(null);
+                }}
+              />
+            </div>
+          </div>
+        )}
 
         {/* Progress Bar */}
         <div className="glass rounded-2xl p-6 border border-white/5 mb-8 animate-fade-in-up stagger-1">
@@ -226,12 +269,12 @@ export default function SessionDetailPage({ params }: SessionPageProps) {
           </div>
           <div className="flex items-center justify-between mt-3">
             <span className="text-sm text-phantom-gray">
-              {session.agents.filter((a) => a.status === "completed").length} of{" "}
-              {session.agents.length} agents completed
+              {displayAgents.filter((a) => a.status === "completed").length} of{" "}
+              {displayAgents.length} agents completed
             </span>
             <span className="text-sm text-ember-orange flex items-center gap-1.5">
               <Bug className="w-4 h-4" />
-              {session.totalBugs} bugs found
+              {session.bugsFound || 0} bugs found
             </span>
           </div>
         </div>
@@ -245,7 +288,7 @@ export default function SessionDetailPage({ params }: SessionPageProps) {
                 Agent Status
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {session.agents.map((agent) => {
+                {displayAgents.map((agent) => {
                   const config =
                     statusConfig[agent.status as keyof typeof statusConfig];
                   return (
@@ -302,12 +345,26 @@ export default function SessionDetailPage({ params }: SessionPageProps) {
 
                       <div className="flex items-center justify-between text-sm">
                         <span className={config.color}>{config.label}</span>
-                        {agent.bugsFound > 0 && (
-                          <span className="text-ember-orange flex items-center gap-1">
-                            <Bug className="w-3 h-3" />
-                            {agent.bugsFound}
-                          </span>
-                        )}
+                        <div className="flex items-center gap-2">
+                          {agent.bugsFound > 0 && (
+                            <span className="text-ember-orange flex items-center gap-1">
+                              <Bug className="w-3 h-3" />
+                              {agent.bugsFound}
+                            </span>
+                          )}
+                          {session.project?.accessUrl && (
+                            <button
+                              onClick={() => {
+                                setSelectedAgent({ id: agent.id, name: agent.name });
+                                setShowSimulator(true);
+                              }}
+                              className="p-1 rounded hover:bg-white/10 text-phantom-gray hover:text-electric-cyan transition-colors"
+                              title={`Watch ${agent.name} test`}
+                            >
+                              <Play className="w-3 h-3" />
+                            </button>
+                          )}
+                        </div>
                       </div>
                     </div>
                   );

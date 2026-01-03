@@ -1,11 +1,26 @@
 import { NextResponse } from "next/server";
 
-// Kinde auth is disabled - set KINDE_ISSUER_URL and other env vars to enable
-// See: https://kinde.com/docs/developer-tools/nextjs-sdk/
+// Auth provider placeholder
+// Configure your preferred auth provider (Clerk, NextAuth, Auth0, etc.)
 
 export async function GET() {
   return NextResponse.json(
-    { error: "Authentication not configured. Set Kinde environment variables to enable." },
+    {
+      message: "Auth provider not configured. Please set up your preferred authentication solution.",
+      suggestions: [
+        "Clerk (clerk.com)",
+        "NextAuth.js (next-auth.js.org)", 
+        "Auth0 (auth0.com)",
+        "Supabase Auth (supabase.com/auth)",
+      ],
+    },
+    { status: 503 }
+  );
+}
+
+export async function POST() {
+  return NextResponse.json(
+    { error: "Auth provider not configured" },
     { status: 503 }
   );
 }

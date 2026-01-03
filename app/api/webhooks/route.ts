@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { createServerClient } from "@/lib/supabase";
 import { createOrchestrator } from "@/lib/orchestrator";
 import { getEnabledAgents } from "@/lib/agents";
+import { verifyWebhookSignature } from "@/lib/api/auth";
+import { dispatchWebhookEvent } from "@/lib/api/webhooks";
 import type { AgentEvent } from "@/lib/types";
 import type { Json } from "@/lib/database.types";
 
@@ -12,14 +14,17 @@ export async function POST(request: NextRequest) {
   const supabase = createServerClient();
 
   try {
-    const body = await request.json();
+    // Clone request to read body twice (once for verification, once for parsing)
+    const rawBody = await request.text();
+    const body = JSON.parse(rawBody);
     const source = detectWebhookSource(request);
 
-    // Verify webhook signature (production requirement)
-    // const isValid = await verifyWebhookSignature(request, source);
-    // if (!isValid) {
-    //   return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
-    // }
+    // Verify webhook signature (for production)
+    const isValid = await verifyIncomingWebhook(request, rawBody, source);
+    if (!isValid && process.env.NODE_ENV === "production") {
+      console.warn("[Webhook] Invalid signature from:", source);
+      return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
+    }
 
     // Extract relevant information based on source
     const eventInfo = parseWebhookEvent(source, body);
@@ -187,6 +192,20 @@ export async function POST(request: NextRequest) {
       })
       .eq("id", session.id);
 
+    // Dispatch session.started webhook event
+    dispatchWebhookEvent(
+      "session.started",
+      {
+        sessionId: session.id,
+        projectId: project.id,
+        projectName: project.name,
+        testUrl: project.access_url,
+        trigger: source,
+        triggerEvent: eventInfo,
+      },
+      project.id
+    );
+
     // Start orchestrator (runs in background)
     orchestrator.deployAgents().catch(async (error) => {
       console.error("Orchestrator error:", error);
@@ -197,6 +216,18 @@ export async function POST(request: NextRequest) {
           completed_at: new Date().toISOString(),
         })
         .eq("id", session.id);
+
+      // Dispatch session.failed webhook event  
+      dispatchWebhookEvent(
+        "session.failed",
+        {
+          sessionId: session.id,
+          projectId: project.id,
+          projectName: project.name,
+          error: error instanceof Error ? error.message : "Unknown error",
+        },
+        project.id
+      );
     });
 
     return NextResponse.json({
@@ -353,3 +384,49 @@ function parseBitbucketEvent(
 
   return null;
 }
+
+// ============================================================================
+// Webhook Signature Verification
+// ============================================================================
+
+async function verifyIncomingWebhook(
+  request: NextRequest,
+  rawBody: string,
+  source: "github" | "gitlab" | "bitbucket" | "unknown"
+): Promise<boolean> {
+  // Get webhook secret from environment
+  const secrets: Record<string, string | undefined> = {
+    github: process.env.GITHUB_WEBHOOK_SECRET,
+    gitlab: process.env.GITLAB_WEBHOOK_SECRET,
+    bitbucket: process.env.BITBUCKET_WEBHOOK_SECRET,
+  };
+
+  const secret = secrets[source];
+  
+  // If no secret configured, skip verification (development mode)
+  if (!secret) {
+    return true;
+  }
+
+  switch (source) {
+    case "github": {
+      const signature = request.headers.get("x-hub-signature-256") || "";
+      return verifyWebhookSignature(rawBody, signature, secret);
+    }
+    case "gitlab": {
+      const token = request.headers.get("x-gitlab-token") || "";
+      return token === secret;
+    }
+    case "bitbucket": {
+      // Bitbucket uses IP allowlisting typically, but supports signatures too
+      const signature = request.headers.get("x-hub-signature") || "";
+      if (signature) {
+        return verifyWebhookSignature(rawBody, signature, secret);
+      }
+      return true; // IP allowlisting assumed
+    }
+    default:
+      return false;
+  }
+}
+

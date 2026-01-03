@@ -148,24 +148,22 @@ export default function NewProjectPage() {
             <PlatformOption
               icon={<Smartphone className="h-6 w-6" />}
               label="Mobile"
-              description="Coming soon"
+              description="Test mobile applications"
               selected={platform === "mobile"}
               onClick={() => setPlatform("mobile")}
-              disabled
               gradient="from-plasma-pink to-rose-500"
             />
             <PlatformOption
               icon={<Monitor className="h-6 w-6" />}
               label="Desktop"
-              description="Coming soon"
+              description="Test desktop applications"
               selected={platform === "desktop"}
               onClick={() => setPlatform("desktop")}
-              disabled
               gradient="from-neural to-purple-600"
             />
           </div>
 
-          {/* URL */}
+          {/* URL - Web */}
           {platform === "web" && (
             <div className="mt-6 animate-fade-in-up">
               <label className="block text-sm font-medium text-ghost-white mb-2">
@@ -182,6 +180,48 @@ export default function NewProjectPage() {
               <p className="text-xs text-mist-gray mt-2 flex items-center gap-1">
                 <Info className="w-3 h-3" />
                 Make sure the URL is accessible from our testing servers
+              </p>
+            </div>
+          )}
+
+          {/* URL - Mobile */}
+          {platform === "mobile" && (
+            <div className="mt-6 animate-fade-in-up">
+              <label className="block text-sm font-medium text-ghost-white mb-2">
+                App Store URL or Deep Link
+              </label>
+              <Input
+                type="url"
+                value={accessUrl}
+                onChange={(e) => setAccessUrl(e.target.value)}
+                placeholder="https://apps.apple.com/... or https://play.google.com/..."
+                icon={<Smartphone className="w-4 h-4" />}
+                required
+              />
+              <p className="text-xs text-mist-gray mt-2 flex items-center gap-1">
+                <Info className="w-3 h-3" />
+                Provide an App Store, Play Store URL, or a deep link to your app
+              </p>
+            </div>
+          )}
+
+          {/* URL - Desktop */}
+          {platform === "desktop" && (
+            <div className="mt-6 animate-fade-in-up">
+              <label className="block text-sm font-medium text-ghost-white mb-2">
+                Download URL or Executable Path
+              </label>
+              <Input
+                type="url"
+                value={accessUrl}
+                onChange={(e) => setAccessUrl(e.target.value)}
+                placeholder="https://download.your-app.com/installer"
+                icon={<Monitor className="w-4 h-4" />}
+                required
+              />
+              <p className="text-xs text-mist-gray mt-2 flex items-center gap-1">
+                <Info className="w-3 h-3" />
+                Provide a download URL for Windows, macOS, or Linux builds
               </p>
             </div>
           )}

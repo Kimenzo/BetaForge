@@ -1,9 +1,5 @@
 import Link from "next/link";
-import { Bot, ArrowRight, SkipForward, Check } from "lucide-react";
-import {
-  RegisterLink,
-  LoginLink,
-} from "@kinde-oss/kinde-auth-nextjs/components";
+import { Bot, ArrowRight, Check } from "lucide-react";
 
 export default function SignUpPage() {
   return (
@@ -53,28 +49,32 @@ export default function SignUpPage() {
             ))}
           </div>
 
-          {/* Kinde Register Button */}
-          <RegisterLink className="w-full h-14 rounded-xl bg-gradient-to-r from-neural to-electric-cyan text-white font-semibold hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2 mb-4">
-            Create Account
-            <ArrowRight className="w-4 h-4" />
-          </RegisterLink>
+          {/* Auth Coming Soon Notice */}
+          <div className="mb-6 p-4 rounded-xl bg-neural/10 border border-neural/20">
+            <p className="text-sm text-phantom-gray">
+              🔐 Authentication coming soon. For now, explore as guest.
+            </p>
+          </div>
 
-          {/* Maybe Later - Guest Access */}
+          {/* Continue as Guest */}
           <Link
             href="/dashboard"
-            className="w-full h-12 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300 flex items-center justify-center gap-2 text-phantom-gray hover:text-white"
+            className="w-full h-14 rounded-xl bg-gradient-to-r from-neural to-electric-cyan text-white font-semibold hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2 mb-4"
           >
-            <SkipForward className="w-4 h-4" />
-            Maybe later - Explore as guest
+            Explore Dashboard
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
         {/* Sign In Link */}
         <p className="text-sm text-phantom-gray mt-6">
           Already have an account?{" "}
-          <LoginLink className="text-neural hover:text-neural-bright transition-colors font-medium">
+          <Link
+            href="/login"
+            className="text-neural hover:text-neural-bright transition-colors font-medium"
+          >
             Sign in
-          </LoginLink>
+          </Link>
         </p>
       </div>
     </div>
