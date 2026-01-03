@@ -204,9 +204,10 @@ export class PushNotificationManager {
       }
 
       // Create new subscription
+      const applicationServerKey = this.urlBase64ToUint8Array(vapidPublicKey);
       subscription = await this.registration.pushManager.subscribe({
         userVisibleOnly: true,
-        applicationServerKey: this.urlBase64ToUint8Array(vapidPublicKey),
+        applicationServerKey: applicationServerKey.buffer as ArrayBuffer,
       });
 
       console.log("[PWA] Push subscription created");
@@ -579,8 +580,7 @@ export function registerProtocolHandler(): void {
   try {
     navigator.registerProtocolHandler(
       "web+betaforge",
-      `${window.location.origin}/protocol?type=%s`,
-      "BetaForge"
+      `${window.location.origin}/protocol?type=%s`
     );
     console.log("[PWA] Protocol handler registered");
   } catch (error) {

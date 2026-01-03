@@ -8,7 +8,7 @@ import type { Metric } from "web-vitals";
 // Performance thresholds (top 1% targets)
 const THRESHOLDS = {
   LCP: { good: 1200, poor: 2500 }, // Largest Contentful Paint
-  FID: { good: 50, poor: 100 }, // First Input Delay
+
   CLS: { good: 0.05, poor: 0.1 }, // Cumulative Layout Shift
   FCP: { good: 900, poor: 1800 }, // First Contentful Paint
   TTFB: { good: 200, poor: 500 }, // Time to First Byte
@@ -47,7 +47,7 @@ export async function measureWebVitals(
 ): Promise<void> {
   if (typeof window === "undefined") return;
 
-  const { onLCP, onFID, onCLS, onFCP, onTTFB, onINP } = await import(
+  const { onLCP, onCLS, onFCP, onTTFB, onINP } = await import(
     "web-vitals"
   );
 
@@ -62,7 +62,7 @@ export async function measureWebVitals(
   };
 
   onLCP(handleMetric);
-  onFID(handleMetric);
+
   onCLS(handleMetric);
   onFCP(handleMetric);
   onTTFB(handleMetric);

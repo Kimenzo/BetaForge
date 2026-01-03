@@ -1,11 +1,7 @@
+"use client";
+
 import { WifiOff, RefreshCw, Home, Sparkles } from "lucide-react";
 import Link from "next/link";
-
-export const metadata = {
-  title: "Offline - BetaForge",
-  description:
-    "You appear to be offline. Please check your internet connection.",
-};
 
 export default function OfflinePage() {
   return (

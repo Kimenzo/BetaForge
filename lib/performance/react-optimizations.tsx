@@ -38,6 +38,12 @@ export function memoWithDeepCompare<P extends object>(
   return MemoizedComponent;
 }
 
+// Return type interface
+interface OptimizedContextResult<T> {
+  Provider: ComponentType<{ value: T; children: ReactNode }>;
+  useContext: () => T;
+}
+
 /**
  * Create an optimized context with automatic memoization
  * Prevents unnecessary re-renders from context updates
@@ -45,10 +51,7 @@ export function memoWithDeepCompare<P extends object>(
 export function createOptimizedContext<T>(
   defaultValue: T,
   displayName?: string
-): {
-  Provider: ComponentType<{ value: T; children: ReactNode }>;
-  useContext: () => T;
-} {
+): OptimizedContextResult<T> {
   const Context = createContext<T>(defaultValue);
   Context.displayName = displayName;
 
@@ -108,7 +111,7 @@ export function useDeferredValue<T>(value: T): T {
 export function useThrottledValue<T>(value: T, delay: number): T {
   const [throttledValue, setThrottledValue] = useState<T>(value);
   const lastUpdated = useRef<number>(Date.now());
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
   useEffect(() => {
     const now = Date.now();
